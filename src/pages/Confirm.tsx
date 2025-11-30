@@ -43,8 +43,9 @@ const Confirm = () => {
 
   const handleConfirm = () => {
     addCard(pendingCard);
+    const savedCardId = pendingCard.id;
     setPendingCard(null);
-    navigate("/business-cards");
+    navigate("/business-cards", { state: { openCardId: savedCardId } });
   };
 
   const handleEdit = () => {

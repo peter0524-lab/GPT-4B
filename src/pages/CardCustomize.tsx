@@ -79,7 +79,7 @@ const CardCustomize = () => {
 
   const handleApply = () => {
     updateCard(card.id, { design: selectedDesign });
-    navigate(-1);
+    navigate('/business-cards', { state: { selectCardId: card.id } });
   };
 
   return (
