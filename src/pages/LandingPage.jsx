@@ -91,7 +91,6 @@ function LandingPage() {
               <img src={imgIcon1} alt="gift" className="section-icon" />
               <h2 className="section-title">인기 선물</h2>
             </div>
-            <button className="sort-button">판매량순 ▼</button>
           </div>
 
           <div className="gift-cards-container">
@@ -121,19 +120,13 @@ function LandingPage() {
           <div className="alerts-list">
             <div className="alert-card">
               <div className="alert-icon">🔔</div>
-              <p className="alert-text">박상무 님과 연락한 지 90일이 지났습니다. 간단한 선물로 안부를 전해보세요.</p>
+              <p className="alert-text">최하늘 님과 연락한 지 90일이 지났습니다. 간단한 선물로 안부를 전해보세요.</p>
               <button className="alert-button">보기</button>
             </div>
 
             <div className="alert-card">
               <div className="alert-icon">🎁</div>
-              <p className="alert-text">이부장 님의 생일이 5일 남았습니다. 선물을 준비해보세요.</p>
-              <button className="alert-button">보기</button>
-            </div>
-
-            <div className="alert-card">
-              <div className="alert-icon">🔔</div>
-              <p className="alert-text">최대리 님과의 미팅 약속이 내일 오후 2시입니다.</p>
+              <p className="alert-text">강지민 님의 생일이 5일 남았습니다. 선물을 준비해보세요.</p>
               <button className="alert-button">보기</button>
             </div>
           </div>

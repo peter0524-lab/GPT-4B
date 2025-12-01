@@ -87,14 +87,6 @@ function MyDetailPage() {
     navigate('/customize', { state: { card: myCard } })
   }
 
-  const handleCall = () => {
-    window.location.href = 'tel:010-1234-5678'
-  }
-
-  const handleEmail = () => {
-    window.location.href = 'mailto:park.sangmu@company.com'
-  }
-
   const handleBusinessCards = () => {
     navigate('/business-cards')
   }
@@ -197,7 +189,6 @@ function MyDetailPage() {
                 <p className="info-label">전화번호</p>
                 <p className="info-value">010-1234-5678</p>
               </div>
-              <button className="action-button" onClick={handleCall}>전화</button>
             </div>
             <div className="info-row">
               <img src={imgIcon5} alt="이메일" className="info-icon" />
@@ -205,7 +196,6 @@ function MyDetailPage() {
                 <p className="info-label">이메일</p>
                 <p className="info-value">park.sangmu@company.com</p>
               </div>
-              <button className="action-button" onClick={handleEmail}>메일</button>
             </div>
             <div className="info-row">
               <img src={imgIcon3} alt="소속" className="info-icon" />
