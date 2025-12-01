@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import BottomNavigation from '../components/BottomNavigation'
 import './CalendarPage.css'
 
@@ -68,7 +68,9 @@ const formatTime = (date) => {
 
 function CalendarPage() {
   const navigate = useNavigate()
+  const location = useLocation()
   const categoryDropdownRef = useRef(null)
+  const isAddEventPage = location.pathname === '/calendar/add'
   const [currentDate, setCurrentDate] = useState(new Date())
   const [selectedDate, setSelectedDate] = useState(new Date())
   const [events, setEvents] = useState([]) // 구글 캘린더 이벤트 배열
@@ -961,7 +963,7 @@ function CalendarPage() {
         </div>
       )}
 
-      <BottomNavigation />
+      {!isAddEventPage && <BottomNavigation />}
     </div>
   )
 }

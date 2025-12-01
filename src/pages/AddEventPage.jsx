@@ -232,10 +232,17 @@ function AddEventPage() {
     navigate('/calendar')
   }
 
+  const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget) {
+      navigate('/calendar')
+    }
+  }
+
   const days = getDaysInMonth(currentDate)
 
   return (
-    <div className="add-event-page">
+    <div className="add-event-page-overlay" onClick={handleOverlayClick}>
+      <div className="add-event-page">
       {/* 뒤로가기 버튼 */}
       <button className="back-button" onClick={handleBack}>
         <img src={imgBackIcon} alt="뒤로" className="back-icon" />
@@ -411,6 +418,7 @@ function AddEventPage() {
       <button className="add-button" onClick={handleSave}>
         추가
       </button>
+      </div>
     </div>
   )
 }

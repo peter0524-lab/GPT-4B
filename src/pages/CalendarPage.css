@@ -334,9 +334,11 @@
   top: 0;
   left: 0;
   right: 0;
-  bottom: 83px;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
+  z-index: 9999;
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -362,7 +364,7 @@
   border-radius: 40px 40px 0 0;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 24px 18px 100px;
+  padding: 24px 18px 120px;
   position: relative;
   margin: 0;
   margin-bottom: 0;
@@ -370,8 +372,8 @@
   box-sizing: border-box;
   transition: transform 0.1s ease-out;
   cursor: grab;
-  min-height: 70vh;
-  max-height: calc(100vh - 83px);
+  min-height: 85vh;
+  max-height: calc(100vh - 20px);
   will-change: transform;
   backface-visibility: hidden;
   transform-origin: bottom center;

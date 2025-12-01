@@ -448,8 +448,6 @@ function EventDetailPage() {
 
         <div className="section-header">
 
-          <img src={imgImage9} alt="미팅 정보" className="section-icon" />
-
           <h3 className="section-title">미팅 정보</h3>
 
         </div>
@@ -802,8 +800,6 @@ function EventDetailPage() {
 
         <div className="section-header">
 
-          <img src={imgImage8} alt="메모" className="section-icon" />
-
           <h3 className="section-title">메모</h3>
 
         </div>
@@ -839,8 +835,6 @@ function EventDetailPage() {
       <div className="notification-section">
 
         <div className="section-header">
-
-          <img src={imgIcon1} alt="알림" className="section-icon" />
 
           <h3 className="section-title">알림</h3>
 
