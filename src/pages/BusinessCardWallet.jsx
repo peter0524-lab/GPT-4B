@@ -107,10 +107,12 @@ function BusinessCardWallet() {
         const cardIndex = filteredCards.findIndex(card => card.id === openCardId)
         if (cardIndex !== -1) {
           setCurrentIndex(cardIndex)
-          // 애니메이션 없이 바로 모달 열기
-          setTimeout(() => {
-            setShowDetailModal(true)
-          }, 100)
+          // 부드러운 모달 열기 애니메이션
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              setShowDetailModal(true)
+            })
+          })
           // state 초기화 (뒤로가기 시 다시 열리지 않도록)
           navigate(location.pathname, { replace: true, state: {} })
         }
@@ -157,8 +159,22 @@ function BusinessCardWallet() {
   }
 
   const handleCloseModal = () => {
-    setShowDetailModal(false)
-    setFlippingCardId(null)
+    // 모달 닫기 애니메이션을 위해 약간의 지연
+    const modalElement = document.querySelector('.card-detail-modal')
+    if (modalElement) {
+      modalElement.style.animation = 'slideDownModal 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards'
+      const overlayElement = document.querySelector('.card-detail-modal-overlay')
+      if (overlayElement) {
+        overlayElement.style.animation = 'fadeOutOverlay 0.3s ease-out forwards'
+      }
+      setTimeout(() => {
+        setShowDetailModal(false)
+        setFlippingCardId(null)
+      }, 300)
+    } else {
+      setShowDetailModal(false)
+      setFlippingCardId(null)
+    }
   }
 
   const handleEditInfo = () => {

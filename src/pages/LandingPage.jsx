@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import BottomNavigation from '../components/BottomNavigation'
+import { useCardStore } from '../store/cardStore'
 import './LandingPage.css'
 
 const imgGpt4B1 = "https://www.figma.com/api/mcp/asset/a3f2241c-a552-4bd3-b5e3-fa9bb210880a"
@@ -55,6 +56,7 @@ const popularGifts = [
 function LandingPage() {
   const navigate = useNavigate()
   const [userName, setUserName] = useState('')
+  const cards = useCardStore((state) => state.cards)
 
   useEffect(() => {
     const name = localStorage.getItem('userName')
@@ -62,6 +64,48 @@ function LandingPage() {
       setUserName(name)
     }
   }, [])
+
+  // 알림 텍스트에서 이름 추출 함수
+  const extractNameFromAlert = (alertText) => {
+    // "최하늘 님과..." 또는 "강지민 님의..." 형식에서 이름 추출
+    const match = alertText.match(/^([가-힣]+)\s+님/)
+    return match ? match[1] : null
+  }
+
+  // 알림 데이터 구조화
+  const alerts = [
+    {
+      id: 1,
+      icon: '🔔',
+      text: '최하늘 님과 연락한 지 90일이 지났습니다. 간단한 선물로 안부를 전해보세요.',
+    },
+    {
+      id: 2,
+      icon: '🎁',
+      text: '강지민 님의 생일이 5일 남았습니다. 선물을 준비해보세요.',
+    },
+  ]
+
+  // "보기" 버튼 클릭 핸들러
+  const handleViewAlert = (alertText) => {
+    const name = extractNameFromAlert(alertText)
+    if (name) {
+      // 해당 이름의 명함 찾기
+      const card = cards.find(c => c.name === name)
+      if (card) {
+        // 타인명함 상세 페이지로 이동 (모달 열기)
+        navigate('/business-cards', { 
+          state: { openCardId: card.id } 
+        })
+      } else {
+        // 명함이 없으면 명함 목록으로 이동
+        navigate('/business-cards')
+      }
+    } else {
+      // 이름을 추출할 수 없으면 명함 목록으로 이동
+      navigate('/business-cards')
+    }
+  }
 
   return (
     <div className="landing-page">
@@ -118,17 +162,18 @@ function LandingPage() {
         <div className="alerts-section">
           <h2 className="alerts-title">중요 알림</h2>
           <div className="alerts-list">
-            <div className="alert-card">
-              <div className="alert-icon">🔔</div>
-              <p className="alert-text">최하늘 님과 연락한 지 90일이 지났습니다. 간단한 선물로 안부를 전해보세요.</p>
-              <button className="alert-button">보기</button>
-            </div>
-
-            <div className="alert-card">
-              <div className="alert-icon">🎁</div>
-              <p className="alert-text">강지민 님의 생일이 5일 남았습니다. 선물을 준비해보세요.</p>
-              <button className="alert-button">보기</button>
-            </div>
+            {alerts.map((alert) => (
+              <div key={alert.id} className="alert-card">
+                <div className="alert-icon">{alert.icon}</div>
+                <p className="alert-text">{alert.text}</p>
+                <button 
+                  className="alert-button"
+                  onClick={() => handleViewAlert(alert.text)}
+                >
+                  보기
+                </button>
+              </div>
+            ))}
           </div>
         </div>
       </div>
