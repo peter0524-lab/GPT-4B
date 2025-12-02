@@ -1,6 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import BottomNavigation from '../components/BottomNavigation'
+import { giftAPI } from '../utils/api'
+import { isAuthenticated } from '../utils/auth'
 import './GiftHistoryPage.css'
 
 // GiftHistoryPage 전용 이미지 URL (LandingPage와 독립적)
@@ -13,91 +15,131 @@ const imgVector4 = "https://www.figma.com/api/mcp/asset/9f59a389-f83e-4f13-b23f-
 
 function GiftHistoryPage() {
   const navigate = useNavigate()
-  const [selectedYear, setSelectedYear] = useState('2025')
+  const [gifts, setGifts] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+  
+  // 모든 선물에서 연도 추출 함수
+  const getGiftYear = (gift) => {
+    if (gift.year) return String(gift.year)
+    if (gift.purchaseDate || gift.createdAt) {
+      const date = new Date(gift.purchaseDate || gift.createdAt)
+      return String(date.getFullYear())
+    }
+    return String(new Date().getFullYear())
+  }
+  
+  // 초기 선택 연도
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString())
+  
+  // 사용 가능한 모든 연도 추출
+  const availableYears = [...new Set(gifts.map(g => getGiftYear(g)))].sort((a, b) => b.localeCompare(a))
+  
+  // gifts가 로드되면 가장 최근 연도로 자동 선택
+  useEffect(() => {
+    if (availableYears.length > 0 && !availableYears.includes(selectedYear)) {
+      setSelectedYear(availableYears[0])
+    }
+  }, [gifts.length]) // gifts.length를 의존성으로 사용하여 gifts가 로드될 때만 실행
 
   const handleBack = () => {
     navigate('/my/detail')
   }
 
-  // 선물 이력 데이터 (LandingPage와 독립적)
-  const giftHistory2025 = [
-    {
-      id: 1,
-      image: giftHistoryImage1,
-      name: '박부장',
-      position: '부장',
-      giftName: '프리미엄 와인 세트',
-      status: '선물 완료',
-      date: '2025.10.15',
-      price: '150,000원'
-    },
-    {
-      id: 2,
-      image: giftHistoryImage2,
-      name: '이부장',
-      position: '부장',
-      giftName: '명품 신발 세트',
-      status: '선물 완료',
-      date: '2025.09.20',
-      price: '300,000원'
-    },
-    {
-      id: 3,
-      image: giftHistoryImage3,
-      name: '최대리',
-      position: '대리',
-      giftName: '명품 가방',
-      status: '선물 완료',
-      date: '2025.08.05',
-      price: '450,000원'
-    },
-    {
-      id: 4,
-      image: giftHistoryImage4,
-      name: '김과장',
-      position: '과장',
-      giftName: '스마트워치',
-      status: '선물 완료',
-      date: '2025.07.12',
-      price: '350,000원'
-    },
-    {
-      id: 5,
-      image: giftHistoryImage5,
-      name: '정이사',
-      position: '이사',
-      giftName: '프리미엄 와인 세트',
-      status: '선물 완료',
-      date: '2025.06.28',
-      price: '150,000원'
-    }
-  ]
+  // DB에서 선물 이력 가져오기
+  useEffect(() => {
+    const fetchGifts = async () => {
+      if (!isAuthenticated()) {
+        setLoading(false)
+        return
+      }
 
-  const giftHistory2024 = [
-    {
-      id: 6,
-      image: giftHistoryImage1,
-      name: '박상무',
-      position: '상무',
-      giftName: '고급 와인 세트',
-      status: '선물 완료',
-      date: '2024.12.20',
-      price: '180,000원'
-    },
-    {
-      id: 7,
-      image: giftHistoryImage2,
-      name: '이부장',
-      position: '부장',
-      giftName: '프리미엄 선물 박스',
-      status: '선물 완료',
-      date: '2024.11.15',
-      price: '250,000원'
-    }
-  ]
+      setLoading(true)
+      setError(null)
 
-  const giftHistory = selectedYear === '2025' ? giftHistory2025 : giftHistory2024
-  const totalGifts = giftHistory.length
+      try {
+        const response = await giftAPI.getAll()
+        console.log('Gift API Response:', response.data) // 디버깅용
+        if (response.data.success) {
+          const giftsData = response.data.data || []
+          console.log('Fetched gifts:', giftsData) // 디버깅용
+          console.log('Gifts count:', giftsData.length) // 디버깅용
+          setGifts(giftsData)
+        } else {
+          setError(response.data.message || '선물 이력을 불러오는데 실패했습니다.')
+        }
+      } catch (err) {
+        console.error('Failed to fetch gifts:', err)
+        console.error('Error details:', err.response?.data) // 디버깅용
+        setError(err.response?.data?.message || '선물 이력을 불러오는 중 오류가 발생했습니다.')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchGifts()
+  }, [])
+
+  // 날짜를 YYYY.MM.DD 형식으로 변환
+  const formatDate = (dateString) => {
+    if (!dateString) return ''
+    const date = new Date(dateString)
+    const year = date.getFullYear()
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const day = String(date.getDate()).padStart(2, '0')
+    return `${year}.${month}.${day}`
+  }
+
+  // 가격을 원화 형식으로 변환
+  const formatPrice = (price) => {
+    if (!price) return '0원'
+    return `${Number(price).toLocaleString('ko-KR')}원`
+  }
+
+  // 이미지 선택 (giftImage가 있으면 사용, 없으면 기본 이미지 순환)
+  const getGiftImage = (index, giftImage) => {
+    if (giftImage) return giftImage
+    const images = [giftHistoryImage1, giftHistoryImage2, giftHistoryImage3, giftHistoryImage4, giftHistoryImage5]
+    return images[index % images.length]
+  }
+
+  // 연도별로 필터링
+  const giftHistoryByYear = gifts.filter(gift => {
+    const giftYear = getGiftYear(gift)
+    return giftYear === String(selectedYear)
+  })
+  
+  // 연도별 개수 계산 (동적으로)
+  const yearCounts = availableYears.reduce((acc, year) => {
+    acc[year] = gifts.filter(g => getGiftYear(g) === year).length
+    return acc
+  }, {})
+  
+  console.log('Selected year:', selectedYear) // 디버깅용
+  console.log('Total gifts:', gifts.length) // 디버깅용
+  console.log('Available years:', availableYears) // 디버깅용
+  console.log('Gifts by year:', giftHistoryByYear.length) // 디버깅용
+  console.log('Year counts:', yearCounts) // 디버깅용
+
+  // UI 형식으로 변환
+  const giftHistory = giftHistoryByYear.map((gift, index) => {
+    // year가 없으면 날짜에서 추출
+    const giftYear = gift.year || (gift.purchaseDate || gift.createdAt ? String(new Date(gift.purchaseDate || gift.createdAt).getFullYear()) : currentYear)
+    
+    return {
+      id: gift.id,
+      image: getGiftImage(index, gift.giftImage),
+      name: gift.cardName || '이름 없음',
+      position: gift.cardCompany || '',
+      giftName: gift.giftName || '선물',
+      status: '선물 완료',
+      date: formatDate(gift.purchaseDate || gift.createdAt),
+      price: formatPrice(gift.price),
+      year: giftYear
+    }
+  })
+
+  const totalGifts = gifts.length
 
   return (
     <div className="gift-history-page">
@@ -115,33 +157,37 @@ function GiftHistoryPage() {
         {/* 수신자 정보 섹션 */}
         <div className="recipient-section">
           <div className="recipient-avatar">
-            <span className="recipient-initial">박</span>
+            <span className="recipient-initial">선</span>
           </div>
           <div className="recipient-info">
-            <p className="recipient-title">박부장님께 보낸 선물</p>
+            <p className="recipient-title">선물 히스토리</p>
             <p className="recipient-count">총 {totalGifts}개의 선물</p>
           </div>
         </div>
 
         {/* 탭 리스트 */}
-        <div className="tab-list">
-          <button 
-            className={`tab-button ${selectedYear === '2025' ? 'active' : ''}`}
-            onClick={() => setSelectedYear('2025')}
-          >
-            2025년 (5)
-          </button>
-          <button 
-            className={`tab-button ${selectedYear === '2024' ? 'active' : ''}`}
-            onClick={() => setSelectedYear('2024')}
-          >
-            2024년 (2)
-          </button>
-        </div>
+        {availableYears.length > 0 && (
+          <div className="tab-list">
+            {availableYears.map((year) => (
+              <button
+                key={year}
+                className={`tab-button ${selectedYear === year ? 'active' : ''}`}
+                onClick={() => setSelectedYear(year)}
+              >
+                {year}년 ({yearCounts[year] || 0})
+              </button>
+            ))}
+          </div>
+        )}
 
         {/* 선물 이력 리스트 */}
         <div className="gift-list">
-          {giftHistory.map((gift) => (
+          {loading ? (
+            <div className="loading-message">로딩 중...</div>
+          ) : error ? (
+            <div className="error-message">{error}</div>
+          ) : giftHistory.length > 0 ? (
+            giftHistory.map((gift) => (
             <div key={gift.id} className="gift-card">
               <div className="gift-image-wrapper">
                 <img src={gift.image} alt={gift.giftName} className="gift-image" />
@@ -160,7 +206,10 @@ function GiftHistoryPage() {
                 </div>
               </div>
             </div>
-          ))}
+            ))
+          ) : (
+            <div className="empty-message">등록된 선물 이력이 없습니다.</div>
+          )}
         </div>
       </div>
 

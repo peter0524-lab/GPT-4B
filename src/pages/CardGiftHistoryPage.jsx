@@ -1,6 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import BottomNavigation from '../components/BottomNavigation'
+import { giftAPI } from '../utils/api'
+import { isAuthenticated } from '../utils/auth'
 import './CardGiftHistoryPage.css'
 
 // 이미지 URL
@@ -24,120 +26,171 @@ const imgVector4 = "https://www.figma.com/api/mcp/asset/9f59a389-f83e-4f13-b23f-
 function CardGiftHistoryPage() {
   const navigate = useNavigate()
   const location = useLocation()
-  const [selectedYear, setSelectedYear] = useState('2025')
+  const [gifts, setGifts] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
   
   // location.state에서 card 정보 가져오기
   const card = location.state?.card
+  
+  // 모든 선물에서 연도 추출 함수
+  const getGiftYear = (gift) => {
+    if (gift.year) return String(gift.year)
+    if (gift.purchaseDate || gift.createdAt) {
+      const date = new Date(gift.purchaseDate || gift.createdAt)
+      return String(date.getFullYear())
+    }
+    return String(new Date().getFullYear())
+  }
+
+  // 사용 가능한 모든 연도 추출
+  const availableYears = [...new Set(gifts.map(g => getGiftYear(g)))].sort((a, b) => b.localeCompare(a))
+  
+  // 초기 선택 연도
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString())
+  
+  // gifts가 로드되면 가장 최근 연도로 자동 선택
+  useEffect(() => {
+    if (availableYears.length > 0 && !availableYears.includes(selectedYear)) {
+      setSelectedYear(availableYears[0])
+    }
+  }, [gifts.length])
   
   const handleBack = () => {
     navigate(-1) // 이전 페이지로 돌아가기
   }
 
-  // 전체 선물 이력 데이터 (실제로는 store나 API에서 가져와야 함)
-  const allGiftHistory = [
-    {
-      id: 1,
-      cardId: 'card-1', // 명함 ID
-      cardName: '안연주',
-      image: imgImageWithFallback,
-      icon: imgIcon,
-      name: '안연주',
-      position: '대리',
-      giftName: '프리미엄 와인 세트',
-      category: '주류',
-      status: '전달 완료',
-      date: '2025.10.15',
-      price: '150,000원',
-      year: '2025'
-    },
-    {
-      id: 2,
-      cardId: 'card-1',
-      cardName: '안연주',
-      image: imgImageWithFallback1,
-      icon: imgIcon,
-      name: '안연주',
-      position: '대리',
-      giftName: '명품 선물 세트',
-      category: '고급 선물',
-      status: '전달 완료',
-      date: '2025.09.20',
-      price: '300,000원',
-      year: '2025'
-    },
-    {
-      id: 3,
-      cardId: 'card-2',
-      cardName: '이부장',
-      image: imgImageWithFallback2,
-      icon: imgIcon2,
-      name: '이부장',
-      position: '부장',
-      giftName: '꽃다발 선물',
-      category: '꽃',
-      status: '전달 완료',
-      date: '2025.08.05',
-      price: '50,000원',
-      year: '2025'
-    },
-    {
-      id: 4,
-      cardId: 'card-3',
-      cardName: '최대리',
-      image: imgImageWithFallback3,
-      icon: imgIcon4,
-      name: '최대리',
-      position: '대리',
-      giftName: '초콜릿 선물 세트',
-      category: '식품',
-      status: '전달 완료',
-      date: '2025.07.12',
-      price: '80,000원',
-      year: '2025'
-    },
-    {
-      id: 5,
-      cardId: 'card-1',
-      cardName: '안연주',
-      image: imgImageWithFallback4,
-      icon: imgIcon,
-      name: '안연주',
-      position: '대리',
-      giftName: '선물 배송 상자',
-      category: '기타',
-      status: '전달 완료',
-      date: '2024.12.20',
-      price: '200,000원',
-      year: '2024'
-    },
-    {
-      id: 6,
-      cardId: 'card-2',
-      cardName: '이부장',
-      image: imgImageWithFallback,
-      icon: imgIcon2,
-      name: '이부장',
-      position: '부장',
-      giftName: '고급 와인 세트',
-      category: '주류',
-      status: '전달 완료',
-      date: '2024.11.15',
-      price: '180,000원',
-      year: '2024'
-    }
-  ]
+  // DB에서 해당 명함의 선물 이력 가져오기
+  useEffect(() => {
+    const fetchGifts = async () => {
+      if (!isAuthenticated()) {
+        setLoading(false)
+        setError('로그인이 필요합니다.')
+        return
+      }
 
-  // 특정 명함의 선물 이력만 필터링
-  const cardGiftHistory = card 
-    ? allGiftHistory.filter(gift => gift.cardId === card.id || gift.cardName === card.name)
-    : []
+      if (!card || !card.id) {
+        setLoading(false)
+        setError('명함 정보가 없습니다.')
+        return
+      }
+
+      setLoading(true)
+      setError(null)
+
+      try {
+        // card.id를 숫자로 변환 (DB의 cardId는 INT 타입)
+        // card.id가 문자열이거나 숫자일 수 있으므로 처리
+        let cardId = card.id
+        if (typeof cardId === 'string') {
+          cardId = parseInt(cardId, 10)
+          if (isNaN(cardId)) {
+            throw new Error('Invalid card ID format')
+          }
+        }
+        
+        console.log('Fetching gifts for cardId:', cardId, 'card:', card) // 디버깅용
+        console.log('Card ID type:', typeof card.id, 'value:', card.id) // 디버깅용
+        
+        // cardId를 쿼리 파라미터로 전달
+        const response = await giftAPI.getAll({ cardId: String(cardId) })
+        console.log('Gift API Response:', response.data) // 디버깅용
+        console.log('API Request params:', { cardId: String(cardId) }) // 디버깅용
+        
+        if (response.data.success) {
+          const giftsData = response.data.data || []
+          console.log('Fetched gifts:', giftsData) // 디버깅용
+          console.log('Gifts count:', giftsData.length) // 디버깅용
+          
+          // 각 선물의 cardId 확인
+          giftsData.forEach((gift, index) => {
+            console.log(`Gift ${index + 1}:`, {
+              id: gift.id,
+              cardId: gift.cardId,
+              cardName: gift.cardName,
+              giftName: gift.giftName
+            })
+          })
+          
+          setGifts(giftsData)
+        } else {
+          setError(response.data.message || '선물 이력을 불러오는데 실패했습니다.')
+        }
+      } catch (err) {
+        console.error('Failed to fetch gifts:', err)
+        console.error('Error details:', err.response?.data) // 디버깅용
+        console.error('Card object:', card) // 디버깅용
+        setError(err.response?.data?.message || err.message || '선물 이력을 불러오는 중 오류가 발생했습니다.')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchGifts()
+  }, [card])
+
+  // 날짜를 YYYY.MM.DD 형식으로 변환
+  const formatDate = (dateString) => {
+    if (!dateString) return ''
+    const date = new Date(dateString)
+    const year = date.getFullYear()
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const day = String(date.getDate()).padStart(2, '0')
+    return `${year}.${month}.${day}`
+  }
+
+  // 가격을 원화 형식으로 변환
+  const formatPrice = (price) => {
+    if (!price) return '0원'
+    return `${Number(price).toLocaleString('ko-KR')}원`
+  }
+
+  // 이미지 선택 (giftImage가 있으면 사용, 없으면 기본 이미지 순환)
+  const getGiftImage = (index, giftImage) => {
+    if (giftImage) return giftImage
+    const images = [imgImageWithFallback, imgImageWithFallback1, imgImageWithFallback2, imgImageWithFallback3, imgImageWithFallback4]
+    return images[index % images.length]
+  }
+
+  // 아이콘 선택 (명함 정보에 따라)
+  const getGiftIcon = (index) => {
+    const icons = [imgIcon, imgIcon2, imgIcon4, imgIcon5, imgIcon6]
+    return icons[index % icons.length]
+  }
 
   // 연도별로 필터링
-  const giftHistory = cardGiftHistory.filter(gift => gift.year === selectedYear)
+  const giftHistoryByYear = gifts.filter(gift => {
+    const giftYear = getGiftYear(gift)
+    return giftYear === String(selectedYear)
+  })
+  
+  // 연도별 개수 계산 (동적으로)
+  const yearCounts = availableYears.reduce((acc, year) => {
+    acc[year] = gifts.filter(g => getGiftYear(g) === year).length
+    return acc
+  }, {})
+  
+  console.log('Selected year:', selectedYear) // 디버깅용
+  console.log('Total gifts:', gifts.length) // 디버깅용
+  console.log('Available years:', availableYears) // 디버깅용
+  console.log('Gifts by year:', giftHistoryByYear.length) // 디버깅용
+  console.log('Year counts:', yearCounts) // 디버깅용
 
-  // 연도별 개수 계산
-  const count2025 = cardGiftHistory.filter(g => g.year === '2025').length
-  const count2024 = cardGiftHistory.filter(g => g.year === '2024').length
+  // UI 형식으로 변환
+  const giftHistory = giftHistoryByYear.map((gift, index) => ({
+    id: gift.id,
+    image: getGiftImage(index, gift.giftImage),
+    icon: getGiftIcon(index),
+    name: gift.cardName || card?.name || '이름 없음',
+    position: gift.cardCompany || card?.company || '',
+    giftName: gift.giftName || '선물',
+    category: gift.category || '기타',
+    status: '전달 완료',
+    date: formatDate(gift.purchaseDate || gift.createdAt),
+    price: formatPrice(gift.price)
+  }))
+
+  const cardGiftHistory = gifts
 
   return (
     <div className="card-gift-history-page">
@@ -155,26 +208,31 @@ function CardGiftHistoryPage() {
         </div>
 
         {/* 탭 리스트 */}
-        {cardGiftHistory.length > 0 && (
+        {availableYears.length > 0 && (
           <div className="tab-list">
-            <button 
-              className={`tab-button ${selectedYear === '2025' ? 'active' : ''}`}
-              onClick={() => setSelectedYear('2025')}
-            >
-              2025년 ({count2025})
-            </button>
-            <button 
-              className={`tab-button ${selectedYear === '2024' ? 'active' : ''}`}
-              onClick={() => setSelectedYear('2024')}
-            >
-              2024년 ({count2024})
-            </button>
+            {availableYears.map((year) => (
+              <button
+                key={year}
+                className={`tab-button ${selectedYear === year ? 'active' : ''}`}
+                onClick={() => setSelectedYear(year)}
+              >
+                {year}년 ({yearCounts[year] || 0})
+              </button>
+            ))}
           </div>
         )}
 
         {/* 선물 이력 리스트 */}
         <div className="gift-list">
-          {giftHistory.length > 0 ? (
+          {loading ? (
+            <div className="empty-gift-history">
+              <p>로딩 중...</p>
+            </div>
+          ) : error ? (
+            <div className="empty-gift-history">
+              <p>{error}</p>
+            </div>
+          ) : giftHistory.length > 0 ? (
             giftHistory.map((gift) => (
               <div key={gift.id} className="gift-card">
                 <div className="gift-card-content">

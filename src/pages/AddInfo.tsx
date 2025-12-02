@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import CardForm from "../components/CardForm/CardForm";
 import { BusinessCard, useCardStore } from "../store/cardStore";
+import { isAuthenticated } from "../utils/auth";
 import "./AddInfo.css";
 
 const AddInfo = () => {
@@ -14,25 +15,30 @@ const AddInfo = () => {
   const draft = (location.state as { draft?: BusinessCard } | undefined)
     ?.draft;
 
-  const handleSubmit = (card: BusinessCard) => {
-    // draft가 pendingCard인 경우 (Confirm에서 수정하기로 온 경우)
-    if (draft?.id && draft.id === pendingCard?.id) {
-      // pendingCard 업데이트
-      setPendingCard(card);
-      navigate("/confirm");
-      return;
+  const handleSubmit = async (card: BusinessCard) => {
+    try {
+      // draft가 pendingCard인 경우 (Confirm에서 수정하기로 온 경우)
+      if (draft?.id && draft.id === pendingCard?.id) {
+        // pendingCard 업데이트
+        setPendingCard(card);
+        navigate("/confirm");
+        return;
+      }
+      
+      // 기존 명함 수정인 경우 (id가 있고 이미 저장된 명함인 경우)
+      if (card.id && draft?.id && getCardById(card.id)) {
+        await updateCard(card.id, card);
+        navigate("/business-cards");
+      } else {
+        // 새 명함 추가인 경우 - DB에 저장
+        await addCard(card);
+        navigate("/business-cards");
+      }
+      setPendingCard(null);
+    } catch (error) {
+      console.error('Failed to save card:', error);
+      alert('명함 저장에 실패했습니다. 다시 시도해주세요.');
     }
-    
-    // 기존 명함 수정인 경우 (id가 있고 이미 저장된 명함인 경우)
-    if (card.id && draft?.id && getCardById(card.id)) {
-      updateCard(card.id, card);
-      navigate("/business-cards");
-    } else {
-      // 새 명함 추가인 경우
-      addCard(card);
-      navigate("/business-cards");
-    }
-    setPendingCard(null);
   };
 
   return (

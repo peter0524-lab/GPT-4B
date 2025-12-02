@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import BottomNavigation from '../components/BottomNavigation'
 import { useCardStore } from '../store/cardStore'
+import { userAPI } from '../utils/api'
+import { isAuthenticated } from '../utils/auth'
 import './LandingPage.css'
 
 const imgGpt4B1 = "https://www.figma.com/api/mcp/asset/a3f2241c-a552-4bd3-b5e3-fa9bb210880a"
@@ -58,11 +60,33 @@ function LandingPage() {
   const [userName, setUserName] = useState('')
   const cards = useCardStore((state) => state.cards)
 
+  // DB에서 로그인한 유저의 이름 가져오기
   useEffect(() => {
-    const name = localStorage.getItem('userName')
-    if (name) {
-      setUserName(name)
+    const fetchUserName = async () => {
+      if (isAuthenticated()) {
+        try {
+          const response = await userAPI.getProfile()
+          if (response.data.success && response.data.data.name) {
+            setUserName(response.data.data.name)
+          }
+        } catch (error) {
+          console.error('Failed to fetch user name:', error)
+          // 에러 발생 시 localStorage에서 가져오기 (fallback)
+          const name = localStorage.getItem('userName')
+          if (name) {
+            setUserName(name)
+          }
+        }
+      } else {
+        // 로그인하지 않은 경우 localStorage에서 가져오기
+        const name = localStorage.getItem('userName')
+        if (name) {
+          setUserName(name)
+        }
+      }
     }
+
+    fetchUserName()
   }, [])
 
   // 알림 텍스트에서 이름 추출 함수
