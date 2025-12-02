@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import BottomNavigation from '../components/BottomNavigation'
 import { useCardStore } from '../store/cardStore'
+import { userAPI } from '../utils/api'
+import { isAuthenticated } from '../utils/auth'
 import './MyDetailPage.css'
 
 // 명함 디자인 맵 (MyDetailPage용 - 유사 색상 그라데이션)
@@ -43,25 +45,69 @@ function MyDetailPage() {
   const navigate = useNavigate()
   const [myCardDesign, setMyCardDesign] = useState('design-1')
   const cards = useCardStore((state) => state.cards)
+  const [myInfo, setMyInfo] = useState({
+    name: '',
+    position: '',
+    company: '',
+    phone: '',
+    email: '',
+    memo: '',
+  })
+  const [isLoading, setIsLoading] = useState(true)
   
-  // 내 정보 상태
-  const loadMyInfo = () => {
-    const savedInfo = localStorage.getItem('my-info');
-    if (savedInfo) {
-      return JSON.parse(savedInfo);
-    }
-    // 기본값
-    return {
-      name: "박상무",
-      position: "상무",
-      company: "한국프로축구연맹 영업본부",
-      phone: "010-1234-5678",
-      email: "park.sangmu@company.com",
-      memo: "",
-    };
-  };
+  // DB에서 사용자 정보 가져오기
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      if (!isAuthenticated()) {
+        // 로그인하지 않은 경우 기본값 사용
+        const savedInfo = localStorage.getItem('my-info');
+        if (savedInfo) {
+          setMyInfo(JSON.parse(savedInfo));
+        } else {
+          setMyInfo({
+            name: "박상무",
+            position: "상무",
+            company: "한국프로축구연맹 영업본부",
+            phone: "010-1234-5678",
+            email: "park.sangmu@company.com",
+            memo: "",
+          });
+        }
+        setIsLoading(false);
+        return;
+      }
 
-  const [myInfo, setMyInfo] = useState(loadMyInfo())
+      try {
+        const response = await userAPI.getProfile();
+        if (response.data.success) {
+          const userData = response.data.data;
+          // DB에서 가져온 정보로 설정
+          const savedInfo = localStorage.getItem('my-info');
+          const localInfo = savedInfo ? JSON.parse(savedInfo) : {};
+          
+          setMyInfo({
+            name: userData.name || localInfo.name || '',
+            position: userData.position || localInfo.position || '',
+            company: userData.company || localInfo.company || '',
+            phone: userData.phone || localInfo.phone || '',
+            email: userData.email || localInfo.email || '',
+            memo: localInfo.memo || '',
+          });
+        }
+      } catch (error) {
+        console.error('Failed to fetch user info:', error);
+        // 에러 발생 시 localStorage에서 가져오기
+        const savedInfo = localStorage.getItem('my-info');
+        if (savedInfo) {
+          setMyInfo(JSON.parse(savedInfo));
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchUserInfo();
+  }, [])
 
   // localStorage에서 내 명함 디자인 불러오기
   useEffect(() => {
@@ -113,11 +159,11 @@ function MyDetailPage() {
     // 내 명함 정보를 BusinessCard 형태로 만들어서 CardCustomize로 전달
     const myCard = {
       id: 'my-card',
-      name: '박상무',
-      position: '상무',
-      company: '영업본부',
-      phone: '010-1234-5678',
-      email: 'park.sangmu@company.com',
+      name: myInfo.name || '',
+      position: myInfo.position || '',
+      company: myInfo.company || '',
+      phone: myInfo.phone || '',
+      email: myInfo.email || '',
       design: myCardDesign
     }
     navigate('/customize', { state: { card: myCard } })
@@ -141,6 +187,16 @@ function MyDetailPage() {
 
   const handleEditMyInfo = () => {
     navigate('/my/edit')
+  }
+
+  if (isLoading) {
+    return (
+      <div className="my-detail-page">
+        <div className="my-detail-background" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+          <p>로딩 중...</p>
+        </div>
+      </div>
+    );
   }
 
   return (

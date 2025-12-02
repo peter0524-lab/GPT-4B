@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import BottomNavigation from '../components/BottomNavigation'
 import { useCardStore } from '../store/cardStore'
+import { isAuthenticated } from '../utils/auth'
 import './BusinessCardWallet.css'
 
 const imgIcon = "https://www.figma.com/api/mcp/asset/d56d758a-c7b8-42c8-bd08-19709b82a5d6"
@@ -83,16 +84,31 @@ function BusinessCardWallet() {
   const [flippingCardId, setFlippingCardId] = useState(null)
   const [isGridView, setIsGridView] = useState(false)
   const cards = useCardStore((state) => state.cards)
+  const fetchCards = useCardStore((state) => state.fetchCards)
+  const isLoading = useCardStore((state) => state.isLoading)
+  
+  // 명함 목록 가져오기 (검색어가 변경될 때마다)
+  useEffect(() => {
+    if (isAuthenticated()) {
+      // 검색어가 변경되면 서버에서 검색된 결과를 가져옴
+      const timeoutId = setTimeout(() => {
+        fetchCards(searchQuery);
+      }, 300); // 300ms debounce
+      
+      return () => clearTimeout(timeoutId);
+    }
+  }, [fetchCards, searchQuery])
+  
+  // 초기 로드
+  useEffect(() => {
+    if (isAuthenticated() && cards.length === 0) {
+      fetchCards();
+    }
+  }, [fetchCards])
 
-  // 검색 필터링
-  const filteredCards = cards.filter(card => {
-    const query = searchQuery.toLowerCase()
-    return (
-      card.company?.toLowerCase().includes(query) ||
-      card.position?.toLowerCase().includes(query) ||
-      card.name?.toLowerCase().includes(query)
-    )
-  })
+  // 검색 필터링 (서버 측 검색을 사용하므로 클라이언트 측 필터링은 선택적)
+  // 서버에서 이미 검색된 결과를 받으므로 필터링 불필요
+  const filteredCards = cards
 
   const currentCard = filteredCards[currentIndex] || filteredCards[0]
 
@@ -245,7 +261,11 @@ function BusinessCardWallet() {
         </div>
 
         {/* Business Card Display */}
-        {filteredCards.length > 0 ? (
+        {isLoading ? (
+          <div className="empty-state">
+            <p className="empty-message">로딩 중...</p>
+          </div>
+        ) : filteredCards.length > 0 ? (
           <div className="card-carousel-section">
             {!isGridView ? (
               <>

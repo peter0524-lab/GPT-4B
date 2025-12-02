@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import CardConfirm from "../components/CardConfirm/CardConfirm";
 import { BusinessCard, useCardStore } from "../store/cardStore";
+import { isAuthenticated } from "../utils/auth";
 import "./Confirm.css";
 
 const Confirm = () => {
@@ -41,11 +42,17 @@ const Confirm = () => {
     );
   }
 
-  const handleConfirm = () => {
-    addCard(pendingCard);
-    const savedCardId = pendingCard.id;
-    setPendingCard(null);
-    navigate("/business-cards", { state: { openCardId: savedCardId } });
+  const handleConfirm = async () => {
+    try {
+      // DB에 저장
+      await addCard(pendingCard);
+      const savedCardId = pendingCard.id;
+      setPendingCard(null);
+      navigate("/business-cards", { state: { openCardId: savedCardId } });
+    } catch (error) {
+      console.error('Failed to save card:', error);
+      alert('명함 저장에 실패했습니다. 다시 시도해주세요.');
+    }
   };
 
   const handleEdit = () => {

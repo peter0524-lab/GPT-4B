@@ -48,9 +48,9 @@ export const authAPI = {
   login: (username, password) =>
     api.post('/auth/login', { username, password }),
   
-  register: (username, email, password, name, phone) => {
-    console.log('Register API call:', { username, email, name, phone: phone || 'not provided' });
-    return api.post('/auth/register', { username, email, password, name, phone });
+  register: (username, email, password, name, phone, position, company) => {
+    console.log('Register API call:', { username, email, name, phone: phone || 'not provided', position, company });
+    return api.post('/auth/register', { username, email, password, name, phone, position, company });
   },
   
   getMe: () =>

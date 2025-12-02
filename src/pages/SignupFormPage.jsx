@@ -90,13 +90,15 @@ function SignupFormPage() {
 
       setIsSubmitting(true)
       try {
-        // 회원가입 API 호출 (username, email, password, name, phone)
+        // 회원가입 API 호출 (username, email, password, name, phone, position, company)
         const response = await authAPI.register(
           username,
           formData.email,
           password,
           formData.name,
-          formData.phone
+          formData.phone,
+          formData.position,
+          formData.affiliation // affiliation을 company로 사용
         )
 
         if (response.data.success) {
