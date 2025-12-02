@@ -220,7 +220,7 @@ function BusinessCardWallet() {
           <div className="header-actions">
             <button 
               className="header-action-btn"
-              onClick={() => navigate('/add')}
+              onClick={() => navigate('/manual-add')}
             >
               <span className="action-icon">📝</span>
               <span className="action-label">수동 명함 등록</span>

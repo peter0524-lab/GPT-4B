@@ -17,7 +17,7 @@ const fields: Array<{
   {
     name: "memo",
     label: "메모",
-    placeholder: "만난 계기, 추억 등",
+    placeholder: "상대방의 취미나 관심사, 이벤트 등 메모하기",
     multiline: true,
   },
 ];

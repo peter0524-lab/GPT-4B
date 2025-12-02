@@ -26,7 +26,7 @@ const Home = () => {
           </button>
           <button
             type="button"
-            onClick={() => navigate("/add")}
+            onClick={() => navigate("/manual-add")}
             className="rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700"
           >
             직접 입력

@@ -26,6 +26,7 @@ import FilterPage from './pages/FilterPage'
 import OCR from './pages/OCR'
 import Confirm from './pages/Confirm'
 import AddInfo from './pages/AddInfo'
+import ManualAddCardPage from './pages/ManualAddCardPage'
 import CardDetail from './pages/CardDetail'
 import Cardbook from './pages/Cardbook'
 import CardCustomize from './pages/CardCustomize'
@@ -51,6 +52,7 @@ function App() {
         <Route path="/confirm" element={<Confirm />} />
         <Route path="/add" element={<AddInfo />} />
         <Route path="/add-info" element={<AddInfo />} />
+        <Route path="/manual-add" element={<ManualAddCardPage />} />
         <Route path="/customize" element={<CardCustomize />} />
         <Route path="/cards" element={<Cardbook />} />
         <Route path="/cards/:id" element={<CardDetail />} />

@@ -14,12 +14,6 @@ const fields: Array<{
   { name: "company", label: "회사", placeholder: "Cursor Studio", required: true },
   { name: "phone", label: "전화", placeholder: "010-1234-5678", required: true },
   { name: "email", label: "이메일", placeholder: "hello@cursor.ai", required: true },
-  {
-    name: "memo",
-    label: "메모",
-    placeholder: "만난 계기, 추억 등",
-    multiline: true,
-  },
 ];
 
 function EditMyInfoPage() {
@@ -38,7 +32,6 @@ function EditMyInfoPage() {
       company: "한국프로축구연맹 영업본부",
       phone: "010-1234-5678",
       email: "park.sangmu@company.com",
-      memo: "",
     };
   };
 
