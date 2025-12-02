@@ -86,7 +86,8 @@ const Confirm = () => {
           <p className="confirm-step">Step 2.</p>
           <h1 className="confirm-title">OCR 결과를 확인하세요</h1>
           <p className="confirm-subtitle">
-            정보가 잘 인식되었는지 확인 후, 수정이 필요하면 직접 편집하세요.
+            정보가 잘 인식되었는지 확인 후,<br />
+            수정이 필요하면 직접 편집하세요.
           </p>
         </div>
         <CardConfirm

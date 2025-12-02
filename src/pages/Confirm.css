@@ -16,7 +16,9 @@
 }
 
 .confirm-header {
-  margin-bottom: 32px;
+  margin-bottom: 16px;
+  padding-top: 8px;
+  text-align: center;
 }
 
 .confirm-step {
@@ -28,7 +30,7 @@
 }
 
 .confirm-title {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 700;
   color: #1f2937;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
@@ -37,7 +39,7 @@
 }
 
 .confirm-subtitle {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 400;
   color: #6b7280;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
