@@ -3,56 +3,13 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import BottomNavigation from '../components/BottomNavigation'
 import { useCardStore } from '../store/cardStore'
 import { fetchBusinessCardGiftHistory } from './BusinessCardGiftHistoryPage'
+import { giftAPI } from '../utils/api'
+import { isAuthenticated } from '../utils/auth'
 import './BusinessCardWallet.css'
 
 const imgIcon = "https://www.figma.com/api/mcp/asset/d56d758a-c7b8-42c8-bd08-19709b82a5d6"
 const imgGpt4B1 = "https://www.figma.com/api/mcp/asset/c2072de6-f1a8-4f36-a042-2df786f153b1"
 
-// 전체 선물 이력 데이터 (실제로는 store나 API에서 가져와야 함)
-const allGiftHistory = [
-  {
-    id: 1,
-    cardId: 'card-park-sangmu',
-    cardName: '박상무',
-    giftName: '프리미엄 와인 세트',
-    year: '2025'
-  },
-  {
-    id: 2,
-    cardId: 'card-1',
-    cardName: '안연주',
-    giftName: '명품 선물 세트',
-    year: '2025'
-  },
-  {
-    id: 3,
-    cardId: 'card-2',
-    cardName: '이부장',
-    giftName: '꽃다발 선물',
-    year: '2025'
-  },
-  {
-    id: 4,
-    cardId: 'card-3',
-    cardName: '최대리',
-    giftName: '초콜릿 선물 세트',
-    year: '2025'
-  },
-  {
-    id: 5,
-    cardId: 'card-1',
-    cardName: '안연주',
-    giftName: '선물 배송 상자',
-    year: '2024'
-  },
-  {
-    id: 6,
-    cardId: 'card-2',
-    cardName: '이부장',
-    giftName: '고급 와인 세트',
-    year: '2024'
-  }
-]
 
 // 명함 디자인 맵
 const cardDesigns = {
@@ -84,16 +41,31 @@ function BusinessCardWallet() {
   const [flippingCardId, setFlippingCardId] = useState(null)
   const [isGridView, setIsGridView] = useState(false)
   const cards = useCardStore((state) => state.cards)
+  const fetchCards = useCardStore((state) => state.fetchCards)
+  const isLoading = useCardStore((state) => state.isLoading)
+  
+  // 명함 목록 가져오기 (검색어가 변경될 때마다)
+  useEffect(() => {
+    if (isAuthenticated()) {
+      // 검색어가 변경되면 서버에서 검색된 결과를 가져옴
+      const timeoutId = setTimeout(() => {
+        fetchCards(searchQuery);
+      }, 300); // 300ms debounce
+      
+      return () => clearTimeout(timeoutId);
+    }
+  }, [fetchCards, searchQuery])
+  
+  // 초기 로드 (페이지 진입 시 한 번만)
+  useEffect(() => {
+    if (isAuthenticated()) {
+      fetchCards();
+    }
+  }, []) // 빈 배열로 한 번만 실행
 
-  // 검색 필터링
-  const filteredCards = cards.filter(card => {
-    const query = searchQuery.toLowerCase()
-    return (
-      card.company?.toLowerCase().includes(query) ||
-      card.position?.toLowerCase().includes(query) ||
-      card.name?.toLowerCase().includes(query)
-    )
-  })
+  // 검색 필터링 (서버 측 검색을 사용하므로 클라이언트 측 필터링은 선택적)
+  // 서버에서 이미 검색된 결과를 받으므로 필터링 불필요
+  const filteredCards = cards
 
   const currentCard = filteredCards[currentIndex] || filteredCards[0]
 
@@ -246,7 +218,11 @@ function BusinessCardWallet() {
         </div>
 
         {/* Business Card Display */}
-        {filteredCards.length > 0 ? (
+        {isLoading ? (
+          <div className="empty-state">
+            <p className="empty-message">로딩 중...</p>
+          </div>
+        ) : filteredCards.length > 0 ? (
           <div className="card-carousel-section">
             {!isGridView ? (
               <>
@@ -410,6 +386,8 @@ function BusinessCardWallet() {
 // Card Detail Modal Component
 function CardDetailModal({ card, onClose }) {
   const [memo, setMemo] = useState(card.memo || '')
+  const [giftHistoryCount, setGiftHistoryCount] = useState(0)
+  const [isLoadingGifts, setIsLoadingGifts] = useState(false)
   const navigate = useNavigate()
   const updateCard = useCardStore((state) => state.updateCard)
   const deleteCard = useCardStore((state) => state.deleteCard)
