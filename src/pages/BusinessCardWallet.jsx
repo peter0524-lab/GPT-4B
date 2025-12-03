@@ -667,7 +667,7 @@ function CardDetailModal({ card, onClose }) {
               </>
             )}
 
-            {/* Position/Department */}
+            {/* Gender/Position/Department */}
             <div className="modal-info-row">
               <span className="info-icon">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -677,9 +677,15 @@ function CardDetailModal({ card, onClose }) {
                 </svg>
               </span>
               <div className="info-content">
-                <span className="info-label">소속 / 직급</span>
+                <span className="info-label">성별 / 소속 / 직급</span>
                 <span className="info-value">
-                  {card.position && card.company ? `${card.company} / ${card.position}` : card.position || card.company || '-'}
+                  {(() => {
+                    const genderDisplay = card.gender === '남성' ? 'M' : card.gender === '여성' ? 'F' : '-';
+                    const parts = [genderDisplay];
+                    if (card.company) parts.push(card.company);
+                    if (card.position) parts.push(card.position);
+                    return parts.join(' / ');
+                  })()}
                 </span>
               </div>
             </div>

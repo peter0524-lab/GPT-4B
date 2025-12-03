@@ -35,6 +35,7 @@ const AddInfo = () => {
   const isEditMode = draft && !fromOCR;
 
   const [memo, setMemo] = useState(card?.memo || '');
+  const [gender, setGender] = useState(card?.gender || '');
 
   // 명함 디자인 색상 가져오기
   const cardDesign = card?.design || 'design-1';
@@ -65,9 +66,10 @@ const AddInfo = () => {
   const handleComplete = () => {
     if (!card) return;
 
-    // 메모 업데이트
+    // 메모 및 성별 업데이트
     const updatedCard: BusinessCard = {
       ...card,
+      gender: gender || undefined,
       memo: memo.trim() || undefined,
     };
 
@@ -175,17 +177,31 @@ const AddInfo = () => {
           )}
         </div>
 
+        {/* Gender Section */}
+        <div className="add-info-gender-section">
+          <label className="add-info-gender-label">성별</label>
+          <select
+            className="add-info-gender-select"
+            value={gender}
+            onChange={(e) => setGender(e.target.value)}
+          >
+            <option value="">선택 안 함</option>
+            <option value="남성">남성</option>
+            <option value="여성">여성</option>
+          </select>
+        </div>
+
         {/* Memo Section */}
         <div className="add-info-memo-section">
           <h2 className="add-info-memo-title">메모</h2>
           <textarea
             className="add-info-memo-textarea"
-            placeholder="혹시 추가로 메모하고 싶은 내용이 있나요?"
+            placeholder="추가로 저장하고 싶은 내용을 입력하세요"
             value={memo}
             onChange={(e) => setMemo(e.target.value)}
           />
           <p className="add-info-memo-example">
-            예: 박상무님과의 첫 만남, 영업부장님 소개로 만남
+            예: 12월이 생일이심, 영업부장님 소개로 만남
           </p>
         </div>
 

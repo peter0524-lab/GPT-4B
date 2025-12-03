@@ -8,12 +8,25 @@ const fields: Array<{
   placeholder: string;
   required?: boolean;
   multiline?: boolean;
+  type?: "text" | "select";
+  options?: Array<{ value: string; label: string }>;
 }> = [
   { name: "name", label: "이름", placeholder: "홍길동", required: true },
   { name: "position", label: "직함", placeholder: "Product Manager" },
   { name: "company", label: "회사", placeholder: "Cursor Studio" },
   { name: "phone", label: "전화", placeholder: "010-1234-5678" },
   { name: "email", label: "이메일", placeholder: "hello@cursor.ai" },
+  {
+    name: "gender",
+    label: "성별",
+    placeholder: "성별을 선택해주세요",
+    type: "select",
+    options: [
+      { value: "", label: "선택 안 함" },
+      { value: "남성", label: "남성" },
+      { value: "여성", label: "여성" },
+    ],
+  },
   {
     name: "memo",
     label: "메모",
@@ -54,6 +67,7 @@ const CardForm = ({
       company: formValues.company,
       phone: formValues.phone,
       email: formValues.email,
+      gender: formValues.gender,
       memo: formValues.memo,
       image: formValues.image,
     });
@@ -83,6 +97,23 @@ const CardForm = ({
                 required={field.required}
                 className="card-form-textarea"
               />
+            ) : field.type === "select" ? (
+              <select
+                value={formValues[field.name] ?? ""}
+                onChange={(event) =>
+                  setFormValues((prev) => ({
+                    ...prev,
+                    [field.name]: event.target.value,
+                  }))
+                }
+                className="card-form-select"
+              >
+                {field.options?.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
             ) : (
               <input
                 type="text"
