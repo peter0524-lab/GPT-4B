@@ -12,6 +12,15 @@ const cardGiftImage3 = "https://www.figma.com/api/mcp/asset/3c2a8783-5233-4eeb-b
 const cardGiftImage4 = "https://www.figma.com/api/mcp/asset/c80efe8f-7bb1-4967-bf18-e4af3f5139e6"
 const cardGiftImage5 = "https://www.figma.com/api/mcp/asset/e58eabb5-b484-4998-af61-7a34377ede25"
 
+// 뒤로가기 아이콘 SVG 컴포넌트 (main 디자인)
+function BackIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  )
+}
+
 function CardGiftHistoryPage() {
   const navigate = useNavigate()
   const location = useLocation()
@@ -32,7 +41,7 @@ function CardGiftHistoryPage() {
     return String(new Date().getFullYear())
   }
 
-  // 사용 가능한 모든 연도 추출
+  // 사용 가능한 모든 연도 추출 (peter - API 기반 동적 연도)
   const availableYears = [...new Set(gifts.map(g => getGiftYear(g)))].sort((a, b) => b.localeCompare(a))
 
   // 초기 선택 연도: 현재 연도
@@ -45,7 +54,7 @@ function CardGiftHistoryPage() {
     }
   }, [gifts.length]) // gifts.length를 의존성으로 사용하여 gifts가 로드될 때만 실행
 
-  // DB에서 해당 명함의 선물 이력 가져오기 (더미 데이터 없이 DB 데이터만 사용)
+  // DB에서 해당 명함의 선물 이력 가져오기 (peter - API 연동)
   useEffect(() => {
     const fetchGifts = async () => {
       if (!isAuthenticated()) {
@@ -173,27 +182,28 @@ function CardGiftHistoryPage() {
         {/* 헤더 */}
         <div className="card-gift-history-header">
           <button className="card-back-button" onClick={handleBack}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M15 18L9 12L15 6" stroke="#1f2937" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
+            <BackIcon />
           </button>
           <h1 className="card-gift-history-title">선물 이력</h1>
         </div>
 
-        {/* 탭 리스트 */}
-        <div className="tab-list">
-          <button 
-            className={`tab-button ${selectedYear === '2025' ? 'active' : ''}`}
-            onClick={() => setSelectedYear('2025')}
-          >
-            2025년 ({count2025})
-          </button>
-          <button 
-            className={`tab-button ${selectedYear === '2024' ? 'active' : ''}`}
-            onClick={() => setSelectedYear('2024')}
-          >
-            2024년 ({count2024})
-          </button>
+        {/* 탭 리스트 (peter - 동적 연도 탭) */}
+        <div className="card-tab-list">
+          {availableYears.length > 0 ? (
+            availableYears.map(year => (
+              <button 
+                key={year}
+                className={`card-tab-button ${selectedYear === year ? 'active' : ''}`}
+                onClick={() => handleYearChange(year)}
+              >
+                {year}년 ({yearCounts[year] || 0})
+              </button>
+            ))
+          ) : (
+            <button className="card-tab-button active">
+              {new Date().getFullYear()}년 (0)
+            </button>
+          )}
         </div>
 
         {/* 선물 이력 리스트 */}
@@ -202,33 +212,27 @@ function CardGiftHistoryPage() {
         ) : error ? (
           <div className="card-error">{error}</div>
         ) : giftHistory.length > 0 ? (
-          <div className="card-gift-list">
+          <div className="gift-list">
             {giftHistory.map((gift) => (
-              <div key={gift.id} className="card-gift-card">
-                <div className="card-gift-image-wrapper">
-                  <img src={gift.image} alt={gift.giftName} className="card-gift-image" />
-                </div>
-                <div className="card-gift-info">
-                  <div className="card-gift-recipient">
-                    {gift.recipient} {gift.recipientPosition}
+              <div key={gift.id} className="gift-card">
+                <div className="gift-card-content">
+                  <div className="gift-image-wrapper">
+                    <img src={gift.image} alt={gift.giftName} className="card-gift-image" />
                   </div>
                   <div className="gift-info">
                     <div className="gift-header">
-                      <p className="gift-recipient">{gift.name} {gift.position}</p>
-                      <p className="gift-name">{gift.giftName}</p>
+                      <p className="gift-recipient">{gift.recipient} {gift.recipientPosition}</p>
+                      <p className="card-gift-name">{gift.giftName}</p>
                     </div>
-                    <div className="gift-badges">
+                    <div className="card-gift-tags">
                       <span className="category-badge">{gift.category}</span>
                       <span className="status-badge">{gift.status}</span>
                     </div>
-                    <div className="gift-footer">
-                      <div className="gift-date">
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="date-icon">
-                          <path d="M12.6667 2.66667H12V2C12 1.63181 11.7015 1.33333 11.3333 1.33333C10.9651 1.33333 10.6667 1.63181 10.6667 2V2.66667H5.33333V2C5.33333 1.63181 5.03486 1.33333 4.66667 1.33333C4.29848 1.33333 4 1.63181 4 2V2.66667H3.33333C2.59695 2.66667 2 3.26362 2 4V12.6667C2 13.403 2.59695 14 3.33333 14H12.6667C13.403 14 14 13.403 14 12.6667V4C14 3.26362 13.403 2.66667 12.6667 2.66667ZM12.6667 12.6667H3.33333V6.66667H12.6667V12.6667Z" fill="#6a7282"/>
-                        </svg>
+                    <div className="card-gift-footer">
+                      <div className="card-gift-date">
                         <span>{gift.date}</span>
                       </div>
-                      <span className="gift-price">{gift.price}</span>
+                      <span className="card-gift-price">{gift.price}</span>
                     </div>
                   </div>
                 </div>

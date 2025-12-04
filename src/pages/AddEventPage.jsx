@@ -4,12 +4,53 @@ import { calendarAPI } from '../utils/api'
 import { isAuthenticated } from '../utils/auth'
 import './AddEventPage.css'
 
-// 아이콘 이미지 URL
-const imgVector = "https://www.figma.com/api/mcp/asset/db824051-d071-4c9e-8840-c8a9b8da272b"
-const imgVector1 = "https://www.figma.com/api/mcp/asset/d9e6a3bb-fb3e-42dd-b262-1e478ad0bda1"
-const imgIcon = "https://www.figma.com/api/mcp/asset/8c0e2d4e-0d4b-4f42-bb90-de66d03a6b27"
-const imgButton = "https://www.figma.com/api/mcp/asset/b1c95ac0-e7f1-4a27-91f0-452379c5df52"
-const imgBackIcon = "https://www.figma.com/api/mcp/asset/ee258417-6b3f-4f61-b06d-4c34a0ab3bbf"
+// 뒤로가기 아이콘 SVG 컴포넌트
+function BackIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  )
+}
+
+// 이전 달 화살표 아이콘 SVG 컴포넌트
+function PrevArrowIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  )
+}
+
+// 다음 달 화살표 아이콘 SVG 컴포넌트
+function NextArrowIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  )
+}
+
+// 참여자 추가 아이콘 SVG 컴포넌트
+function AddParticipantIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M16 21V19C16 17.9391 15.5786 16.9217 14.8284 16.1716C14.0783 15.4214 13.0609 15 12 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <circle cx="8.5" cy="7" r="4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M20 8V14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M23 11H17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  )
+}
+
+// 드롭다운 아이콘 SVG 컴포넌트
+function DropdownIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 6L8 10L12 6" stroke="#6a7282" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  )
+}
 
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 
                 'July', 'August', 'September', 'October', 'November', 'December']
@@ -247,7 +288,9 @@ function AddEventPage() {
       <div className="add-event-page">
       {/* 뒤로가기 버튼 */}
       <button className="back-button" onClick={handleBack}>
-        <img src={imgBackIcon} alt="뒤로" className="back-icon" />
+        <div className="back-icon">
+          <BackIcon />
+        </div>
         <span>뒤로</span>
       </button>
 
@@ -256,7 +299,7 @@ function AddEventPage() {
         <div className="calendar-header-nav">
           <button className="nav-arrow" onClick={handlePrevMonth}>
             <div className="arrow-icon">
-              <img src={imgVector1} alt="이전" className="arrow-img" />
+              <PrevArrowIcon />
             </div>
           </button>
           <p className="calendar-month">
@@ -264,7 +307,7 @@ function AddEventPage() {
           </p>
           <button className="nav-arrow" onClick={handleNextMonth}>
             <div className="arrow-icon arrow-right">
-              <img src={imgVector} alt="다음" className="arrow-img" />
+              <NextArrowIcon />
             </div>
           </button>
         </div>
@@ -306,7 +349,7 @@ function AddEventPage() {
           >
             <div className="category-dot" style={{ backgroundColor: selectedCategory.color }}></div>
             <span>{selectedCategory.label}</span>
-            <img src={imgIcon} alt="드롭다운" className="dropdown-icon" />
+            <DropdownIcon />
           </button>
           {showCategoryDropdown && (
             <div className="category-dropdown">
@@ -343,7 +386,7 @@ function AddEventPage() {
             disabled={!participantInput.trim()}
             type="button"
           >
-            <img src={imgButton} alt="참여자 추가" />
+            <AddParticipantIcon />
           </button>
         </div>
         {participants.length > 0 && (
@@ -451,7 +494,7 @@ function AddEventPage() {
             type="button"
           >
             <span>{formData.notification || '없음'}</span>
-            <img src={imgIcon} alt="드롭다운" className="dropdown-icon" />
+            <DropdownIcon />
           </button>
           {showNotificationDropdown && (
             <div className="notification-dropdown">
@@ -487,5 +530,3 @@ function AddEventPage() {
 }
 
 export default AddEventPage
-
-

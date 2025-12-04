@@ -9,6 +9,7 @@ export type BusinessCard = {
   company?: string;
   phone?: string;
   email?: string;
+  gender?: string;
   memo?: string;
   image?: string;
   design?: string;

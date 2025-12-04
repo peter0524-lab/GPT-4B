@@ -6,8 +6,6 @@ import { giftAPI } from '../utils/api'
 import { isAuthenticated } from '../utils/auth'
 import './BusinessCardWallet.css'
 
-const imgGpt4B1 = "https://www.figma.com/api/mcp/asset/c2072de6-f1a8-4f36-a042-2df786f153b1"
-
 // 돋보기 아이콘 SVG 컴포넌트
 function SearchIcon() {
   return (
@@ -632,7 +630,7 @@ function CardDetailModal({ card, onClose }) {
             <div className="gift-card-content-wrapper">
               <div className="gift-card-info">
                 <div className="gift-card-label-row">
-                  <img src={imgGpt4B1} alt="GPT-4b Logo" className="gift-card-logo" />
+                  <img src="/assets/gpt_4b_logo_blueberry.png" alt="GPT-4b Logo" className="gift-card-logo" />
                   <div className="gift-card-label-wrapper">
                     <span className="gift-card-label">선물 추천</span>
                     <span className="gift-card-label">받으러가기</span>
@@ -708,7 +706,7 @@ function CardDetailModal({ card, onClose }) {
               </>
             )}
 
-            {/* Position/Department */}
+            {/* Gender/Position/Department */}
             <div className="modal-info-row">
               <span className="info-icon">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -718,9 +716,15 @@ function CardDetailModal({ card, onClose }) {
                 </svg>
               </span>
               <div className="info-content">
-                <span className="info-label">소속 / 직급</span>
+                <span className="info-label">성별 / 소속 / 직급</span>
                 <span className="info-value">
-                  {card.position && card.company ? `${card.company} / ${card.position}` : card.position || card.company || '-'}
+                  {(() => {
+                    const genderDisplay = card.gender === '남성' ? 'M' : card.gender === '여성' ? 'F' : '-';
+                    const parts = [genderDisplay];
+                    if (card.company) parts.push(card.company);
+                    if (card.position) parts.push(card.position);
+                    return parts.join(' / ');
+                  })()}
                 </span>
               </div>
             </div>
