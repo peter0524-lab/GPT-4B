@@ -38,7 +38,7 @@ function CameraIcon() {
   )
 }
 
-// 전체 선물 이력 데이터 (실제로는 store나 API에서 가져와야 함)
+// 전체 선물 이력 데이터 (실제로는 store나 API에서 가져와야 함)..
 const allGiftHistory = [
   {
     id: 1,
