@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { chatAPI } from '../utils/api'
 import './GiftRecommendResultPage.css'
 import { giftAPI, chatAPI } from '../utils/api.js'
 
