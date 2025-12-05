@@ -211,6 +211,19 @@ function EventDetailPage() {
 
   }
 
+  // 로컬 시간을 MySQL DATETIME 형식으로 변환하는 함수 (YYYY-MM-DD HH:mm:ss)
+  const toMySQLDateTime = (date) => {
+    if (!date) return null
+    const year = date.getFullYear()
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const day = String(date.getDate()).padStart(2, '0')
+    const hours = String(date.getHours()).padStart(2, '0')
+    const minutes = String(date.getMinutes()).padStart(2, '0')
+    const seconds = String(date.getSeconds()).padStart(2, '0')
+    
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
+  }
+
   const handleSave = async () => {
 
     try {
@@ -226,8 +239,8 @@ function EventDetailPage() {
       if (isAuthenticated() && event && event.id) {
         const eventData = {
           title: formData.title,
-          startDate: startDate.toISOString(),
-          endDate: endDate.toISOString(),
+          startDate: toMySQLDateTime(startDate),
+          endDate: toMySQLDateTime(endDate),
           category: event.category || '미팅',
           color: event.color || '#4A90E2',
           description: event.description || event.category || '미팅',
@@ -256,8 +269,14 @@ function EventDetailPage() {
           setIsEditing(false)
           setShowNotificationDropdown(false)
           
-          // 성공 메시지 (선택사항)
-          // alert('일정이 저장되었습니다.')
+          // 업데이트된 이벤트의 날짜로 캘린더 이동
+          const updatedStartDate = new Date(response.data.data.startDate)
+          navigate('/calendar', { 
+            state: { 
+              selectedDate: updatedStartDate,
+              refreshEvents: true
+            } 
+          })
           return
         } else {
           throw new Error('일정 업데이트에 실패했습니다.')
@@ -287,8 +306,8 @@ function EventDetailPage() {
           participant: formData.participant,
           memo: formData.memo,
           notification: formData.notification,
-          startDate: startDate.toISOString(),
-          endDate: endDate.toISOString()
+          startDate: toMySQLDateTime(startDate),
+          endDate: toMySQLDateTime(endDate)
         }
         localStorage.setItem('calendarEvents', JSON.stringify(storedEvents))
       }
