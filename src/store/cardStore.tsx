@@ -1,5 +1,7 @@
 import { create } from "zustand";
+// @ts-ignore - JavaScript module without type definitions
 import { cardAPI } from "../utils/api";
+// @ts-ignore - JavaScript module without type definitions
 import { isAuthenticated } from "../utils/auth";
 
 export type BusinessCard = {
@@ -80,6 +82,7 @@ export const useCardStore = create<CardState>((set, get) => ({
           company: card.company,
           phone: card.phone,
           email: card.email,
+          gender: card.gender,
           memo: card.memo,
           image: card.image,
           design: card.design || 'design-1',
@@ -106,6 +109,7 @@ export const useCardStore = create<CardState>((set, get) => ({
           company: card.company && card.company.trim() !== '' ? card.company : undefined,
           phone: card.phone && card.phone.trim() !== '' ? card.phone : undefined,
           email: card.email && card.email.trim() !== '' ? card.email : undefined,
+          gender: card.gender && card.gender.trim() !== '' ? card.gender : undefined,
           memo: card.memo && card.memo.trim() !== '' ? card.memo : undefined,
           image: card.image && card.image.trim() !== '' ? card.image : undefined,
           design: card.design || 'design-1',
@@ -129,6 +133,7 @@ export const useCardStore = create<CardState>((set, get) => ({
             company: newCard.company,
             phone: newCard.phone,
             email: newCard.email,
+            gender: newCard.gender,
             memo: newCard.memo,
             image: newCard.image,
             design: newCard.design || 'design-1',
@@ -164,7 +169,21 @@ export const useCardStore = create<CardState>((set, get) => ({
   updateCard: async (id, updates) => {
     if (isAuthenticated()) {
       try {
-        const response = await cardAPI.update(id, updates);
+        // 빈 문자열을 null로 변환하여 DB에 null로 저장되도록 함 (성별은 항상 포함)
+        const cleanUpdates: any = {
+          name: updates.name,
+          position: updates.position && String(updates.position).trim() !== '' ? String(updates.position).trim() : null,
+          company: updates.company && String(updates.company).trim() !== '' ? String(updates.company).trim() : null,
+          phone: updates.phone && String(updates.phone).trim() !== '' ? String(updates.phone).trim() : null,
+          email: updates.email && String(updates.email).trim() !== '' ? String(updates.email).trim() : null,
+          gender: updates.gender !== undefined ? (String(updates.gender).trim() !== '' ? String(updates.gender).trim() : null) : undefined, // null로 명시적으로 설정하여 필드 업데이트
+          memo: updates.memo && String(updates.memo).trim() !== '' ? String(updates.memo).trim() : null,
+          image: updates.image && String(updates.image).trim() !== '' ? String(updates.image).trim() : null,
+          design: updates.design || 'design-1',
+          isFavorite: updates.isFavorite || false,
+        };
+        
+        const response = await cardAPI.update(id, cleanUpdates);
         if (response.data.success) {
           const updatedCard = response.data.data;
           const formattedCard = {
@@ -174,6 +193,7 @@ export const useCardStore = create<CardState>((set, get) => ({
             company: updatedCard.company,
             phone: updatedCard.phone,
             email: updatedCard.email,
+            gender: updatedCard.gender,
             memo: updatedCard.memo,
             image: updatedCard.image,
             design: updatedCard.design || 'design-1',

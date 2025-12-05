@@ -1,3 +1,9 @@
+/* CSS 변수 정의 - 입력 필드 배경색 통일 */
+:root {
+  --input-bg-color: #f3f3f5;
+  --input-bg-hover: #e5e5e7;
+}
+
 .calendar-page {
   width: 100%;
   max-width: 393px;
@@ -482,7 +488,7 @@
 .event-title-input {
   flex: 1;
   height: 36px;
-  background: #f3f3f5;
+  background: var(--input-bg-color);
   border: none;
   border-bottom: 0.667px solid rgba(0, 0, 0, 0);
   border-radius: 0;
@@ -577,6 +583,8 @@
   margin-bottom: 20px;
   width: 100%;
   box-sizing: border-box;
+  padding: 0;
+  margin-left: 0;
 }
 
 .participant-label {
@@ -593,7 +601,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  background: #cdcecf;
+  background: var(--input-bg-color);
   border-radius: 10px;
   padding: 12px 16px;
   width: 100%;
@@ -884,7 +892,7 @@
   font-size: 14px;
   font-weight: 500;
   color: #0a0a0a;
-  margin-bottom: 8px;
+  margin-bottom: 0;
   display: block;
   text-align: left;
 }
@@ -894,39 +902,44 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 8px;
-  margin-top: 20px;
   margin-bottom: 20px;
   position: relative;
   width: 100%;
   box-sizing: border-box;
+  padding: 0;
+  margin-left: 0;
 }
 
 .notification-edit-wrapper {
   position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .notification-button {
   width: 100%;
-  background: #eeeeee;
+  background: var(--input-bg-color);
   border: none;
-  border-radius: 8.687px;
+  border-radius: 10px;
   height: 45px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 12px;
+  padding: 0 16px;
   cursor: pointer;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 12.161px;
+  font-size: 16px;
   font-weight: 400;
-  color: #364153;
-  line-height: 17.373px;
-  letter-spacing: -0.1306px;
+  color: #717182;
+  line-height: 20px;
+  letter-spacing: -0.3125px;
   box-sizing: border-box;
+  margin: 0;
 }
 
 .notification-button:hover {
-  background: #e5e5e5;
+  background: var(--input-bg-hover);
 }
 
 .notification-dropdown {
@@ -994,7 +1007,7 @@
   font-size: 14px;
   font-weight: 500;
   color: #0a0a0a;
-  margin-bottom: 8px;
+  margin-bottom: 0;
   display: block;
   text-align: left;
 }
@@ -1007,15 +1020,17 @@
   margin-bottom: 20px;
   width: 100%;
   box-sizing: border-box;
+  padding: 0;
+  margin-left: 0;
 }
 
 .memo-input {
   width: 100%;
   min-height: 110px;
-  padding: 12px;
-  background: #717182;
+  padding: 12px 16px;
+  background: var(--input-bg-color);
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
   font-size: 16px;
   font-weight: 400;
@@ -1023,6 +1038,8 @@
   letter-spacing: -0.3125px;
   outline: none;
   resize: vertical;
+  box-sizing: border-box;
+  margin: 0;
 }
 
 .memo-input::placeholder {

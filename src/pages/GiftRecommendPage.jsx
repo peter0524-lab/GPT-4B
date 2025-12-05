@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
+import { giftAPI } from '../utils/api'
 import './GiftRecommendPage.css'
 
 // 명함 디자인 맵
@@ -94,20 +95,49 @@ function GiftRecommendPage() {
     }
   }
 
-  const handleGetRecommendation = () => {
+  const handleGetRecommendation = async () => {
     setIsProcessing(true)
-    // 2초 후 선물 추천 결과 페이지로 이동
-    setTimeout(() => {
-      navigate('/gift-recommend/result', { 
-        state: { 
-          card, 
-          additionalInfo,
-          memos,
-          minPrice: minPrice ? normalizePrice(minPrice) : undefined,
-          maxPrice: maxPrice ? normalizePrice(maxPrice) : undefined
-        } 
-      })
-    }, 2000)
+    
+    try {
+      // API 명세서에 맞게 요청 데이터 구성
+      const requestData = {
+        cardId: card?.id,
+        additionalInfo: additionalInfo || undefined,
+        gender: card?.gender || undefined,
+        memos: memos.length > 0 ? memos : undefined,
+        minPrice: minPrice ? normalizePrice(minPrice) : undefined,
+        maxPrice: maxPrice ? normalizePrice(maxPrice) : undefined,
+        includeNaver: true
+      }
+
+      console.log('Gift Recommend Request:', requestData)
+      
+      const response = await giftAPI.recommend(requestData)
+      
+      console.log('Gift Recommend Response:', response.data)
+
+      if (response.data && response.data.success) {
+        // API 응답 데이터와 함께 결과 페이지로 이동
+        navigate('/gift-recommend/result', { 
+          state: { 
+            card,
+            additionalInfo,
+            memos,
+            // API 응답 데이터
+            recommendedGifts: response.data.data?.recommendedGifts || [],
+            rationaleCards: response.data.data?.rationaleCards || [],
+            personaString: response.data.data?.personaString || ''
+          } 
+        })
+      } else {
+        throw new Error(response.data?.message || '선물 추천에 실패했습니다.')
+      }
+    } catch (error) {
+      console.error('Gift recommendation error:', error)
+      const errorMessage = error.response?.data?.message || error.message || '선물 추천에 실패했습니다.'
+      alert(errorMessage)
+      setIsProcessing(false)
+    }
   }
 
   if (isLoading) {

@@ -77,8 +77,17 @@ function CalendarPage() {
   const location = useLocation()
   const categoryDropdownRef = useRef(null)
   const isAddEventPage = location.pathname === '/calendar/add'
-  const [currentDate, setCurrentDate] = useState(new Date())
-  const [selectedDate, setSelectedDate] = useState(new Date())
+  
+  // location.state에서 전달된 날짜가 있으면 사용, 없으면 오늘 날짜
+  const initialSelectedDate = location.state?.selectedDate 
+    ? new Date(location.state.selectedDate) 
+    : new Date()
+  const initialCurrentDate = location.state?.selectedDate 
+    ? new Date(location.state.selectedDate) 
+    : new Date()
+  
+  const [currentDate, setCurrentDate] = useState(initialCurrentDate)
+  const [selectedDate, setSelectedDate] = useState(initialSelectedDate)
   const [events, setEvents] = useState([]) // 구글 캘린더 이벤트 배열
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
@@ -221,6 +230,32 @@ function CalendarPage() {
       setEvents(transformedEvents)
     })
   }, [currentDate])
+
+  // location.state에서 refreshEvents가 true이면 이벤트 새로고침
+  useEffect(() => {
+    if (location.state?.refreshEvents && isAuthenticated()) {
+      const year = currentDate.getFullYear()
+      const month = currentDate.getMonth()
+      const startDate = new Date(year, month, 1)
+      const endDate = new Date(year, month + 1, 0)
+      
+      fetchCalendarEvents(startDate, endDate).then(dbEvents => {
+        const uniqueEvents = dbEvents.reduce((acc, event) => {
+          const existingIndex = acc.findIndex(e => e.id === event.id)
+          if (existingIndex === -1) {
+            acc.push(event)
+          }
+          return acc
+        }, [])
+        
+        const transformedEvents = uniqueEvents.map(transformDBEvent)
+        setEvents(transformedEvents)
+      })
+      
+      // state 초기화
+      navigate(location.pathname, { replace: true, state: {} })
+    }
+  }, [location.state?.refreshEvents])
 
   const getDaysInMonth = (date) => {
     const year = date.getFullYear()
@@ -377,6 +412,19 @@ function CalendarPage() {
     setShowCategoryDropdown(false)
   }
 
+  // 로컬 시간을 MySQL DATETIME 형식으로 변환하는 함수 (YYYY-MM-DD HH:mm:ss)
+  const toMySQLDateTime = (date) => {
+    if (!date) return null
+    const year = date.getFullYear()
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const day = String(date.getDate()).padStart(2, '0')
+    const hours = String(date.getHours()).padStart(2, '0')
+    const minutes = String(date.getMinutes()).padStart(2, '0')
+    const seconds = String(date.getSeconds()).padStart(2, '0')
+    
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
+  }
+
   const handleSave = async () => {
     if (isSaving) {
       return // 이미 저장 중이면 중복 호출 방지
@@ -401,20 +449,24 @@ function CalendarPage() {
         modalSelectedDate.getMonth(),
         modalSelectedDate.getDate(),
         formData.startTime.hour,
-        formData.startTime.minute
+        formData.startTime.minute,
+        0,
+        0
       )
       const endDate = new Date(
         modalSelectedDate.getFullYear(),
         modalSelectedDate.getMonth(),
         modalSelectedDate.getDate(),
         formData.endTime.hour,
-        formData.endTime.minute
+        formData.endTime.minute,
+        0,
+        0
       )
 
       const eventData = {
         title: formData.title,
-        startDate: startDate.toISOString(),
-        endDate: endDate.toISOString(),
+        startDate: toMySQLDateTime(startDate),
+        endDate: toMySQLDateTime(endDate),
         category: selectedCategory.id,
         color: selectedCategory.color,
         description: selectedCategory.id,

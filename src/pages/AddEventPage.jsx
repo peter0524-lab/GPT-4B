@@ -195,6 +195,19 @@ function AddEventPage() {
     }
   }
 
+  // 로컬 시간을 MySQL DATETIME 형식으로 변환하는 함수 (YYYY-MM-DD HH:mm:ss)
+  const toMySQLDateTime = (date) => {
+    if (!date) return null
+    const year = date.getFullYear()
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const day = String(date.getDate()).padStart(2, '0')
+    const hours = String(date.getHours()).padStart(2, '0')
+    const minutes = String(date.getMinutes()).padStart(2, '0')
+    const seconds = String(date.getSeconds()).padStart(2, '0')
+    
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
+  }
+
   const handleSave = async () => {
     if (isSaving) {
       return // 이미 저장 중이면 중복 호출 방지
@@ -218,20 +231,24 @@ function AddEventPage() {
         selectedDate.getMonth(),
         selectedDate.getDate(),
         formData.startTime.hour,
-        formData.startTime.minute
+        formData.startTime.minute,
+        0,
+        0
       )
       const endDate = new Date(
         selectedDate.getFullYear(),
         selectedDate.getMonth(),
         selectedDate.getDate(),
         formData.endTime.hour,
-        formData.endTime.minute
+        formData.endTime.minute,
+        0,
+        0
       )
 
       const eventData = {
         title: formData.title,
-        startDate: startDate.toISOString(),
-        endDate: endDate.toISOString(),
+        startDate: toMySQLDateTime(startDate),
+        endDate: toMySQLDateTime(endDate),
         category: selectedCategory.id,
         color: selectedCategory.color,
         participants: participants,
