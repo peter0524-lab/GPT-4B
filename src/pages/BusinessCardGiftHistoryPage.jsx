@@ -1,22 +1,64 @@
 import { useState, useEffect } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation, useSearchParams } from 'react-router-dom'
 import BottomNavigation from '../components/BottomNavigation'
-import { giftAPI } from '../utils/api'
+import { giftAPI, cardAPI } from '../utils/api'
 import { isAuthenticated } from '../utils/auth'
 import './BusinessCardGiftHistoryPage.css'
 
 // BusinessCardGiftHistoryPage 전용 이미지 URL (완전히 독립적)
 const businessCardGiftImage1 = "https://www.figma.com/api/mcp/asset/22a17804-a225-448c-ad64-50983c1fa891"
+const businessCardGiftImage2 = "https://www.figma.com/api/mcp/asset/3479ec16-6041-4bb0-be11-8808d8df88df"
+const businessCardGiftImage3 = "https://www.figma.com/api/mcp/asset/3c2a8783-5233-4eeb-b511-684069144ba3"
+const businessCardGiftImage4 = "https://www.figma.com/api/mcp/asset/c80efe8f-7bb1-4967-bf18-e4af3f5139e6"
+const businessCardGiftImage5 = "https://www.figma.com/api/mcp/asset/e58eabb5-b484-4998-af61-7a34377ede25"
 
 function BusinessCardGiftHistoryPage() {
   const navigate = useNavigate()
   const location = useLocation()
+  const [searchParams] = useSearchParams()
   const [gifts, setGifts] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [card, setCard] = useState(null)
   
-  // location.state에서 card 정보 가져오기
-  const card = location.state?.card
+  // location.state에서 card 정보 가져오기 (우선순위 1)
+  // URL 쿼리 파라미터에서 cardId 가져오기 (우선순위 2)
+  const stateCard = location.state?.card
+  const cardIdFromUrl = searchParams.get('cardId')
+
+  // card 정보 로드 (state에서 가져오거나 URL 파라미터로부터 API 호출)
+  useEffect(() => {
+    const loadCard = async () => {
+      // state에서 card 정보가 있으면 사용
+      if (stateCard) {
+        setCard(stateCard)
+        return
+      }
+
+      // URL 파라미터에서 cardId가 있으면 API로 가져오기
+      if (cardIdFromUrl) {
+        try {
+          const response = await cardAPI.getById(cardIdFromUrl)
+          if (response.data && response.data.success) {
+            setCard(response.data.data)
+          } else {
+            setError('명함을 찾을 수 없습니다.')
+            setLoading(false)
+          }
+        } catch (err) {
+          console.error('[BusinessCardGiftHistoryPage] Failed to fetch card:', err)
+          setError('명함 정보를 불러오는데 실패했습니다.')
+          setLoading(false)
+        }
+      } else {
+        // card 정보가 없으면 에러 표시
+        setError('명함 정보가 없습니다.')
+        setLoading(false)
+      }
+    }
+
+    loadCard()
+  }, [stateCard, cardIdFromUrl])
 
   // 모든 선물에서 연도 추출 함수
   const getGiftYear = (gift) => {
@@ -52,6 +94,10 @@ function BusinessCardGiftHistoryPage() {
       }
 
       if (!card || !card.id) {
+        // card가 아직 로드 중이면 기다림
+        if (cardIdFromUrl || stateCard) {
+          return
+        }
         setGifts([])
         setLoading(false)
         setError('명함 정보가 없습니다.')
@@ -105,7 +151,7 @@ function BusinessCardGiftHistoryPage() {
     }
 
     fetchGifts()
-  }, [card])
+  }, [card, cardIdFromUrl, stateCard])
 
   // 날짜를 YYYY.MM.DD 형식으로 변환
   const formatDate = (dateString) => {
@@ -150,7 +196,7 @@ function BusinessCardGiftHistoryPage() {
     recipientPosition: card?.position || '',
     giftName: gift.giftName || '',
     category: gift.category || '',
-    status: gift.status || '',
+    status: '전달 완료',
     date: formatDate(gift.purchaseDate || gift.createdAt),
     price: formatPrice(gift.price)
   }))
