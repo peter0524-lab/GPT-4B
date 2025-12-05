@@ -33,6 +33,21 @@ api.interceptors.response.use(
     return response;
   },
   (error) => {
+    // JSON 파싱 오류 처리
+    if (error.message && error.message.includes('JSON')) {
+      console.error('JSON parsing error:', error);
+      return Promise.reject({
+        ...error,
+        response: {
+          ...error.response,
+          data: {
+            success: false,
+            message: '서버 응답을 처리하는 중 오류가 발생했습니다.',
+          },
+        },
+      });
+    }
+
     if (error.response?.status === 401) {
       // 인증 실패 시 토큰 제거 및 로그인 페이지로 이동
       localStorage.removeItem("token");

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { chatAPI } from '../utils/api'
 import './LLMPage.css'
 
 // LLM 아이콘 이미지 경로
@@ -13,7 +14,9 @@ function LLMPage() {
   const [messages, setMessages] = useState([])
   const [showTutorial, setShowTutorial] = useState(false)
   const [showLLMModal, setShowLLMModal] = useState(false)
-  const [selectedLLM, setSelectedLLM] = useState(null)
+  const [selectedLLM, setSelectedLLM] = useState('gpt')
+  const [chatId, setChatId] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
   const plusButtonRef = useRef(null)
   const messagesEndRef = useRef(null)
 
@@ -39,20 +42,149 @@ function LLMPage() {
     navigate(-1)
   }
 
-  const handleSendMessage = () => {
-    if (message.trim()) {
-      // 사용자 메시지 추가
-      setMessages([...messages, { type: 'user', text: message.trim() }])
+  const handleSendMessage = async () => {
+    if (message.trim() && !isLoading) {
+      const userMessage = message.trim()
       setMessage('')
+      setIsLoading(true)
       
-      // TODO: AI 응답 받기 (실제로는 API 호출)
-      // 임시로 AI 응답 추가
-      setTimeout(() => {
+      // 사용자 메시지 추가
+      setMessages(prev => [...prev, { type: 'user', text: userMessage }])
+      
+      try {
+        // API 호출
+        const response = await chatAPI.sendMessage(
+          userMessage,
+          selectedLLM || 'gpt',
+          chatId
+        )
+        
+        console.log('Chat API Response:', response.data)
+        console.log('Full response:', JSON.stringify(response.data, null, 2))
+        
+        if (response.data && response.data.success) {
+          const chat = response.data.data
+          
+          console.log('Chat object:', chat)
+          console.log('Chat messages:', chat?.messages)
+          console.log('Messages type:', typeof chat?.messages)
+          console.log('Is array:', Array.isArray(chat?.messages))
+          
+          // chatId 저장 (새 채팅인 경우)
+          if (!chatId && chat && chat.id) {
+            setChatId(chat.id)
+          }
+          
+          // 마지막 assistant 메시지 가져오기
+          if (chat && chat.messages) {
+            // messages가 문자열인 경우 파싱
+            let messages = chat.messages
+            if (typeof messages === 'string') {
+              try {
+                messages = JSON.parse(messages)
+              } catch (parseError) {
+                console.error('Failed to parse messages:', parseError)
+                throw new Error('메시지 데이터를 파싱할 수 없습니다.')
+              }
+            }
+            
+            if (Array.isArray(messages)) {
+              console.log('Messages array length:', messages.length)
+              console.log('All messages:', messages)
+              
+              const assistantMessages = messages.filter(msg => msg && msg.role === 'assistant')
+              console.log('Assistant messages:', assistantMessages)
+              
+              if (assistantMessages.length > 0) {
+                const lastAssistantMessage = assistantMessages[assistantMessages.length - 1]
+                console.log('Last assistant message:', lastAssistantMessage)
+                
+                setMessages(prev => [...prev, { 
+                  type: 'ai', 
+                  text: lastAssistantMessage.content || '응답을 받지 못했습니다.' 
+                }])
+              } else {
+                // assistant 메시지가 없으면 모든 메시지를 확인
+                console.warn('No assistant messages found. All messages:', messages)
+                console.warn('Message roles:', messages.map(m => m?.role))
+                console.warn('Full chat object:', chat)
+                
+                // 사용자에게 에러 메시지 표시하되, 실제로 받은 데이터도 표시
+                const errorMsg = messages.length > 0 
+                  ? `AI 응답을 받지 못했습니다. (받은 메시지 수: ${messages.length})`
+                  : 'AI 응답을 받지 못했습니다. 잠시 후 다시 시도해주세요.'
+                
+                setMessages(prev => [...prev, { 
+                  type: 'ai', 
+                  text: errorMsg 
+                }])
+                return // 에러를 throw하지 않고 메시지만 표시
+              }
+            } else {
+              console.error('Messages is not an array:', messages)
+              console.error('Messages type:', typeof messages)
+              console.error('Messages value:', messages)
+              setMessages(prev => [...prev, { 
+                type: 'ai', 
+                text: '서버 응답 형식이 올바르지 않습니다. 잠시 후 다시 시도해주세요.' 
+              }])
+              return
+            }
+          } else {
+            console.error('Chat or messages missing:', { chat, hasMessages: !!chat?.messages })
+            console.error('Full response data:', response.data)
+            setMessages(prev => [...prev, { 
+              type: 'ai', 
+              text: '채팅 데이터를 받지 못했습니다. 잠시 후 다시 시도해주세요.' 
+            }])
+            return
+          }
+        } else {
+          throw new Error(response.data?.message || '응답을 받지 못했습니다')
+        }
+      } catch (error) {
+        console.error('Chat API Error:', error)
+        console.error('Error details:', {
+          message: error.message,
+          response: error.response?.data,
+          status: error.response?.status,
+          responseText: error.response?.data ? JSON.stringify(error.response.data, null, 2) : 'No response data',
+          fullError: error
+        })
+        
+        // response.data의 전체 내용 출력
+        if (error.response?.data) {
+          console.error('Response data:', error.response.data)
+        }
+        
+        let errorMessage = '죄송합니다. 오류가 발생했습니다. 다시 시도해주세요.'
+        
+        // JSON 파싱 오류인 경우
+        if (error.message && error.message.includes('JSON')) {
+          errorMessage = '서버 응답을 처리하는 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.'
+        } else if (error.response?.data?.message) {
+          errorMessage = error.response.data.message
+        } else if (error.response?.data) {
+          // 응답 데이터가 있지만 형식이 다른 경우
+          try {
+            const data = typeof error.response.data === 'string' 
+              ? JSON.parse(error.response.data) 
+              : error.response.data
+            errorMessage = data.message || errorMessage
+          } catch (parseError) {
+            errorMessage = error.response.data || errorMessage
+          }
+        } else if (error.message) {
+          errorMessage = error.message
+        }
+        
         setMessages(prev => [...prev, { 
           type: 'ai', 
-          text: '안녕하세요! GPT-4b입니다. 무엇을 도와드릴까요?' 
+          text: errorMessage 
         }])
-      }, 500)
+      } finally {
+        setIsLoading(false)
+      }
     }
   }
 
@@ -68,6 +200,9 @@ function LLMPage() {
   const handleLLMSelect = (llm) => {
     setSelectedLLM(llm)
     setShowLLMModal(false)
+    // LLM을 변경하면 새로운 채팅 시작
+    setChatId(null)
+    setMessages([])
     console.log('Selected LLM:', llm)
   }
 
@@ -120,6 +255,11 @@ function LLMPage() {
                   <p>{msg.text}</p>
                 </div>
               ))}
+              {isLoading && (
+                <div className="message-bubble ai-message">
+                  <p>답변을 생성하고 있습니다...</p>
+                </div>
+              )}
               <div ref={messagesEndRef} />
             </div>
           )}
@@ -147,7 +287,7 @@ function LLMPage() {
           <button 
             className="send-button"
             onClick={handleSendMessage}
-            disabled={!message.trim()}
+            disabled={!message.trim() || isLoading}
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>

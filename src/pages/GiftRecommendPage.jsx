@@ -19,6 +19,8 @@ function GiftRecommendPage() {
   const [isLoading, setIsLoading] = useState(true)
   const [isProcessing, setIsProcessing] = useState(false)
   const [additionalInfo, setAdditionalInfo] = useState('')
+  const [minPrice, setMinPrice] = useState('')
+  const [maxPrice, setMaxPrice] = useState('')
   
   // 메모를 배열로 변환 (실제로는 별도 store나 API에서 가져와야 함)
   const initialMemos = card?.memo 
@@ -53,6 +55,45 @@ function GiftRecommendPage() {
     setMemos(memos.filter((_, i) => i !== index))
   }
 
+  // 가격 범위 값 정규화 (1 미만은 1로, 20 이상은 20으로)
+  const normalizePrice = (value) => {
+    const numValue = parseFloat(value)
+    if (isNaN(numValue)) return ''
+    if (numValue < 1) return 1
+    if (numValue > 20) return 20
+    return Math.round(numValue)
+  }
+
+  const handleMinPriceChange = (e) => {
+    const value = e.target.value
+    // 숫자만 입력 허용
+    if (value === '' || /^\d*\.?\d*$/.test(value)) {
+      setMinPrice(value)
+    }
+  }
+
+  const handleMaxPriceChange = (e) => {
+    const value = e.target.value
+    // 숫자만 입력 허용
+    if (value === '' || /^\d*\.?\d*$/.test(value)) {
+      setMaxPrice(value)
+    }
+  }
+
+  const handleMinPriceBlur = () => {
+    if (minPrice !== '') {
+      const normalized = normalizePrice(minPrice)
+      setMinPrice(normalized.toString())
+    }
+  }
+
+  const handleMaxPriceBlur = () => {
+    if (maxPrice !== '') {
+      const normalized = normalizePrice(maxPrice)
+      setMaxPrice(normalized.toString())
+    }
+  }
+
   const handleGetRecommendation = () => {
     setIsProcessing(true)
     // 2초 후 선물 추천 결과 페이지로 이동
@@ -61,7 +102,9 @@ function GiftRecommendPage() {
         state: { 
           card, 
           additionalInfo,
-          memos 
+          memos,
+          minPrice: minPrice ? normalizePrice(minPrice) : undefined,
+          maxPrice: maxPrice ? normalizePrice(maxPrice) : undefined
         } 
       })
     }, 2000)
@@ -156,6 +199,47 @@ function GiftRecommendPage() {
             value={additionalInfo}
             onChange={(e) => setAdditionalInfo(e.target.value)}
           />
+        </div>
+
+        {/* Price Range Section */}
+        <div className="price-range-section">
+          <h2 className="section-title">선물 가격 범위</h2>
+          <div className="price-range-container">
+            <div className="price-input-group">
+              <label className="price-label">최소 가격</label>
+              <div className="price-input-wrapper">
+                <input
+                  type="text"
+                  className="price-input"
+                  placeholder="1"
+                  value={minPrice}
+                  onChange={handleMinPriceChange}
+                  onBlur={handleMinPriceBlur}
+                  min="1"
+                  max="20"
+                />
+                <span className="price-unit">만원</span>
+              </div>
+            </div>
+            <div className="price-separator">~</div>
+            <div className="price-input-group">
+              <label className="price-label">최대 가격</label>
+              <div className="price-input-wrapper">
+                <input
+                  type="text"
+                  className="price-input"
+                  placeholder="20"
+                  value={maxPrice}
+                  onChange={handleMaxPriceChange}
+                  onBlur={handleMaxPriceBlur}
+                  min="1"
+                  max="20"
+                />
+                <span className="price-unit">만원</span>
+              </div>
+            </div>
+          </div>
+          <p className="price-range-hint">가격 범위는 1만원 ~ 20만원 사이입니다</p>
         </div>
 
         {/* Get Recommendation Button */}

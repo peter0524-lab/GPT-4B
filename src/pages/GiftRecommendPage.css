@@ -226,6 +226,109 @@
   border-color: #584cdc;
 }
 
+/* Price Range Section */
+.price-range-section {
+  margin-bottom: 24px;
+}
+
+.price-range-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.price-input-group {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 140px;
+  width: 100%;
+}
+
+.price-label {
+  font-family: 'Inter', 'Noto Sans KR', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1f2937;
+}
+
+.price-display {
+  font-family: 'Inter', 'Noto Sans KR', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #584cdc;
+  margin-bottom: 6px;
+  min-height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.price-input-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: white;
+  padding: 0 16px;
+  transition: border-color 0.2s;
+  min-height: 48px;
+}
+
+.price-input-wrapper:focus-within {
+  border-color: #584cdc;
+}
+
+.price-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 14px 0;
+  font-family: 'Inter', 'Noto Sans KR', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #1f2937;
+  background: transparent;
+  text-align: left;
+  width: 100%;
+}
+
+.price-input::placeholder {
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+.price-unit {
+  font-family: 'Inter', 'Noto Sans KR', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #6b7280;
+  margin-left: 8px;
+  flex-shrink: 0;
+}
+
+.price-separator {
+  font-family: 'Inter', 'Noto Sans KR', sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: #6b7280;
+  flex-shrink: 0;
+  align-self: center;
+  margin-top: 24px;
+}
+
+.price-range-hint {
+  font-family: 'Inter', 'Noto Sans KR', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #9ca3af;
+  margin: 0;
+}
+
 /* Get Recommendation Button */
 .recommend-button-container {
   margin-top: 32px;
