@@ -70,6 +70,8 @@ const CardForm = ({
       gender: formValues.gender,
       memo: formValues.memo,
       image: formValues.image,
+      design: formValues.design || initialValues?.design || 'design-1',
+      isFavorite: formValues.isFavorite || initialValues?.isFavorite || false,
     });
   };
 
@@ -86,7 +88,7 @@ const CardForm = ({
             </label>
             {field.multiline ? (
               <textarea
-                value={formValues[field.name] ?? ""}
+                value={String(formValues[field.name] ?? "")}
                 onChange={(event) =>
                   setFormValues((prev) => ({
                     ...prev,
@@ -99,7 +101,7 @@ const CardForm = ({
               />
             ) : field.type === "select" ? (
               <select
-                value={formValues[field.name] ?? ""}
+                value={String(formValues[field.name] ?? "")}
                 onChange={(event) =>
                   setFormValues((prev) => ({
                     ...prev,
@@ -117,7 +119,7 @@ const CardForm = ({
             ) : (
               <input
                 type="text"
-                value={formValues[field.name] ?? ""}
+                value={String(formValues[field.name] ?? "")}
                 onChange={(event) =>
                   setFormValues((prev) => ({
                     ...prev,

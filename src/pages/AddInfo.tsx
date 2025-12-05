@@ -54,7 +54,21 @@ const AddInfo = () => {
       
       // 기존 명함 수정인 경우 (id가 있고 이미 저장된 명함인 경우)
       if (updatedCard.id && getCardById(updatedCard.id)) {
-        await updateCard(updatedCard.id, updatedCard);
+        // 빈 문자열을 null로 변환하여 DB에 null로 저장되도록 함 (성별은 항상 포함)
+        const cleanCardData: any = {
+          name: updatedCard.name,
+          position: updatedCard.position && updatedCard.position.trim() !== '' ? updatedCard.position : null,
+          company: updatedCard.company && updatedCard.company.trim() !== '' ? updatedCard.company : null,
+          phone: updatedCard.phone && updatedCard.phone.trim() !== '' ? updatedCard.phone : null,
+          email: updatedCard.email && updatedCard.email.trim() !== '' ? updatedCard.email : null,
+          gender: updatedCard.gender && updatedCard.gender.trim() !== '' ? updatedCard.gender.trim() : null, // 빈 문자열이면 null로 명시적으로 설정
+          memo: updatedCard.memo && updatedCard.memo.trim() !== '' ? updatedCard.memo : null,
+          image: updatedCard.image && updatedCard.image.trim() !== '' ? updatedCard.image : null,
+          design: updatedCard.design || draft?.design || 'design-1',
+          isFavorite: updatedCard.isFavorite || false,
+        };
+        
+        await updateCard(updatedCard.id, cleanCardData);
         navigate("/business-cards");
       } else {
         // 새 명함 추가인 경우 (DB에 저장)
@@ -74,7 +88,7 @@ const AddInfo = () => {
     // 메모 및 성별 업데이트
     const updatedCard: BusinessCard = {
       ...card,
-      gender: gender || undefined,
+      gender: gender.trim() || undefined,
       memo: memo.trim() || undefined,
     };
 
@@ -88,7 +102,20 @@ const AddInfo = () => {
         navigate("/business-cards", { state: { openCardId: savedCard.id } });
       } else if (card.id && getCardById(card.id)) {
         // 기존 명함 수정인 경우
-        await updateCard(card.id, updatedCard);
+        // 빈 문자열을 null로 변환하여 DB에 null로 저장되도록 함 (성별은 항상 포함)
+        const cleanCardData: any = {
+          name: updatedCard.name,
+          position: updatedCard.position && updatedCard.position.trim() !== '' ? updatedCard.position : null,
+          company: updatedCard.company && updatedCard.company.trim() !== '' ? updatedCard.company : null,
+          phone: updatedCard.phone && updatedCard.phone.trim() !== '' ? updatedCard.phone : null,
+          email: updatedCard.email && updatedCard.email.trim() !== '' ? updatedCard.email : null,
+          gender: gender.trim() !== '' ? gender.trim() : null, // 빈 문자열이면 null로 명시적으로 설정
+          memo: updatedCard.memo && updatedCard.memo.trim() !== '' ? updatedCard.memo : null,
+          image: updatedCard.image && updatedCard.image.trim() !== '' ? updatedCard.image : null,
+          design: updatedCard.design || card.design || 'design-1',
+          isFavorite: updatedCard.isFavorite || false,
+        };
+        await updateCard(card.id, cleanCardData);
         navigate("/business-cards");
       } else {
         // 새 명함 추가인 경우

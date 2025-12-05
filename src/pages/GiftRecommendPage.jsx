@@ -94,20 +94,45 @@ function GiftRecommendPage() {
     }
   }
 
-  const handleGetRecommendation = () => {
+  const handleGetRecommendation = async () => {
     setIsProcessing(true)
-    // 2초 후 선물 추천 결과 페이지로 이동
-    setTimeout(() => {
-      navigate('/gift-recommend/result', { 
-        state: { 
-          card, 
-          additionalInfo,
-          memos,
-          minPrice: minPrice ? normalizePrice(minPrice) : undefined,
-          maxPrice: maxPrice ? normalizePrice(maxPrice) : undefined
-        } 
-      })
-    }, 2000)
+    
+    try {
+      // API 호출하여 persona embedding 문자열 생성
+      // gender는 백엔드에서 DB의 card.gender를 사용하므로 전달하지 않음
+      const { giftAPI } = await import('../utils/api.js')
+      const response = await giftAPI.recommend(
+        card.id,
+        additionalInfo,
+        '', // gender는 백엔드에서 DB의 card.gender를 사용
+        memos,
+        minPrice ? normalizePrice(minPrice) : undefined,
+        maxPrice ? normalizePrice(maxPrice) : undefined
+      )
+      
+      if (response.data.success) {
+        // 성공 시 결과 페이지로 이동
+        navigate('/gift-recommend/result', { 
+          state: { 
+            card, 
+            additionalInfo,
+            memos,
+            gender: response.data.data.originalData?.gender || '',
+            personaString: response.data.data.personaString,
+            recommendedGifts: response.data.data.recommendedGifts || [],
+            rationaleCards: response.data.data.rationaleCards || [],
+            minPrice: minPrice ? normalizePrice(minPrice) : undefined,
+            maxPrice: maxPrice ? normalizePrice(maxPrice) : undefined
+          } 
+        })
+      } else {
+        throw new Error(response.data.message || '선물 추천 요청에 실패했습니다.')
+      }
+    } catch (error) {
+      console.error('Gift recommendation error:', error)
+      alert(error.response?.data?.message || error.message || '선물 추천 요청에 실패했습니다.')
+      setIsProcessing(false)
+    }
   }
 
   if (isLoading) {

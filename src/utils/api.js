@@ -135,8 +135,8 @@ export const giftAPI = {
 
   delete: (id) => api.delete(`/gifts/${id}`),
 
-  recommend: (cardId, additionalInfo) =>
-    api.post("/gifts/recommend", { cardId, additionalInfo }),
+  recommend: (cardId, additionalInfo, gender = '', memos = [], minPrice, maxPrice) =>
+    api.post("/gifts/recommend", { cardId, additionalInfo, gender, memos, minPrice, maxPrice }),
 };
 
 // Chat API
@@ -147,6 +147,9 @@ export const chatAPI = {
 
   sendMessage: (message, llmProvider = "gpt", chatId = null) =>
     api.post("/chat", { message, llmProvider, chatId }),
+
+  createHistory: (messages, title, llmProvider = "gpt") =>
+    api.post("/chat/create-history", { messages, title, llmProvider }),
 
   delete: (id) => api.delete(`/chat/${id}`),
 };
