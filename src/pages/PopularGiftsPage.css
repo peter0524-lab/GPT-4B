@@ -12,20 +12,23 @@
 
 /* Header */
 .page-header {
-  height: 95px;
   position: sticky;
   top: 0;
   background: white;
-  z-index: 10;
+  z-index: 50;
   border-radius: 40px 40px 0 0;
+  padding-top: 30px;
+  padding-bottom: 8px;
+  position: relative;
 }
 
 .header-content {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 64px;
-  padding: 30px 16px 1px 8px;
+  padding: 0 16px 8px 16px;
+  position: relative;
+  min-height: 64px;
 }
 
 .back-button {
@@ -64,15 +67,18 @@
 .page-title {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 700;
   color: #0a0a0a;
   line-height: 24px;
   letter-spacing: -0.3125px;
   margin: 0;
+  padding: 0;
   position: absolute;
   left: 50%;
-  transform: translateX(-50%);
+  top: 50%;
+  transform: translate(-50%, -50%);
   text-align: center;
+  width: 100%;
 }
 
 .header-spacer {
@@ -91,8 +97,12 @@
   flex-direction: column;
   align-items: center;
   gap: 2px;
-  margin-left: auto;
-  color: #584cdc;
+  color: #0a0a0a;
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
 }
 
 .home-button svg {
@@ -104,7 +114,7 @@
 .home-button-text {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 500;
   color: currentColor;
   line-height: 16.5px;
   letter-spacing: 0.0645px;
@@ -116,8 +126,9 @@
 
 /* Filter Guide */
 .filter-guide {
-  padding: 0 16px 4px 16px;
+  padding: 0 16px 2px 16px;
   background: white;
+  margin-top: -2px;
 }
 
 .filter-guide-text {
@@ -137,10 +148,7 @@
   align-items: center;
   justify-content: flex-end;
   padding: 0 16px;
-  position: sticky;
-  top: 95px;
   background: white;
-  z-index: 9;
 }
 
 .sort-button {
@@ -221,45 +229,82 @@
 /* Applied Filters */
 .applied-filters {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 8px;
-  padding: 4px 16px;
+  padding: 8px 16px;
   background-color: #f9fafb;
-  overflow-x: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  position: sticky;
+  top: 162px;
+  z-index: 49;
 }
 
-.applied-filters::-webkit-scrollbar {
+.filter-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.filter-items-scroll {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-behavior: smooth;
+  flex: 1;
+  min-width: 0;
+}
+
+.filter-items-scroll::-webkit-scrollbar {
   display: none;
 }
 
 .applied-filter-tag {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 3px;
   background-color: white;
   border: 1px solid #e5e7eb;
   border-radius: 100px;
-  padding: 6px 8px 6px 12px;
+  padding: 3px 5px 3px 8px;
   white-space: nowrap;
   flex-shrink: 0;
+  height: 20px;
+  box-sizing: border-box;
+}
+
+.category-filter-tag,
+.price-filter-tag {
+  padding: 3px 8px;
+  border: none;
+  background-color: transparent;
+  height: 20px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+
+.category-item-tag,
+.price-item-tag {
+  padding: 3px 5px 3px 8px;
 }
 
 .filter-tag-label {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 400;
   color: #6a7282;
-  line-height: 18px;
+  line-height: 14px;
 }
 
 .filter-tag-value {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 500;
   color: #584cdc;
-  line-height: 18px;
+  line-height: 14px;
 }
 
 .filter-tag-remove {
@@ -281,8 +326,8 @@
 }
 
 .filter-tag-remove svg {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
 }
 
 /* Gifts Container */

@@ -14,9 +14,9 @@ function BackIcon() {
 function HomeIcon() {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M2 12L12 3L22 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M4 12V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M9 22V16C9 15.4696 9.21071 14.9609 9.58579 14.5858C9.96086 14.2107 10.4696 14 11 14H13C13.5304 14 14.0391 14.2107 14.4142 14.5858C14.7893 14.9609 15 15.4696 15 16V22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M2 12L12 3L22 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M4 12V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M9 22V16C9 15.4696 9.21071 14.9609 9.58579 14.5858C9.96086 14.2107 10.4696 14 11 14H13C13.5304 14 14.0391 14.2107 14.4142 14.5858C14.7893 14.9609 15 15.4696 15 16V22" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   )
 }
@@ -274,69 +274,83 @@ function PopularGiftsPage() {
     <div className="popular-gifts-page">
       {/* Header */}
       <div className="page-header">
+        <button className="home-button" onClick={handleHome}>
+          <HomeIcon />
+          <span className="home-button-text">홈으로</span>
+        </button>
         <div className="header-content">
-          <button className="back-button" onClick={handleBack}>
-            <div className="back-icon">
-              <BackIcon />
-            </div>
-          </button>
           <h1 className="page-title">인기 선물</h1>
-          <button className="home-button" onClick={handleHome}>
-            <HomeIcon />
-            <span className="home-button-text">홈으로</span>
-          </button>
+          <div className="header-spacer"></div>
         </div>
-      </div>
+        
+        {/* Filter Guide Text */}
+        <div className="filter-guide">
+          <p className="filter-guide-text">필터를 적용해서 원하는 선물을 구경해보아요</p>
+        </div>
 
-      {/* Filter Guide Text */}
-      <div className="filter-guide">
-        <p className="filter-guide-text">필터를 적용해서 원하는 선물을 구경해보아요</p>
-      </div>
-
-      {/* Filter Bar */}
-      <div className="sort-filter-bar">
-        <Link 
-          to="/popular-gifts/filter" 
-          className="filter-button"
-          state={{ 
-            category: appliedCategories,
-            priceRange: appliedPriceRanges
-          }}
-        >
-          <span className="filter-icon"><FilterIcon /></span>
-          <span className="filter-text">필터</span>
-        </Link>
+        {/* Filter Bar */}
+        <div className="sort-filter-bar">
+          <Link 
+            to="/popular-gifts/filter" 
+            className="filter-button"
+            state={{ 
+              category: appliedCategories,
+              priceRange: appliedPriceRanges
+            }}
+          >
+            <span className="filter-icon"><FilterIcon /></span>
+            <span className="filter-text">필터</span>
+          </Link>
+        </div>
       </div>
 
       {/* Applied Filters */}
       {(appliedCategories.length > 0 || appliedPriceRanges.length > 0) && (
         <div className="applied-filters">
-          {appliedCategories.map((category) => (
-            <div key={category} className="applied-filter-tag">
-              <span className="filter-tag-label">카테고리</span>
-              <span className="filter-tag-value">{category}</span>
-              <button 
-                className="filter-tag-remove"
-                onClick={() => handleRemoveCategory(category)}
-                aria-label={`${category} 필터 제거`}
-              >
-                <CloseIcon />
-              </button>
+          {/* 카테고리 필터들 - 첫 번째 줄 */}
+          {appliedCategories.length > 0 && (
+            <div className="filter-row">
+              <div className="applied-filter-tag category-filter-tag">
+                <span className="filter-tag-label">카테고리</span>
+              </div>
+              <div className="filter-items-scroll">
+                {appliedCategories.map((category) => (
+                  <div key={category} className="applied-filter-tag category-item-tag">
+                    <span className="filter-tag-value">{category}</span>
+                    <button 
+                      className="filter-tag-remove"
+                      onClick={() => handleRemoveCategory(category)}
+                      aria-label={`${category} 필터 제거`}
+                    >
+                      <CloseIcon />
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
-          ))}
-          {appliedPriceRanges.map((range) => (
-            <div key={range} className="applied-filter-tag">
-              <span className="filter-tag-label">가격대</span>
-              <span className="filter-tag-value">{range}</span>
-              <button 
-                className="filter-tag-remove"
-                onClick={() => handleRemovePriceRange(range)}
-                aria-label={`${range} 필터 제거`}
-              >
-                <CloseIcon />
-              </button>
+          )}
+          {/* 가격대 필터들 - 두 번째 줄 */}
+          {appliedPriceRanges.length > 0 && (
+            <div className="filter-row">
+              <div className="applied-filter-tag price-filter-tag">
+                <span className="filter-tag-label">가격대</span>
+              </div>
+              <div className="filter-items-scroll">
+                {appliedPriceRanges.map((range) => (
+                  <div key={range} className="applied-filter-tag price-item-tag">
+                    <span className="filter-tag-value">{range}</span>
+                    <button 
+                      className="filter-tag-remove"
+                      onClick={() => handleRemovePriceRange(range)}
+                      aria-label={`${range} 필터 제거`}
+                    >
+                      <CloseIcon />
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
-          ))}
+          )}
         </div>
       )}
 
