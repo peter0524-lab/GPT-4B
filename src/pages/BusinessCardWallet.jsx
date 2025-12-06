@@ -192,12 +192,6 @@ function BusinessCardWallet() {
   }
 
   const handleCardClick = (cardId) => {
-    // 클릭한 카드의 인덱스를 찾아서 currentIndex 업데이트
-    const cardIndex = filteredCards.findIndex(card => card.id === cardId)
-    if (cardIndex !== -1) {
-      setCurrentIndex(cardIndex)
-    }
-    
     setFlippingCardId(cardId)
     setIsFlipping(true)
     
@@ -242,7 +236,7 @@ function BusinessCardWallet() {
           <div className="header-content">
             <div className="header-instruction">
               <p>명함을 찾아서</p>
-              <p>내용을 수정할 수 있어요.</p>
+              <p>내용을 수정할 수 있어요</p>
             </div>
           </div>
         </div>
@@ -255,7 +249,7 @@ function BusinessCardWallet() {
             </div>
             <input
               type="text"
-              placeholder="회사명, 직책 등을 검색하세요"
+              placeholder="회사명, 직급 등을 검색"
               value={searchQuery}
               onChange={(e) => {
                 setSearchQuery(e.target.value)
@@ -298,6 +292,34 @@ function BusinessCardWallet() {
               </button>
             </div>
           )}
+        </div>
+
+        {/* Usage Count and Guide - Below action buttons */}
+        <div className={`usage-and-guide-container ${isGridView ? 'grid-view-container' : ''}`}>
+          {!isGridView && (
+            <div className="card-guide">
+              <p className="card-guide-text">명함을 눌러 상세 정보 확인</p>
+            </div>
+          )}
+          <div className="usage-indicator-top">
+            {isGridView ? (
+              <span className="usage-count-grid">
+                <span className="usage-count-number-grid">{cards.length}</span> / 200
+              </span>
+            ) : (
+              <span className="usage-count-carousel">
+                {filteredCards.length > 0 ? (
+                  <>
+                    <span className="usage-count-number-carousel">{currentIndex + 1}</span> / 200
+                  </>
+                ) : (
+                  <>
+                    <span className="usage-count-number-carousel">0</span> / 200
+                  </>
+                )}
+              </span>
+            )}
+          </div>
         </div>
 
         {/* Business Card Display */}
@@ -381,22 +403,6 @@ function BusinessCardWallet() {
                     </svg>
                   </button>
                 </div>
-
-                {/* Action Buttons */}
-                <div className="card-actions">
-                  <button 
-                    className="action-btn action-btn-primary"
-                    onClick={handleConfirmCard}
-                  >
-                    명함 확인하기
-                  </button>
-                  <button 
-                    className="action-btn action-btn-secondary"
-                    onClick={handleEditInfo}
-                  >
-                    정보 수정
-                  </button>
-                </div>
               </>
             ) : (
               <div className="cards-grid">
@@ -437,9 +443,6 @@ function BusinessCardWallet() {
 
         {/* Footer Message */}
         <div className="wallet-footer">
-          <div className="usage-indicator">
-            <span className="usage-count">{cards.length}/200</span>
-          </div>
           <p className="footer-text">더 많은 명함을 관리할 수 있어요</p>
           <a 
             href="#" 
@@ -556,6 +559,13 @@ function CardDetailModal({ card, onClose }) {
     navigate('/business-card/gift-history', { state: { card } })
   }
 
+  const handleEditInfo = () => {
+    if (card) {
+      // Navigate to add page with card as draft for editing
+      navigate('/add', { state: { draft: card } })
+    }
+  }
+
   // 모달 배경색 (명함 디자인에 맞춤)
   const modalBackground = card?.design 
     ? pageBackgroundDesigns[card.design] || pageBackgroundDesigns['design-1']
@@ -615,6 +625,11 @@ function CardDetailModal({ card, onClose }) {
               </div>
             </div>
           </div>
+          
+          {/* Edit Button - Bottom right of card */}
+          <button className="modal-edit-button" onClick={handleEditInfo}>
+            정보 수정
+          </button>
         </div>
 
         {/* Gift Action Buttons */}

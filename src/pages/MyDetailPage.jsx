@@ -341,7 +341,7 @@ function MyDetailPage() {
 
           {/* 내 정보 수정하기 버튼 */}
           <button className="edit-my-info-button" onClick={handleEditMyInfo}>
-            내 정보 수정하기
+            내 정보 수정
           </button>
         </div>
 
@@ -357,7 +357,7 @@ function MyDetailPage() {
                     <path d="M5 6H11" stroke="#0a0a0a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                     <path d="M5 9H9" stroke="#0a0a0a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
-                  <span className="stat-label">총 명함 갯수</span>
+                  <span className="stat-label">총 명함 개수</span>
                 </div>
                 <p className="stat-value">{cards.length}개</p>
               </div>
