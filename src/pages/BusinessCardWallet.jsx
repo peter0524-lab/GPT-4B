@@ -111,6 +111,7 @@ function BusinessCardWallet() {
   const [showDetailModal, setShowDetailModal] = useState(false)
   const [flippingCardId, setFlippingCardId] = useState(null)
   const [isGridView, setIsGridView] = useState(false)
+  const [selectedCardId, setSelectedCardId] = useState(null)
   const cards = useCardStore((state) => state.cards)
   const fetchCards = useCardStore((state) => state.fetchCards)
   const isLoading = useCardStore((state) => state.isLoading)
@@ -139,6 +140,11 @@ function BusinessCardWallet() {
   const filteredCards = cards
 
   const currentCard = filteredCards[currentIndex] || filteredCards[0]
+  
+  // 선택된 카드 찾기
+  const selectedCard = selectedCardId 
+    ? filteredCards.find(card => card.id === selectedCardId) || currentCard
+    : currentCard
 
   // location.state에서 openCardId 또는 selectCardId를 확인하고 처리
   useEffect(() => {
@@ -151,6 +157,7 @@ function BusinessCardWallet() {
         const cardIndex = filteredCards.findIndex(card => card.id === openCardId)
         if (cardIndex !== -1) {
           setCurrentIndex(cardIndex)
+          setSelectedCardId(openCardId)
           // 부드러운 모달 열기 애니메이션
           requestAnimationFrame(() => {
             requestAnimationFrame(() => {
@@ -166,6 +173,7 @@ function BusinessCardWallet() {
         const cardIndex = filteredCards.findIndex(card => card.id === selectCardId)
         if (cardIndex !== -1) {
           setCurrentIndex(cardIndex)
+          setSelectedCardId(selectCardId)
           // state 초기화
           navigate(location.pathname, { replace: true, state: {} })
         }
@@ -192,14 +200,36 @@ function BusinessCardWallet() {
   }
 
   const handleCardClick = (cardId) => {
-    setFlippingCardId(cardId)
-    setIsFlipping(true)
+    // 클릭한 카드의 인덱스 찾기
+    const clickedCardIndex = filteredCards.findIndex(card => card.id === cardId)
     
-    // 뒤집기 애니메이션 후 모달 표시
-    setTimeout(() => {
-      setShowDetailModal(true)
-      setIsFlipping(false)
-    }, 600) // 애니메이션 시간과 맞춤
+    // 슬라이드 뷰일 때, 클릭한 카드가 현재 활성화된 카드가 아니라면 먼저 해당 카드로 이동
+    if (!isGridView && clickedCardIndex !== -1 && clickedCardIndex !== currentIndex) {
+      setCurrentIndex(clickedCardIndex)
+      // 슬라이드 이동 후 약간의 지연을 두고 모달 열기
+      setTimeout(() => {
+        setSelectedCardId(cardId)
+        setFlippingCardId(cardId)
+        setIsFlipping(true)
+        
+        // 뒤집기 애니메이션 후 모달 표시
+        setTimeout(() => {
+          setShowDetailModal(true)
+          setIsFlipping(false)
+        }, 600) // 애니메이션 시간과 맞춤
+      }, 400) // 슬라이드 이동 애니메이션 시간
+    } else {
+      // 이미 활성화된 카드를 클릭했거나 그리드 뷰인 경우
+      setSelectedCardId(cardId)
+      setFlippingCardId(cardId)
+      setIsFlipping(true)
+      
+      // 뒤집기 애니메이션 후 모달 표시
+      setTimeout(() => {
+        setShowDetailModal(true)
+        setIsFlipping(false)
+      }, 600) // 애니메이션 시간과 맞춤
+    }
   }
 
   const handleCloseModal = () => {
@@ -214,17 +244,19 @@ function BusinessCardWallet() {
       setTimeout(() => {
         setShowDetailModal(false)
         setFlippingCardId(null)
+        setSelectedCardId(null)
       }, 300)
     } else {
       setShowDetailModal(false)
       setFlippingCardId(null)
+      setSelectedCardId(null)
     }
   }
 
   const handleEditInfo = () => {
-    if (currentCard) {
+    if (selectedCard) {
       // Navigate to add page with card as draft for editing
-      navigate('/add', { state: { draft: currentCard } })
+      navigate('/add', { state: { draft: selectedCard } })
     }
   }
 
@@ -361,7 +393,7 @@ function BusinessCardWallet() {
                               filter: isActive ? 'blur(0)' : 'blur(3px)',
                               zIndex: isActive ? 10 : 5 - Math.abs(offset)
                             }}
-                            onClick={() => isActive && handleCardClick(card.id)}
+                            onClick={() => handleCardClick(card.id)}
                           >
                             <div 
                               className="business-card-display"
@@ -460,9 +492,9 @@ function BusinessCardWallet() {
       <BottomNavigation />
 
       {/* Card Detail Modal */}
-      {showDetailModal && currentCard && (
+      {showDetailModal && selectedCard && (
         <CardDetailModal 
-          card={currentCard} 
+          card={selectedCard} 
           onClose={handleCloseModal}
         />
       )}
