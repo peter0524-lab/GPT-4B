@@ -212,9 +212,9 @@ function LandingPage() {
     // 일정 태그 색상의 파스텔톤 버전 (새로운 색상에 맞춰 조정, 더 진하게)
     const pastelColors = {
       '미팅': '#f0eff8', // #8f85e7의 파스텔톤 (보라색 톤)
-      '업무': '#c5d9ff', // #5b99f9의 파스텔톤 (더 진하게)
-      '개인': '#c0e6d0', // #81bf99의 파스텔톤 (더 진하게)
-      '기타': '#d1d5db'  // #9da3af의 파스텔톤 (더 진하게)
+      '업무': '#95b8ff', // #5b99f9의 파스텔톤 (조금 더 진하게)
+      '개인': '#95d4a8', // #81bf99의 파스텔톤 (조금 더 진하게)
+      '기타': '#b8bcc5'  // #9da3af의 파스텔톤 (더 진하게)
     }
     return pastelColors[category] || pastelColors['기타']
   }
@@ -410,7 +410,7 @@ function LandingPage() {
                   >
                     <p 
                       className="alert-text"
-                      style={{ color: isMeeting ? 'white' : '#0a0a0a' }}
+                      style={{ color: 'white' }}
                     >
                       {alert.text}
                     </p>
