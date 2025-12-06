@@ -34,15 +34,20 @@ function SignupPage() {
       return
     }
 
-    // 아이디 중복 확인
-    if (existingUserIds.includes(userId)) {
+    // 아이디 규칙: 4자 이상, 영문 또는 영문+숫자 조합
+    const usernameRegex = /^[a-zA-Z][a-zA-Z0-9]*$/
+    
+    if (userId.length < 4) {
+      setIsUserIdValid(false)
+      setUserIdError('아이디는 4자 이상이어야 합니다')
+    } else if (!usernameRegex.test(userId)) {
+      setIsUserIdValid(false)
+      setUserIdError('아이디는 영문으로 시작하며 영문 또는 영문+숫자 조합이어야 합니다')
+    } else if (existingUserIds.includes(userId)) {
       setIsUserIdValid(false)
       setUserIdError('이미 존재하는 아이디입니다')
-    } else if (userId.length >= 3) {
-      setIsUserIdValid(true)
-      setUserIdError('')
     } else {
-      setIsUserIdValid(false)
+      setIsUserIdValid(true)
       setUserIdError('')
     }
   }, [userId])
@@ -51,13 +56,16 @@ function SignupPage() {
   useEffect(() => {
     if (password.length === 0) {
       setIsPasswordValid(false)
+      setPasswordError('')
       return
     }
 
-    if (password.length >= 6) {
-      setIsPasswordValid(true)
-    } else {
+    if (password.length < 6) {
       setIsPasswordValid(false)
+      setPasswordError('비밀번호는 6자 이상이어야 합니다')
+    } else {
+      setIsPasswordValid(true)
+      setPasswordError('')
     }
   }, [password])
 
@@ -124,8 +132,10 @@ function SignupPage() {
                 </div>
               )}
             </div>
-            {userIdError && (
+            {userIdError ? (
               <p className="error-message">{userIdError}</p>
+            ) : (
+              <p className="input-hint">아이디는 4자 이상의 영문 또는 영문+숫자 조합이어야 합니다</p>
             )}
           </div>
 
@@ -136,7 +146,7 @@ function SignupPage() {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className={`signup-input ${isPasswordValid ? 'input-valid' : ''}`}
+                className={`signup-input ${passwordError ? 'input-error' : ''} ${isPasswordValid ? 'input-valid' : ''}`}
                 placeholder="비밀번호를 입력하세요"
               />
               {isPasswordValid && (
@@ -145,6 +155,11 @@ function SignupPage() {
                 </div>
               )}
             </div>
+            {passwordError ? (
+              <p className="error-message">{passwordError}</p>
+            ) : (
+              <p className="input-hint">비밀번호는 6자 이상이어야 합니다</p>
+            )}
           </div>
 
           <div className="input-group">

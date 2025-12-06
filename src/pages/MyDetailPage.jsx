@@ -328,12 +328,6 @@ function MyDetailPage() {
           </div>
 
           <div className="profile-header">
-            <div className="profile-image-wrapper">
-              <div className="profile-image-placeholder"></div>
-              <div className="profile-image-overlay">
-                <ProfileCameraIcon />
-              </div>
-            </div>
             <div className="profile-info">
               <h2 className="profile-name">{myInfo.name}</h2>
             </div>
