@@ -350,12 +350,16 @@ function EventDetailPage() {
     if (window.confirm('정말 이 일정을 삭제하시겠습니까?')) {
 
       try {
+        // 삭제할 일정의 날짜 저장
+        const deletedEventDate = event?.startDate || new Date()
+
         // DB에서 삭제 (인증된 사용자인 경우) - peter API 연동
         if (isAuthenticated() && event && event.id) {
           const response = await calendarAPI.deleteEvent(event.id)
           
           if (response.data && response.data.success) {
-            navigate('/calendar')
+            // 삭제된 일정의 날짜로 캘린더 이동
+            navigate('/calendar', { state: { selectedDate: deletedEventDate } })
             return
           } else {
             throw new Error('일정 삭제에 실패했습니다.')
@@ -367,7 +371,8 @@ function EventDetailPage() {
         const filteredEvents = storedEvents.filter(e => e.id !== eventId)
         localStorage.setItem('calendarEvents', JSON.stringify(filteredEvents))
 
-        navigate('/calendar')
+        // 삭제된 일정의 날짜로 캘린더 이동
+        navigate('/calendar', { state: { selectedDate: deletedEventDate } })
 
       } catch (err) {
 
