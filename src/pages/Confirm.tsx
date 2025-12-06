@@ -50,6 +50,11 @@ const Confirm = () => {
   }
 
   const handleConfirm = () => {
+    // 이름 필수 검증
+    if (!pendingCard?.name || pendingCard.name.trim() === "") {
+      alert("이름을 입력해주세요.");
+      return;
+    }
     // 명함 추가정보 입력 페이지로 이동
     navigate("/add-info", { state: { fromOCR: true, card: pendingCard } });
   };
@@ -60,6 +65,11 @@ const Confirm = () => {
 
   const handleSaveEdit = () => {
     if (editedCard) {
+      // 이름 필수 검증
+      if (!editedCard.name || editedCard.name.trim() === "") {
+        alert("이름을 입력해주세요.");
+        return;
+      }
       setPendingCard(editedCard);
       // 저장 완료 후 명함 추가정보 입력 페이지로 이동
       navigate("/add-info", { state: { fromOCR: true, card: editedCard } });
@@ -67,8 +77,8 @@ const Confirm = () => {
   };
 
   const handleBack = () => {
-    // 뒤로가기: OCR 페이지로 돌아가기
-    navigate("/ocr");
+    // 뒤로가기: OCR 페이지로 돌아가기 (fromConfirm 플래그 전달)
+    navigate("/ocr", { state: { fromConfirm: true } });
   };
 
   const handleFieldChange = (field: keyof BusinessCard, value: string) => {

@@ -1,6 +1,6 @@
 // pages/OCR.tsx
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import OCRCamera from "../components/OCRCamera/OCRCamera";
 import { runOCR } from "../utils/ocr";
 import { useCardStore } from "../store/cardStore";
@@ -25,8 +25,28 @@ const hasCameraSupport = () => {
   return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
 };
 
+// 더미데이터 감지 함수
+const isDummyData = (ocrResult: any): boolean => {
+  if (!ocrResult) return false;
+  
+  // 백엔드 mockOCRResponse에서 반환하는 더미데이터 목록
+  const dummyNames = ["박소윤", "이도현", "최하늘"];
+  const dummyCompanies = ["Luna Collective", "Nova Labs", "Orbit Studio"];
+  const dummyEmails = ["soyoon@luna.co", "dohyun@nova.ai", "ha-neul@orbit.studio"];
+  const dummyPhones = ["010-1234-5678", "010-8765-4321", "010-2345-6789"];
+  
+  const isDummyName = ocrResult.name && dummyNames.includes(ocrResult.name);
+  const isDummyCompany = ocrResult.company && dummyCompanies.includes(ocrResult.company);
+  const isDummyEmail = ocrResult.email && dummyEmails.includes(ocrResult.email);
+  const isDummyPhone = ocrResult.phone && dummyPhones.includes(ocrResult.phone);
+  
+  // 하나라도 더미데이터와 일치하면 더미데이터로 판단
+  return isDummyName || isDummyCompany || isDummyEmail || isDummyPhone;
+};
+
 const OCR = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const setPendingCard = useCardStore(state => state.setPendingCard);
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -60,6 +80,12 @@ const OCR = () => {
       console.log("🎯 [OCR 페이지 - 캡처 결과 수신]");
       console.log("📊 OCR 결과:", ocrResult);
 
+      // 더미데이터 감지
+      const isDummy = isDummyData(ocrResult);
+      if (isDummy) {
+        console.warn("⚠️ 더미데이터 감지됨. 모든 필드를 빈 값으로 처리합니다.");
+      }
+
       // OCR 결과 유효성 검사
       if (!ocrResult || (!ocrResult.name && !ocrResult.company && !ocrResult.email)) {
         console.warn("⚠️ OCR 결과가 불완전합니다:", ocrResult);
@@ -71,14 +97,15 @@ const OCR = () => {
         console.log("✅ OCR 결과 유효성 검사 통과");
       }
 
+      // 더미데이터인 경우 모든 필드를 빈 값으로 처리 (이름 포함)
       const pending = {
         id: crypto.randomUUID(),
-        name: ocrResult.name ?? "이름 미확인",
-        position: ocrResult.position,
-        company: ocrResult.company,
-        phone: ocrResult.phone,
-        email: ocrResult.email,
-        memo: ocrResult.memo,
+        name: isDummy ? undefined : (ocrResult.name ?? undefined),
+        position: isDummy ? undefined : (ocrResult.position ?? undefined),
+        company: isDummy ? undefined : (ocrResult.company ?? undefined),
+        phone: isDummy ? undefined : (ocrResult.phone ?? undefined),
+        email: isDummy ? undefined : (ocrResult.email ?? undefined),
+        memo: isDummy ? undefined : (ocrResult.memo ?? undefined),
         image,
       };
 
@@ -143,6 +170,12 @@ const OCR = () => {
           console.log("🎯 [OCR 페이지 - 파일 업로드 결과 수신]");
           console.log("📊 OCR 결과:", ocrResult);
 
+          // 더미데이터 감지
+          const isDummy = isDummyData(ocrResult);
+          if (isDummy) {
+            console.warn("⚠️ 더미데이터 감지됨. 모든 필드를 빈 값으로 처리합니다.");
+          }
+
           // OCR 결과 유효성 검사
           if (!ocrResult || (!ocrResult.name && !ocrResult.company && !ocrResult.email)) {
             console.warn("⚠️ OCR 결과가 불완전합니다:", ocrResult);
@@ -154,14 +187,15 @@ const OCR = () => {
             console.log("✅ OCR 결과 유효성 검사 통과");
           }
 
+          // 더미데이터인 경우 모든 필드를 빈 값으로 처리 (이름 포함)
           const pending = {
             id: crypto.randomUUID(),
-            name: ocrResult.name ?? "이름 미확인",
-            position: ocrResult.position,
-            company: ocrResult.company,
-            phone: ocrResult.phone,
-            email: ocrResult.email,
-            memo: ocrResult.memo,
+            name: isDummy ? undefined : (ocrResult.name ?? undefined),
+            position: isDummy ? undefined : (ocrResult.position ?? undefined),
+            company: isDummy ? undefined : (ocrResult.company ?? undefined),
+            phone: isDummy ? undefined : (ocrResult.phone ?? undefined),
+            email: isDummy ? undefined : (ocrResult.email ?? undefined),
+            memo: isDummy ? undefined : (ocrResult.memo ?? undefined),
             image: imageDataUrl,
           };
 
@@ -223,6 +257,16 @@ const OCR = () => {
     );
   }
 
+  const handleBack = () => {
+    // Confirm 페이지에서 온 경우 명함집으로 이동
+    const fromConfirm = (location.state as { fromConfirm?: boolean } | null)?.fromConfirm;
+    if (fromConfirm) {
+      navigate("/business-cards");
+    } else {
+      navigate(-1);
+    }
+  };
+
   return (
     <div className="ocr-page">
       <div className="ocr-container">
@@ -230,7 +274,7 @@ const OCR = () => {
         <div className="ocr-header">
           <button
             className="ocr-back-button"
-            onClick={() => navigate(-1)}
+            onClick={handleBack}
             type="button"
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -244,57 +288,6 @@ const OCR = () => {
             </svg>
           </button>
 
-          {useCamera && (
-            <button
-              className="ocr-flip-button"
-              onClick={() => {
-                setCameraToggle(prev => prev + 1);
-              }}
-              type="button"
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20Z"
-                  stroke="white"
-                  strokeWidth="2"
-                />
-                <path
-                  d="M12 6V2M12 22V18M6 12H2M22 12H18"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </button>
-          )}
-
-          {!useCamera && (
-            <button
-              className="ocr-switch-button"
-              onClick={() => {
-                if (hasCameraSupport()) {
-                  setUseCamera(true);
-                } else {
-                  setError("이 브라우저는 카메라를 지원하지 않습니다.");
-                }
-              }}
-              type="button"
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20Z"
-                  stroke="white"
-                  strokeWidth="2"
-                />
-                <path
-                  d="M12 6V2M12 22V18M6 12H2M22 12H18"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </button>
-          )}
         </div>
 
         {/* Title Section */}

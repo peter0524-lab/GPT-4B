@@ -11,8 +11,8 @@ const editFormFields: Array<{
   multiline?: boolean;
 }> = [
   { name: "name", label: "이름", placeholder: "홍길동", required: true },
-  { name: "position", label: "직함", placeholder: "Product Manager" },
-  { name: "company", label: "회사", placeholder: "Cursor Studio" },
+  { name: "company", label: "소속", placeholder: "Cursor Studio" },
+  { name: "position", label: "직급", placeholder: "Product Manager" },
   { name: "phone", label: "전화", placeholder: "010-1234-5678" },
   { name: "email", label: "이메일", placeholder: "hello@cursor.ai" },
   {
