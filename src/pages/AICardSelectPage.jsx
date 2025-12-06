@@ -54,6 +54,10 @@ function AICardSelectPage() {
     navigate('/gift-recommend', { state: { card, from: 'ai-card-select' } })
   }
 
+  const handleHistoryClick = () => {
+    navigate('/chat-history')
+  }
+
   return (
     <div className="ai-card-select-page">
       <div className="ai-card-select-container">
@@ -67,6 +71,9 @@ function AICardSelectPage() {
           <div className="header-title-section">
             <h1 className="page-title">명함 선택</h1>
           </div>
+          <button className="history-button" onClick={handleHistoryClick}>
+            추천 내역
+          </button>
         </div>
 
         {/* Card List */}
@@ -83,13 +90,13 @@ function AICardSelectPage() {
             <>
               <p className="card-selection-guide">명함을 눌러 선물 추천 대상을 선택할 수 있어요</p>
               {/* Search Bar */}
-              <div className="search-bar">
-                <div className="search-icon-wrapper">
+              <div className="ai-card-select-search-bar">
+                <div className="ai-card-select-search-icon-wrapper">
                   <SearchIcon />
                 </div>
                 <input
                   type="text"
-                  className="search-input"
+                  className="ai-card-select-search-input"
                   placeholder="명함 검색 (이름, 회사, 직급)"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}

@@ -410,6 +410,7 @@ function BusinessCardWallet() {
                     >
                       <div className="grid-card-content">
                         {card.company && <p className="grid-card-company">{card.company}</p>}
+                        {card.position && <p className="grid-card-position">{card.position}</p>}
                         <div className="grid-card-info">
                           <div>
                             <h3 className="grid-card-name">{card.name}</h3>
@@ -576,11 +577,6 @@ function CardDetailModal({ card, onClose }) {
             </svg>
           </button>
           <div className="modal-top-right">
-            <button className="modal-share-button">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18 16.08C17.24 16.08 16.56 16.38 16.04 16.85L8.91 12.7C8.96 12.47 9 12.24 9 12C9 11.76 8.96 11.53 8.91 11.3L15.96 7.19C16.5 7.69 17.21 8 18 8C19.66 8 21 6.66 21 5C21 3.34 19.66 2 18 2C16.34 2 15 3.34 15 5C15 5.24 15.04 5.47 15.09 5.7L8.04 9.81C7.5 9.31 6.79 9 6 9C4.34 9 3 10.34 3 12C3 13.66 4.34 15 6 15C6.79 15 7.5 14.69 8.04 14.19L15.16 18.34C15.11 18.55 15.08 18.77 15.08 19C15.08 20.61 16.39 21.92 18 21.92C19.61 21.92 20.92 20.61 20.92 19C20.92 17.39 19.61 16.08 18 16.08Z" fill="#1f2937"/>
-              </svg>
-            </button>
             <div className="modal-top-actions">
               <button className="modal-customize-button" onClick={handleCustomize}>
                 명함 커스텀하기
@@ -604,22 +600,13 @@ function CardDetailModal({ card, onClose }) {
 
           <div className="modal-profile-section">
             <div className="modal-profile-left">
-              <div className="modal-profile-icon">
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="20" cy="20" r="20" fill="#E5E7EB"/>
-                  <path d="M20 12C21.6569 12 23 13.3431 23 15C23 16.6569 21.6569 18 20 18C18.3431 18 17 16.6569 17 15C17 13.3431 18.3431 12 20 12Z" fill="#9CA3AF"/>
-                  <path d="M14 26C14 23.2386 16.2386 21 19 21H21C23.7614 21 26 23.2386 26 26V28H14V26Z" fill="#9CA3AF"/>
-                </svg>
-              </div>
               <div className="modal-profile-info">
+                {card.company && <p className="modal-profile-company">{card.company}</p>}
+                {card.position && <p className="modal-profile-position">{card.position}</p>}
                 <h2 className="modal-profile-name">
                   {card.name}
                 </h2>
               </div>
-            </div>
-            <div className="modal-profile-details">
-              {card.company && <p className="modal-profile-company">{card.company}</p>}
-              {card.position && <p className="modal-profile-position">{card.position}</p>}
             </div>
           </div>
         </div>

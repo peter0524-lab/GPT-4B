@@ -819,11 +819,11 @@
 
 .modal-profile-company {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
   color: white;
   margin: 0;
-  line-height: 16px;
+  line-height: 18px;
 }
 
 .modal-profile-info {
@@ -834,22 +834,22 @@
 }
 
 .modal-profile-name {
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 400;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  margin: 0;
+  margin: 8px 0 0 0;
   padding: 0;
   color: white;
-  line-height: 24px;
+  line-height: 28px;
 }
 
 .modal-profile-position {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
   color: white;
   margin: 0;
-  line-height: 16px;
+  line-height: 18px;
 }
 
 .modal-contact-section {

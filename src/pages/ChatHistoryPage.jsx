@@ -82,7 +82,7 @@ function ChatHistoryPage() {
 
   // 뒤로가기 핸들러
   const handleBack = () => {
-    navigate('/llm')
+    navigate('/ai-card-select')
   }
 
   // DB에서 채팅 내역 가져오기
@@ -130,17 +130,23 @@ function ChatHistoryPage() {
               <path d="M15 18l-6-6 6-6" stroke="#252525" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </button>
-          <h1 className="chat-history-title">대화내역</h1>
+          <h1 className="chat-history-title">추천 내역</h1>
           <div></div>
         </div>
 
         <div className="search-bar">
+          <div className="search-icon-wrapper">
+            <svg width="14" height="14" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 17C13.4183 17 17 13.4183 17 9C17 4.58172 13.4183 1 9 1C4.58172 1 1 4.58172 1 9C1 13.4183 4.58172 17 9 17Z" stroke="#717182" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M19 19L14.65 14.65" stroke="#717182" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="search-input"
-            placeholder="지난 대화내역 검색"
+            placeholder="지난 추천 내역 검색"
           />
         </div>
 

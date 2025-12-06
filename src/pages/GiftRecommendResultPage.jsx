@@ -31,90 +31,40 @@ function GiftRecommendResultPage() {
   const rationaleCards = location.state?.rationaleCards || []
   const personaString = location.state?.personaString || ''
   
-  const [message, setMessage] = useState('')
-  const [messages, setMessages] = useState([])
   const [showRationale, setShowRationale] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
   const [selectedGiftIndex, setSelectedGiftIndex] = useState(null)
   const [isSavingGift, setIsSavingGift] = useState(false)
   const [isSavingChat, setIsSavingChat] = useState(false)
-  const messagesEndRef = useRef(null)
+  const completionSectionRef = useRef(null)
   
   // 실제 표시할 선물 데이터 (API 응답 또는 폴백)
   const giftsToShow = recommendedGifts.length > 0 ? recommendedGifts : fallbackGifts
 
+  // 선물 선택 시 완료 섹션으로 스크롤
+  useEffect(() => {
+    if (selectedGiftIndex !== null && completionSectionRef.current) {
+      setTimeout(() => {
+        completionSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
+      }, 100)
+    }
+  }, [selectedGiftIndex])
+
   const handleBack = () => {
     navigate(-1)
+  }
+
+  const handleGoHome = () => {
+    navigate('/dashboard')
+  }
+
+  const handleGoToHistory = () => {
+    navigate('/chat-history')
   }
 
   const handleViewDetails = () => {
     setShowRationale(!showRationale)
   }
 
-  // 자동 스크롤 함수
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }
-
-  // 메시지가 추가될 때마다 자동 스크롤
-  useEffect(() => {
-    scrollToBottom()
-  }, [messages])
-
-  const handleSendMessage = async () => {
-    if (message.trim() && !isLoading) {
-      const userMessage = message.trim()
-      setMessage('')
-      setIsLoading(true)
-      
-      // 사용자 메시지 추가
-      setMessages(prev => [...prev, { type: 'user', text: userMessage }])
-      
-      try {
-        // 실제 Chat API 호출
-        const response = await chatAPI.sendMessage(userMessage, 'gpt', null)
-        
-        if (response.data && response.data.success) {
-          const chat = response.data.data
-          
-          if (chat && chat.messages) {
-            let chatMessages = chat.messages
-            if (typeof chatMessages === 'string') {
-              chatMessages = JSON.parse(chatMessages)
-            }
-            
-            if (Array.isArray(chatMessages)) {
-              const assistantMessages = chatMessages.filter(msg => msg && msg.role === 'assistant')
-              if (assistantMessages.length > 0) {
-                const lastAssistantMessage = assistantMessages[assistantMessages.length - 1]
-                setMessages(prev => [...prev, { 
-                  type: 'ai', 
-                  text: lastAssistantMessage.content || '응답을 받지 못했습니다.' 
-                }])
-              }
-            }
-          }
-        } else {
-          throw new Error('응답을 받지 못했습니다.')
-        }
-      } catch (error) {
-        console.error('Chat API Error:', error)
-        setMessages(prev => [...prev, { 
-          type: 'ai', 
-          text: '죄송합니다. 오류가 발생했습니다. 다시 시도해주세요.' 
-        }])
-      } finally {
-        setIsLoading(false)
-      }
-    }
-  }
-
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault()
-      handleSendMessage()
-    }
-  }
 
   const handleSelectGift = async (gift, index) => {
     if (selectedGiftIndex !== null || isSavingGift) return // 이미 선택되었거나 저장 중이면 무시
@@ -198,16 +148,6 @@ function GiftRecommendResultPage() {
         }
       ]
 
-      // 추가 대화 내역이 있으면 포함
-      if (messages.length > 0) {
-        messages.forEach(msg => {
-          chatMessages.push({
-            role: msg.type === 'user' ? 'user' : 'assistant',
-            content: msg.text,
-            timestamp: new Date().toISOString()
-          })
-        })
-      }
 
       // Chat 생성
       await chatAPI.createHistory(
@@ -227,9 +167,6 @@ function GiftRecommendResultPage() {
   const userName = card?.name || '이름 없음'
   const userPosition = card?.position || ''
   const userCompany = card?.company || ''
-  const headerTitle = userPosition && userCompany 
-    ? `${userName} ${userCompany} ${userPosition}`
-    : `${userName}님을 위한 선물추천`
 
   // 추천 rationale 데이터 (API 응답 또는 기본값)
   const rationaleData = rationaleCards.length > 0 
@@ -291,7 +228,16 @@ function GiftRecommendResultPage() {
               <path d="M15 18L9 12L15 6" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </button>
-          <h2 className="header-title">{headerTitle}</h2>
+          <h2 className="header-title">
+            {userPosition && userCompany ? (
+              <>
+                <span className="header-name">{userName}</span>
+                <span className="header-company-position"> {userCompany} {userPosition}</span>
+              </>
+            ) : (
+              `${userName}님을 위한 선물추천`
+            )}
+          </h2>
           <div style={{ width: '24px' }}></div>
         </div>
 
@@ -326,7 +272,7 @@ function GiftRecommendResultPage() {
                 viewBox="0 0 16 16" 
                 fill="none" 
                 xmlns="http://www.w3.org/2000/svg"
-                style={{ transform: showRationale ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s ease' }}
+                style={{ transform: showRationale ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.3s ease' }}
               >
                 <path d="M6 12L10 8L6 4" stroke="#584cdc" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
@@ -427,49 +373,19 @@ function GiftRecommendResultPage() {
             )}
           </div>
 
-          {/* Follow-up Question */}
-          <div className="message-bubble ai-message">
-            <p>혹시 추가 요청 사항이 있으신가요?</p>
-          </div>
-
-          {/* User Messages */}
-          {messages.map((msg, index) => (
-            <div key={index} className={`message-bubble ${msg.type === 'user' ? 'user-message' : 'ai-message'}`}>
-              <p>{msg.text}</p>
-            </div>
-          ))}
-          {isLoading && (
-            <div className="message-bubble ai-message">
-              <p>답변을 생성하고 있습니다...</p>
+          {/* Completion Message */}
+          {selectedGiftIndex !== null && (
+            <div className="completion-section" ref={completionSectionRef}>
+              <div className="completion-message">
+                <p className="completion-title">선물 선택이 완료되었습니다!</p>
+                <p className="completion-subtitle">"추천 내역"에 선물 추천 내용이 저장됩니다.</p>
+                <div className="completion-links">
+                  <button className="completion-home-button" onClick={handleGoHome}>홈으로 가기</button>
+                </div>
+              </div>
             </div>
           )}
-          <div ref={messagesEndRef} />
-        </div>
 
-        {/* Input Bar */}
-        <div className="input-bar">
-          <button className="input-bar-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 5V19M5 12H19" stroke="black" strokeWidth="2" strokeLinecap="round"/>
-            </svg>
-          </button>
-          <input
-            type="text"
-            className="message-input"
-            placeholder="메시지를 입력하세요"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            onKeyPress={handleKeyPress}
-          />
-          <button 
-            className="send-button"
-            onClick={handleSendMessage}
-            disabled={!message.trim() || isLoading}
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </button>
         </div>
       </div>
     </div>

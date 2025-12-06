@@ -19,7 +19,6 @@
   align-items: center;
   justify-content: space-between;
   padding: 16px 20px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   position: relative;
 }
 
@@ -32,6 +31,7 @@
   align-items: center;
   justify-content: center;
   height: 24px;
+  align-self: flex-start;
 }
 
 .back-button:hover {
@@ -46,7 +46,8 @@
   margin: 0;
   position: absolute;
   left: 50%;
-  transform: translateX(-50%);
+  top: 50%;
+  transform: translate(-50%, -50%) translateY(27px);
   line-height: 24px;
   display: flex;
   align-items: center;
@@ -59,7 +60,19 @@
   padding: 4px 12px;
   background-color: #F5F5F5;
   margin: 12px 12px;
+  margin-top: calc(12px + 28px);
   border-radius: 10px;
+  position: relative;
+}
+
+.search-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  margin-right: 8px;
+  flex-shrink: 0;
 }
 
 .search-input {
