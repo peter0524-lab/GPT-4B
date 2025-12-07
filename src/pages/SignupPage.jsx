@@ -103,8 +103,19 @@ function SignupPage() {
 
   const isFormValid = isUserIdValid && isPasswordValid && isConfirmPasswordValid
 
+  const handleBack = () => {
+    navigate('/login')
+  }
+
   return (
     <div className="signup-screen">
+      <div className="signup-header">
+        <button className="signup-back-button" onClick={handleBack}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 18L9 12L15 6" stroke="#1f2937" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
+      </div>
       <div className="signup-container">
         <div className="logo-section">
           <img src="/assets/gpt_4b_logo_blueberry.png" alt="GPT-4b Logo" className="signup-logo" />

@@ -58,6 +58,10 @@ function AICardSelectPage() {
     navigate('/chat-history')
   }
 
+  const handleNavigateToCards = () => {
+    navigate('/business-cards')
+  }
+
   return (
     <div className="ai-card-select-page">
       <div className="ai-card-select-container">
@@ -69,7 +73,7 @@ function AICardSelectPage() {
             </svg>
           </button>
           <div className="header-title-section">
-            <h1 className="page-title">명함 선택</h1>
+            <h1 className="page-title">선물 추천</h1>
           </div>
           <button className="history-button" onClick={handleHistoryClick}>
             추천 내역
@@ -135,7 +139,16 @@ function AICardSelectPage() {
                     ))}
                   </div>
                   {!searchQuery && (
-                    <p className="card-add-guide">"명함집" 탭에서 명함을 추가로 등록해보세요!</p>
+                    <p className="card-add-guide">
+                      명함 추가는{' '}
+                      <button 
+                        className="card-add-link-button"
+                        onClick={handleNavigateToCards}
+                      >
+                        여기
+                      </button>
+                      에서 도와드릴게요
+                    </p>
                   )}
                 </>
               )}

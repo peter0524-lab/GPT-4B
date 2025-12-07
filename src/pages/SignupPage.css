@@ -10,6 +10,22 @@
   position: relative;
 }
 
+.signup-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  z-index: 100;
+  background-color: white;
+}
+
 .signup-container {
   width: 100%;
   max-width: 400px;
@@ -20,6 +36,26 @@
   flex-direction: column;
   align-items: center;
   gap: 32px;
+  position: relative;
+}
+
+.signup-back-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s;
+}
+
+.signup-back-button:hover {
+  opacity: 0.7;
+}
+
+.signup-back-button:active {
+  opacity: 0.5;
 }
 
 .logo-section {

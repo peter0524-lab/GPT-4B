@@ -8,7 +8,7 @@ function WelcomePage() {
   useEffect(() => {
     // 2초 후 대시보드로 이동
     const timer = setTimeout(() => {
-      navigate('/dashboard')
+      navigate('/dashboard', { state: { showCardCompleteModal: true } })
     }, 2000)
 
     return () => clearTimeout(timer)

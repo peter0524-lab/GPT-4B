@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import BottomNavigation from '../components/BottomNavigation'
 import { useCardStore } from '../store/cardStore'
 import { userAPI, calendarAPI } from '../utils/api'
-import { isAuthenticated } from '../utils/auth'
+import { isAuthenticated, getUser } from '../utils/auth'
 import './LandingPage.css'
 
 // 인기 선물 데이터 (PopularGiftsPage와 동일한 데이터, 상위 5개만 표시)
@@ -67,7 +67,9 @@ const popularGifts = [
 
 function LandingPage() {
   const navigate = useNavigate()
+  const location = useLocation()
   const [userName, setUserName] = useState('')
+  const [showCardCompleteModal, setShowCardCompleteModal] = useState(false)
   const cards = useCardStore((state) => state.cards)
 
   // DB에서 로그인한 유저의 이름 가져오기
@@ -98,6 +100,27 @@ function LandingPage() {
 
     fetchUserName()
   }, [])
+
+  // Welcome 페이지에서 온 경우 팝업 표시
+  useEffect(() => {
+    if (location.state?.showCardCompleteModal) {
+      // state 초기화
+      navigate(location.pathname, { replace: true, state: {} })
+      // 약간의 지연 후 팝업 표시
+      setTimeout(() => {
+        setShowCardCompleteModal(true)
+      }, 300)
+    }
+  }, [location.state, navigate, location.pathname])
+
+  const handleGoToMy = () => {
+    setShowCardCompleteModal(false)
+    navigate('/my')
+  }
+
+  const handleCloseModal = () => {
+    setShowCardCompleteModal(false)
+  }
 
   const [alerts, setAlerts] = useState([])
 
@@ -434,6 +457,32 @@ function LandingPage() {
       </div>
 
       <BottomNavigation />
+
+      {/* Card Complete Modal */}
+      {showCardCompleteModal && (
+        <div className="card-complete-modal-overlay" onClick={handleCloseModal}>
+          <div className="card-complete-modal" onClick={(e) => e.stopPropagation()}>
+            <p className="card-complete-message">
+              {userName}님의 명함이 완성됐어요.<br />
+              확인하러 갈까요?
+            </p>
+            <div className="card-complete-buttons">
+              <button 
+                className="card-complete-btn card-complete-btn-primary"
+                onClick={handleGoToMy}
+              >
+                확인하러 갈래요
+              </button>
+              <button 
+                className="card-complete-btn card-complete-btn-secondary"
+                onClick={handleCloseModal}
+              >
+                괜찮아요
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

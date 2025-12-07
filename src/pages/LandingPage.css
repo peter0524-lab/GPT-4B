@@ -253,7 +253,7 @@
   position: absolute !important;
   top: 0 !important;
   left: 0 !important;
-  background-color: #ff6900 !important;
+  background-color: #584cdc !important;
   color: white !important;
   font-size: 10px !important;
   font-weight: 500 !important;
@@ -413,5 +413,107 @@
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
   margin: 0;
   line-height: 18px;
+}
+
+/* Card Complete Modal */
+.card-complete-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeInOverlay 0.3s ease-out forwards;
+}
+
+@keyframes fadeInOverlay {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.card-complete-modal {
+  background-color: white;
+  border-radius: 20px;
+  padding: 32px 24px 24px 24px;
+  max-width: 320px;
+  width: calc(100% - 48px);
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
+  animation: slideUpModal 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes slideUpModal {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.card-complete-message {
+  font-size: 16px;
+  font-weight: 500;
+  color: #1f2937;
+  font-family: 'Inter', 'Noto Sans KR', sans-serif;
+  text-align: center;
+  line-height: 1.6;
+  margin: 0 0 24px 0;
+}
+
+.card-complete-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card-complete-btn {
+  width: 100%;
+  padding: 14px 20px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: 'Inter', 'Noto Sans KR', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+
+.card-complete-btn-primary {
+  background-color: #584cdc;
+  color: white;
+}
+
+.card-complete-btn-primary:hover {
+  background-color: #4539b0;
+}
+
+.card-complete-btn-primary:active {
+  transform: scale(0.98);
+}
+
+.card-complete-btn-secondary {
+  background-color: #f9fafb;
+  color: #1f2937;
+  border: 1px solid #9ca3af;
+}
+
+.card-complete-btn-secondary:hover {
+  background-color: #f3f4f6;
+  border-color: #6b7280;
+  color: #111827;
+}
+
+.card-complete-btn-secondary:active {
+  transform: scale(0.98);
 }
 

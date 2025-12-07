@@ -263,3 +263,27 @@
   width: 100%;
 }
 
+.card-add-link-button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: #584cdc;
+  font-family: 'Mulish', 'Noto Sans KR', sans-serif;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  line-height: inherit;
+}
+
+.card-add-link-button:hover {
+  color: #4539b0;
+  opacity: 0.8;
+}
+
+.card-add-link-button:active {
+  opacity: 0.6;
+}
+

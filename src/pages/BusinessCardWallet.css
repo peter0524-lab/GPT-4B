@@ -62,7 +62,7 @@
   gap: 3px;
   padding: 6px 12px;
   background-color: white;
-  border: 1px solid #e5e7eb;
+  border: 1px solid #000000;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s;
@@ -72,7 +72,7 @@
 
 .header-action-btn:hover {
   background-color: #f9fafb;
-  border-color: #d1d5db;
+  border-color: #000000;
 }
 
 .action-icon {
@@ -479,20 +479,22 @@
 }
 
 .view-all-btn {
-  padding: 6px 12px;
+  padding: 4px 8px;
   background-color: white;
-  border: 1px solid black;
+  border: 1px solid #9ca3af;
   border-radius: 8px;
   font-size: 11px;
   font-weight: 400;
-  color: black;
+  color: #6b7280;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .view-all-btn:hover {
-  background-color: #e5e7eb;
+  background-color: #f3f4f6;
+  border-color: #6b7280;
+  color: #4b5563;
 }
 
 /* Empty State */
