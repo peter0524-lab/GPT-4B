@@ -192,21 +192,36 @@ function LandingPage() {
     const diffMinutes = Math.floor(diffTime / (1000 * 60))
     const diffHours = Math.floor(diffTime / (1000 * 60 * 60))
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24))
+    const remainingHours = diffHours - (diffDays * 24) // 일수를 제외한 남은 시간
+    const remainingMinutes = diffMinutes - (diffHours * 60) // 시간을 제외한 남은 분
     const diffWeeks = Math.floor(diffDays / 7)
 
     let timeText = ''
     
     // 주 단위로 표시 (7일 이상)
     if (diffWeeks > 0) {
-      timeText = `${diffWeeks}주 전입니다`
+      const remainingDays = diffDays - (diffWeeks * 7)
+      if (remainingDays > 0) {
+        timeText = `${diffWeeks}주 ${remainingDays}일 전입니다`
+      } else {
+        timeText = `${diffWeeks}주 전입니다`
+      }
     }
-    // 일 단위로 표시 (24시간 이상)
+    // 일과 시간을 함께 표시 (24시간 이상)
     else if (diffDays > 0) {
-      timeText = `${diffDays}일 전입니다`
+      if (remainingHours > 0) {
+        timeText = `${diffDays}일 ${remainingHours}시간 전입니다`
+      } else {
+        timeText = `${diffDays}일 전입니다`
+      }
     }
-    // 시간 단위로 표시 (60분 이상)
+    // 0일 남았을 때 시간과 분을 함께 표시
     else if (diffHours > 0) {
-      timeText = `${diffHours}시간 전입니다`
+      if (remainingMinutes > 0) {
+        timeText = `${diffHours}시간 ${remainingMinutes}분 전입니다`
+      } else {
+        timeText = `${diffHours}시간 전입니다`
+      }
     }
     // 분 단위로 표시
     else if (diffMinutes > 0) {
