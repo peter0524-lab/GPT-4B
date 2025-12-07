@@ -325,7 +325,6 @@ function GiftRecommendResultPage() {
                 <div className="user-info-name">{userName}</div>
                 {userCompany && <div className="user-info-item">소속: {userCompany}</div>}
                 {userPosition && <div className="user-info-item">직급: {userPosition}</div>}
-                <div className="user-info-item">연령대: 30대 중반</div>
                 <div className="user-info-item">메모: {interests}</div>
                 {additionalInfo && <div className="user-info-item">추가 정보: {additionalInfo}</div>}
               </div>
