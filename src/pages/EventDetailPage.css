@@ -782,7 +782,8 @@
 
 /* Date and Time Picker Modals */
 .date-picker-modal,
-.time-picker-modal {
+/* Event Detail Page Time Picker */
+.event-detail-time-picker-modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -796,7 +797,7 @@
 }
 
 .date-picker-content,
-.time-picker-content {
+.event-detail-time-picker-content {
   background: white;
   border-radius: 16px;
   padding: 24px;
@@ -805,7 +806,7 @@
 }
 
 .date-picker-content h3,
-.time-picker-content h3 {
+.event-detail-time-picker-content h3 {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
   font-size: 16px;
   font-weight: 600;
@@ -850,7 +851,7 @@
 }
 
 .date-picker-close,
-.time-picker-close {
+.event-detail-time-picker-close {
   width: 100%;
   height: 40px;
   background: #584cdc;
@@ -865,30 +866,30 @@
 }
 
 .date-picker-close:hover,
-.time-picker-close:hover {
+.event-detail-time-picker-close:hover:not(:disabled):not(.disabled) {
   opacity: 0.9;
 }
 
-.time-picker-close.disabled,
-.time-picker-close:disabled {
+.event-detail-time-picker-close.disabled,
+.event-detail-time-picker-close:disabled {
   background: #9ca3af;
   cursor: not-allowed;
   opacity: 0.6;
 }
 
-.time-picker-close.disabled:hover,
-.time-picker-close:disabled:hover {
+.event-detail-time-picker-close.disabled:hover,
+.event-detail-time-picker-close:disabled:hover {
   opacity: 0.6;
 }
 
-.time-inputs {
+.event-detail-time-inputs {
   display: flex;
   align-items: center;
   gap: 8px;
   margin-bottom: 20px;
 }
 
-.time-input {
+.event-detail-time-input {
   width: 60px;
   height: 40px;
   border: 1px solid #e5e7eb;
@@ -900,19 +901,19 @@
   outline: none;
 }
 
-.time-input:focus {
+.event-detail-time-input:focus {
   border-color: #584cdc;
 }
 
-.time-input-error {
+.event-detail-time-input-error {
   border-color: #ef4444 !important;
 }
 
-.time-input-error:focus {
+.event-detail-time-input-error:focus {
   border-color: #ef4444 !important;
 }
 
-.time-error-message {
+.event-detail-time-error-message {
   color: #ef4444;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
   font-size: 12px;

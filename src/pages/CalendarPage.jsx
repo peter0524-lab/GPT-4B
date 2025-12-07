@@ -421,6 +421,13 @@ function CalendarPage() {
     setShowCategoryDropdown(false)
   }
 
+  // 시간 검증 함수: 종료 시간이 시작 시간보다 같거나 빠른지 확인
+  const isEndTimeInvalid = () => {
+    const startMinutes = formData.startTime.hour * 60 + formData.startTime.minute
+    const endMinutes = formData.endTime.hour * 60 + formData.endTime.minute
+    return endMinutes <= startMinutes
+  }
+
   // 로컬 시간을 MySQL DATETIME 형식으로 변환하는 함수 (YYYY-MM-DD HH:mm:ss)
   const toMySQLDateTime = (date) => {
     if (!date) return null
@@ -867,17 +874,17 @@ function CalendarPage() {
 
             {/* 시간 선택기 */}
             {showTimePicker && (
-              <div className="time-picker-modal">
-                <div className="time-picker-content">
+              <div className="calendar-time-picker-modal">
+                <div className="calendar-time-picker-content">
                   <h3>시작 시간</h3>
-                  <div className="time-inputs">
+                  <div className="calendar-time-inputs">
                     <input
                       type="number"
                       min="0"
                       max="23"
                       value={formData.startTime.hour}
                       onChange={(e) => handleTimeChange('startTime', 'hour', e.target.value)}
-                      className="time-input"
+                      className="calendar-time-input"
                     />
                     <span>:</span>
                     <input
@@ -886,18 +893,18 @@ function CalendarPage() {
                       max="59"
                       value={formData.startTime.minute}
                       onChange={(e) => handleTimeChange('startTime', 'minute', e.target.value)}
-                      className="time-input"
+                      className="calendar-time-input"
                     />
                   </div>
                   <h3>종료 시간</h3>
-                  <div className="time-inputs">
+                  <div className="calendar-time-inputs">
                     <input
                       type="number"
                       min="0"
                       max="23"
                       value={formData.endTime.hour}
                       onChange={(e) => handleTimeChange('endTime', 'hour', e.target.value)}
-                      className="time-input"
+                      className={`calendar-time-input ${isEndTimeInvalid() ? 'calendar-time-input-error' : ''}`}
                     />
                     <span>:</span>
                     <input
@@ -906,12 +913,16 @@ function CalendarPage() {
                       max="59"
                       value={formData.endTime.minute}
                       onChange={(e) => handleTimeChange('endTime', 'minute', e.target.value)}
-                      className="time-input"
+                      className={`calendar-time-input ${isEndTimeInvalid() ? 'calendar-time-input-error' : ''}`}
                     />
                   </div>
+                  {isEndTimeInvalid() && (
+                    <p className="calendar-time-error-message">종료 시간은 시작 시간보다 늦어야 합니다.</p>
+                  )}
                   <button
-                    className="time-picker-close"
+                    className="calendar-time-picker-close"
                     onClick={() => setShowTimePicker(false)}
+                    disabled={isEndTimeInvalid()}
                   >
                     확인
                   </button>
@@ -974,9 +985,9 @@ function CalendarPage() {
 
             {/* 추가 버튼 */}
             <button 
-              className={`add-button ${formData.title.trim() && !isSaving ? 'add-button-active' : ''}`}
+              className={`add-button ${formData.title.trim() && !isSaving && !isEndTimeInvalid() ? 'add-button-active' : ''}`}
               onClick={handleSave}
-              disabled={!formData.title.trim() || isSaving}
+              disabled={!formData.title.trim() || isSaving || isEndTimeInvalid()}
             >
               {isSaving ? '저장 중...' : '추가'}
             </button>

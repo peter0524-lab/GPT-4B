@@ -228,6 +228,25 @@ function EventDetailPage() {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
   }
 
+  // 시간 검증 함수: 종료 시간이 시작 시간보다 같거나 빠른지 확인
+  // 날짜는 항상 같으므로 시간만 비교
+  const isEndTimeInvalid = () => {
+    if (!event) return false
+    
+    const startDate = formData.startDate || event.startDate
+    const endDate = formData.endDate || event.endDate
+    
+    if (!startDate || !endDate) return false
+    
+    // 시간만 분 단위로 변환하여 비교
+    // 예: 시작 9시 (540분), 종료 11시 (660분) -> 유효함 (660 > 540)
+    // 예: 시작 9시 (540분), 종료 8시 (480분) -> 유효하지 않음 (480 <= 540)
+    const startMinutes = startDate.getHours() * 60 + startDate.getMinutes()
+    const endMinutes = endDate.getHours() * 60 + endDate.getMinutes()
+    
+    return endMinutes <= startMinutes
+  }
+
   const handleSave = async () => {
 
     try {
@@ -1034,13 +1053,13 @@ function EventDetailPage() {
 
       {showTimePicker && (
 
-        <div className="time-picker-modal" onClick={() => setShowTimePicker(false)}>
+        <div className="event-detail-time-picker-modal" onClick={() => setShowTimePicker(false)}>
 
-          <div className="time-picker-content" onClick={(e) => e.stopPropagation()}>
+          <div className="event-detail-time-picker-content" onClick={(e) => e.stopPropagation()}>
 
             <h3>시작 시간</h3>
 
-            <div className="time-inputs">
+            <div className="event-detail-time-inputs">
 
               <input
 
@@ -1064,7 +1083,7 @@ function EventDetailPage() {
 
                 }}
 
-                className="time-input"
+                className="event-detail-time-input"
 
               />
 
@@ -1092,7 +1111,7 @@ function EventDetailPage() {
 
                 }}
 
-                className="time-input"
+                className="event-detail-time-input"
 
               />
 
@@ -1100,7 +1119,7 @@ function EventDetailPage() {
 
             <h3>종료 시간</h3>
 
-            <div className="time-inputs">
+            <div className="event-detail-time-inputs">
 
               <input
 
@@ -1124,11 +1143,7 @@ function EventDetailPage() {
 
                 }}
 
-                className={`time-input ${(() => {
-                  const startDate = formData.startDate || event.startDate
-                  const endDate = formData.endDate || event.endDate
-                  return endDate <= startDate ? 'time-input-error' : ''
-                })()}`}
+                className={`event-detail-time-input ${isEndTimeInvalid() ? 'event-detail-time-input-error' : ''}`}
 
               />
 
@@ -1156,45 +1171,26 @@ function EventDetailPage() {
 
                 }}
 
-                className={`time-input ${(() => {
-                  const startDate = formData.startDate || event.startDate
-                  const endDate = formData.endDate || event.endDate
-                  return endDate <= startDate ? 'time-input-error' : ''
-                })()}`}
+                className={`event-detail-time-input ${isEndTimeInvalid() ? 'event-detail-time-input-error' : ''}`}
 
               />
 
             </div>
-            {(() => {
-              const startDate = formData.startDate || event.startDate
-              const endDate = formData.endDate || event.endDate
-              if (endDate <= startDate) {
-                return <p className="time-error-message">종료 시간은 시작 시간보다 늦어야 합니다.</p>
-              }
-              return null
-            })()}
+            {isEndTimeInvalid() && (
+              <p className="event-detail-time-error-message">종료 시간은 시작 시간보다 늦어야 합니다.</p>
+            )}
 
             <button
 
-              className={`time-picker-close ${(() => {
-                const startDate = formData.startDate || event.startDate
-                const endDate = formData.endDate || event.endDate
-                return endDate <= startDate ? 'disabled' : ''
-              })()}`}
+              className="event-detail-time-picker-close"
 
               onClick={() => {
-                const startDate = formData.startDate || event.startDate
-                const endDate = formData.endDate || event.endDate
-                if (endDate > startDate) {
+                if (!isEndTimeInvalid()) {
                   setShowTimePicker(false)
                 }
               }}
 
-              disabled={(() => {
-                const startDate = formData.startDate || event.startDate
-                const endDate = formData.endDate || event.endDate
-                return endDate <= startDate
-              })()}
+              disabled={isEndTimeInvalid()}
 
             >
 
