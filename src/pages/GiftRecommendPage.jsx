@@ -301,7 +301,7 @@ function GiftRecommendPage() {
         <div className="price-range-section">
           <h2 className="section-title">
             선물 가격 범위
-            <span className="section-subtitle">1만원~20만원 사이의 선물을 추천해드립니다</span>
+            <span className="section-subtitle">1만원 이상의 선물을 추천해드립니다</span>
           </h2>
           <div className="price-range-container">
             <label className="price-label-inline">최소 <span style={{ color: '#ef4444' }}>*</span></label>
@@ -325,7 +325,7 @@ function GiftRecommendPage() {
                 <input
                   type="text"
                   className="price-input"
-                  placeholder="20"
+                  placeholder=""
                   value={maxPrice}
                   onChange={handleMaxPriceChange}
                   onBlur={handleMaxPriceBlur}
