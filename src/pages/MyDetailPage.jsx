@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import BottomNavigation from '../components/BottomNavigation'
 import { useCardStore } from '../store/cardStore'
 import { userAPI, giftAPI } from '../utils/api'
-import { isAuthenticated } from '../utils/auth'
+import { isAuthenticated, logout } from '../utils/auth'
 import './MyDetailPage.css'
 
 // 명함 디자인 맵 (MyDetailPage용 - 유사 색상 그라데이션)
@@ -270,7 +270,7 @@ function MyDetailPage() {
   }
 
   const handleBusinessCards = () => {
-    navigate('/business-cards')
+    navigate('/business-cards', { state: { isGridView: true } })
   }
 
   const handleGiftHistory = () => {
@@ -279,6 +279,12 @@ function MyDetailPage() {
 
   const handleEditMyInfo = () => {
     navigate('/my/edit')
+  }
+
+  const handleLogout = () => {
+    if (window.confirm('정말로 로그아웃을 하시겠습니까?')) {
+      logout()
+    }
   }
 
   if (isLoading) {
@@ -408,6 +414,13 @@ function MyDetailPage() {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* 로그아웃 버튼 */}
+        <div className="logout-section">
+          <button className="logout-button" onClick={handleLogout}>
+            로그아웃
+          </button>
         </div>
 
       </div>

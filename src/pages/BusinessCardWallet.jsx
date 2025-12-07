@@ -110,11 +110,20 @@ function BusinessCardWallet() {
   const [isFlipping, setIsFlipping] = useState(false)
   const [showDetailModal, setShowDetailModal] = useState(false)
   const [flippingCardId, setFlippingCardId] = useState(null)
-  const [isGridView, setIsGridView] = useState(false)
+  const [isGridView, setIsGridView] = useState(location.state?.isGridView || false)
   const [selectedCardId, setSelectedCardId] = useState(null)
   const cards = useCardStore((state) => state.cards)
   const fetchCards = useCardStore((state) => state.fetchCards)
   const isLoading = useCardStore((state) => state.isLoading)
+  
+  // location.state에서 isGridView 확인 및 설정
+  useEffect(() => {
+    if (location.state?.isGridView) {
+      setIsGridView(true)
+      // state 초기화 (뒤로가기 시 다시 열리지 않도록)
+      navigate(location.pathname, { replace: true, state: {} })
+    }
+  }, [location.state, location.pathname, navigate])
   
   // 명함 목록 가져오기 (검색어가 변경될 때마다)
   useEffect(() => {

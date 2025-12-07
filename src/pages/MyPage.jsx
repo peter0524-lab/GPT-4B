@@ -6,12 +6,12 @@ import './MyPage.css'
 
 // 명함 디자인 맵
 const cardDesigns = {
-  'design-1': 'linear-gradient(147.99deg, rgba(109, 48, 223, 1) 0%, rgba(255, 255, 255, 1) 100%)',
-  'design-2': 'linear-gradient(147.99deg, rgba(59, 130, 246, 1) 0%, rgba(255, 255, 255, 1) 100%)',
-  'design-3': 'linear-gradient(147.99deg, rgba(16, 185, 129, 1) 0%, rgba(255, 255, 255, 1) 100%)',
-  'design-4': 'linear-gradient(147.99deg, rgba(236, 72, 153, 1) 0%, rgba(255, 255, 255, 1) 100%)',
-  'design-5': 'linear-gradient(147.99deg, rgba(249, 115, 22, 1) 0%, rgba(255, 255, 255, 1) 100%)',
-  'design-6': 'linear-gradient(147.99deg, rgba(99, 102, 241, 1) 0%, rgba(255, 255, 255, 1) 100%)',
+  'design-1': 'linear-gradient(147.99deg, rgba(109, 48, 223, 1) 0%, rgba(200, 195, 245, 1) 100%)',
+  'design-2': 'linear-gradient(147.99deg, rgba(59, 130, 246, 1) 0%, rgba(191, 219, 254, 1) 100%)',
+  'design-3': 'linear-gradient(147.99deg, rgba(16, 185, 129, 1) 0%, rgba(167, 243, 208, 1) 100%)',
+  'design-4': 'linear-gradient(147.99deg, rgba(236, 72, 153, 1) 0%, rgba(252, 231, 243, 1) 100%)',
+  'design-5': 'linear-gradient(147.99deg, rgba(249, 115, 22, 1) 0%, rgba(255, 237, 213, 1) 100%)',
+  'design-6': 'linear-gradient(147.99deg, rgba(99, 102, 241, 1) 0%, rgba(221, 214, 254, 1) 100%)',
 }
 
 // 명함 디자인별 배경색 맵
@@ -219,65 +219,105 @@ function MyPage() {
     }
   }, [])
 
+  const handleCardClick = () => {
+    if (isAnimating) return
+    
+    setIsAnimating(true)
+    const card = cardRef.current
+    if (card) {
+      // 명함 카드가 위로 자연스럽게 올라가는 애니메이션
+      card.style.transition = 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease-out'
+      card.style.transform = 'translateY(-80vh) rotate(0deg) scale(0.9)'
+      card.style.opacity = '0'
+      
+      // 애니메이션 완료 후 상세 페이지로 이동
+      setTimeout(() => {
+        navigate('/my/detail')
+      }, 1000)
+    }
+  }
+
   const handleSwipeUp = () => {
     if (isAnimating) return
     
     setIsAnimating(true)
     const card = cardRef.current
     if (card) {
-      // 명함 카드가 위로 사라지는 애니메이션 (더 천천히)
-      card.style.transition = 'transform 0.7s ease-out, opacity 0.7s ease-out'
-      card.style.transform = 'translateY(-100vh) rotate(90deg)'
+      // 명함 카드가 위로 자연스럽게 올라가는 애니메이션
+      card.style.transition = 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease-out'
+      card.style.transform = 'translateY(-80vh) rotate(0deg) scale(0.9)'
       card.style.opacity = '0'
       
       // 애니메이션 완료 후 상세 페이지로 이동
       setTimeout(() => {
         navigate('/my/detail')
-      }, 1200)
+      }, 1000)
+    }
+  }
+
+  // 카드 클릭 처리
+  const handleCardClickEvent = (e) => {
+    // 드래그가 발생하지 않았고 애니메이션 중이 아닐 때만 클릭 처리
+    const dragDistance = Math.abs(dragStart.x - dragCurrent.x) + Math.abs(dragStart.y - dragCurrent.y)
+    if (dragDistance < 5 && !isAnimating) {
+      handleCardClick()
     }
   }
 
   // 카드 드래그 시작 (마우스)
   const onCardMouseDown = (e) => {
     if (isAnimating) return
-    setIsDragging(true)
+    e.stopPropagation() // 클릭 이벤트 전파 방지
+    setIsDragging(false) // 초기값을 false로 설정
     setDragStart({ x: e.clientX, y: e.clientY })
     setDragCurrent({ x: e.clientX, y: e.clientY })
   }
 
   // 카드 드래그 중 (마우스)
   const onCardMouseMove = (e) => {
-    if (!isDragging || isAnimating) return
+    if (isAnimating) return
     
     const newY = e.clientY
-    const deltaY = dragStart.y - newY
+    const deltaY = Math.abs(dragStart.y - newY)
+    const deltaX = Math.abs(dragStart.x - e.clientX)
     
-    if (deltaY > 0) {
-      setDragCurrent({ x: e.clientX, y: newY })
-      const card = cardRef.current
-      if (card) {
-        card.style.transition = 'none'
-        card.style.transform = `translateY(${-deltaY}px) rotate(90deg)`
-        card.style.opacity = Math.max(0, 1 - deltaY / 200)
+    // 드래그가 시작되었는지 확인 (5px 이상 이동)
+    if (deltaY > 5 || deltaX > 5) {
+      setIsDragging(true)
+    }
+    
+    if (isDragging && deltaY > 0) {
+      const moveY = dragStart.y - newY
+      if (moveY > 0) {
+        setDragCurrent({ x: e.clientX, y: newY })
+        const card = cardRef.current
+        if (card) {
+          card.style.transition = 'none'
+          card.style.transform = `translateY(${-moveY}px) rotate(0deg)`
+          card.style.opacity = Math.max(0, 1 - moveY / 200)
+        }
       }
     }
   }
 
   // 카드 드래그 종료 (마우스)
   const onCardMouseUp = (e) => {
-    if (!isDragging || isAnimating) return
+    if (isAnimating) return
+    e.stopPropagation() // 클릭 이벤트 전파 방지
     
     const deltaY = dragStart.y - dragCurrent.y
     
-    if (deltaY > minSwipeDistance) {
-      handleSwipeUp()
-    } else {
-      // 드래그 거리가 부족하면 원래 위치로 복귀
-      const card = cardRef.current
-      if (card) {
-        card.style.transition = 'transform 0.3s ease-out, opacity 0.3s ease-out'
-        card.style.transform = 'translateY(0) rotate(90deg)'
-        card.style.opacity = '1'
+    if (isDragging) {
+      if (deltaY > minSwipeDistance) {
+        handleSwipeUp()
+      } else {
+        // 드래그 거리가 부족하면 원래 위치로 복귀
+        const card = cardRef.current
+        if (card) {
+          card.style.transition = 'transform 0.3s ease-out, opacity 0.3s ease-out'
+          card.style.transform = 'translateY(0) rotate(0deg)'
+          card.style.opacity = '1'
+        }
       }
     }
     
@@ -291,25 +331,34 @@ function MyPage() {
     if (isAnimating) return
     setTouchEnd(null)
     setTouchStart(e.touches[0].clientY)
-    setIsDragging(true)
+    setIsDragging(false) // 초기값을 false로 설정
   }
 
   // 카드 터치 이동
   const onCardTouchMove = (e) => {
-    if (!isDragging || isAnimating) return
+    if (isAnimating) return
     
     const currentY = e.touches[0].clientY
     setTouchEnd(currentY)
     
     if (touchStart !== null) {
-      const deltaY = touchStart - currentY
+      const deltaY = Math.abs(touchStart - currentY)
       
-      if (deltaY > 0) {
-        const card = cardRef.current
-        if (card) {
-          card.style.transition = 'none'
-          card.style.transform = `translateY(${-deltaY}px) rotate(90deg)`
-          card.style.opacity = Math.max(0, 1 - deltaY / 200)
+      // 드래그가 시작되었는지 확인 (5px 이상 이동)
+      if (deltaY > 5) {
+        setIsDragging(true)
+      }
+      
+      if (isDragging) {
+        const moveY = touchStart - currentY
+        
+        if (moveY > 0) {
+          const card = cardRef.current
+          if (card) {
+            card.style.transition = 'none'
+            card.style.transform = `translateY(${-moveY}px) rotate(0deg)`
+            card.style.opacity = Math.max(0, 1 - moveY / 200)
+          }
         }
       }
     }
@@ -329,7 +378,7 @@ function MyPage() {
       const card = cardRef.current
       if (card) {
         card.style.transition = 'transform 0.3s ease-out, opacity 0.3s ease-out'
-        card.style.transform = 'translateY(0) rotate(90deg)'
+        card.style.transform = 'translateY(0) rotate(0deg)'
         card.style.opacity = '1'
       }
     }
@@ -354,7 +403,7 @@ function MyPage() {
         const card = cardRef.current
         if (card) {
           card.style.transition = 'none'
-          card.style.transform = `translateY(${-deltaY}px) rotate(90deg)`
+          card.style.transform = `translateY(${-deltaY}px) rotate(0deg)`
           card.style.opacity = Math.max(0, 1 - deltaY / 200)
         }
       }
@@ -372,7 +421,7 @@ function MyPage() {
         const card = cardRef.current
         if (card) {
           card.style.transition = 'transform 0.3s ease-out, opacity 0.3s ease-out'
-          card.style.transform = 'translateY(0) rotate(90deg)'
+          card.style.transform = 'translateY(0) rotate(0deg)'
           card.style.opacity = '1'
         }
       }
@@ -428,13 +477,14 @@ function MyPage() {
         {/* 개인 명함 카드 */}
         <div className="business-card-container">
           <div 
-            className="business-card" 
+            className="business-card"
             ref={cardRef}
+            onClick={handleCardClickEvent}
             onMouseDown={onCardMouseDown}
             onTouchStart={onCardTouchStart}
             onTouchMove={onCardTouchMove}
             onTouchEnd={onCardTouchEnd}
-            style={{ cursor: isDragging ? 'grabbing' : 'grab', userSelect: 'none' }}
+            style={{ cursor: isDragging ? 'grabbing' : 'pointer', userSelect: 'none' }}
           >
             <div 
               className="card-content"
@@ -467,7 +517,7 @@ function MyPage() {
         </div>
 
         {/* 스와이프 업 안내 버튼 */}
-        <button className="swipe-up-button" onClick={handleSwipeUp} disabled={isAnimating}>
+        <div className="swipe-up-button" style={{ pointerEvents: 'none' }}>
           <div className="swipe-arrows">
             <div className="arrow-up">
               <ArrowUpIcon />
@@ -476,8 +526,8 @@ function MyPage() {
               <ArrowUpIcon />
             </div>
           </div>
-          <p className="swipe-text">위로 밀어서 상세정보 확인하기</p>
-        </button>
+          <p className="swipe-text">명함을 눌러서 상세정보 확인하기</p>
+        </div>
       </div>
     </div>
   )
