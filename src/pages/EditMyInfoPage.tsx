@@ -12,8 +12,8 @@ const fields: Array<{
   multiline?: boolean;
 }> = [
   { name: "name", label: "이름", placeholder: "홍길동", required: true },
-  { name: "position", label: "직함", placeholder: "Product Manager", required: true },
-  { name: "company", label: "회사", placeholder: "Cursor Studio", required: true },
+  { name: "company", label: "소속", placeholder: "Cursor Studio", required: true },
+  { name: "position", label: "직급", placeholder: "Product Manager", required: true },
   { name: "phone", label: "전화", placeholder: "010-1234-5678", required: true },
   { name: "email", label: "이메일", placeholder: "hello@cursor.ai", required: true },
 ];
@@ -91,12 +91,12 @@ function EditMyInfoPage() {
       alert("이름을 입력해주세요.");
       return;
     }
-    if (!formValues.position) {
-      alert("직함을 입력해주세요.");
+    if (!formValues.company) {
+      alert("소속을 입력해주세요.");
       return;
     }
-    if (!formValues.company) {
-      alert("회사를 입력해주세요.");
+    if (!formValues.position) {
+      alert("직급을 입력해주세요.");
       return;
     }
     if (!formValues.phone) {
