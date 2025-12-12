@@ -82,10 +82,11 @@ function LoginScreen() {
                 type="text"
                 placeholder="아이디를 입력하세요"
                 value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={(e) => setUsername(e.target.value.toLowerCase())}
                 className="login-input"
-                autoCapitalize="off"
+                autoCapitalize="none"
                 autoCorrect="off"
+                spellCheck={false}
               />
               <div className="input-icon-right">
                 <UserIcon />
