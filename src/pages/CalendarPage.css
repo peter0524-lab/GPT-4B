@@ -19,14 +19,14 @@
 /* 로고 헤더 */
 .logo-header {
   position: absolute;
-  top: clamp(16px, 4vw, 20px);
-  left: clamp(24px, 8vw, 42px);
+  top: clamp(8px, 2vw, 12px);
+  left: clamp(16px, 4vw, 20px);
   z-index: 10;
 }
 
 .calendar-logo {
-  width: clamp(18px, 5vw, 21px);
-  height: clamp(18px, 5vw, 21px);
+  width: clamp(16px, 4vw, 20px);
+  height: clamp(16px, 4vw, 20px);
   object-fit: cover;
 }
 
@@ -76,11 +76,11 @@
   background: white;
   border-radius: 8px;
   box-shadow: 2px 16px 19px 0px rgba(0, 0, 0, 0.09);
-  padding: clamp(16px, 5vw, 24px);
-  margin: 0 clamp(16px, 6vw, 42px) clamp(16px, 5vw, 24px) clamp(16px, 6vw, 42px);
+  padding: clamp(12px, 3vw, 16px);
+  margin: 0 clamp(12px, 3vw, 16px) clamp(12px, 3vw, 16px) clamp(12px, 3vw, 16px);
   display: flex;
   flex-direction: column;
-  gap: clamp(16px, 5vw, 22px);
+  gap: clamp(8px, 2vw, 12px);
 }
 
 .calendar-header-nav {
@@ -147,7 +147,7 @@
 .calendar-days-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: clamp(4px, 1.5vw, 8px);
+  gap: clamp(2px, 0.5vw, 4px);
   width: 100%;
 }
 
@@ -156,8 +156,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: clamp(24px, 8vw, 30px);
-  height: clamp(24px, 8vw, 30px);
+  width: clamp(28px, 9vw, 32px);
+  height: clamp(28px, 9vw, 32px);
   border-radius: 50%;
   cursor: pointer;
   transition: all 0.2s;
@@ -179,7 +179,7 @@
 
 .day-number {
   font-family: 'Avenir Next LT Pro', 'Inter', sans-serif;
-  font-size: clamp(12px, 4vw, 16px);
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 600;
   line-height: 1.2;
   color: #4a5660;
