@@ -891,15 +891,15 @@
 
 /* Main Card Info */
 .modal-main-card {
-  border-radius: clamp(14px, 4vw, 20px);
-  padding: clamp(16px, 5vw, 24px);
-  margin: 0 clamp(16px, 4vw, 20px) 8px clamp(16px, 4vw, 20px);
+  border-radius: clamp(12px, 3vw, 16px);
+  padding: clamp(14px, 4vw, 20px);
+  margin: 0 clamp(20px, 5vw, 24px) 12px clamp(20px, 5vw, 24px);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.12);
   transition: background 0.3s ease;
-  min-height: clamp(100px, 30vw, 140px);
+  min-height: clamp(90px, 25vw, 120px);
   position: relative;
 }
 
@@ -1044,9 +1044,9 @@
 /* Gift History Button */
 .modal-gift-actions {
   display: flex;
-  gap: clamp(8px, 2.5vw, 12px);
-  margin: 8px clamp(16px, 4vw, 20px) 12px clamp(16px, 4vw, 20px);
-  width: calc(100% - clamp(32px, 8vw, 40px));
+  gap: clamp(8px, 2vw, 10px);
+  margin: 8px clamp(20px, 5vw, 24px) 12px clamp(20px, 5vw, 24px);
+  width: calc(100% - clamp(40px, 10vw, 48px));
   box-sizing: border-box;
 }
 
@@ -1177,8 +1177,8 @@
 
 /* Business Card Information Section */
 .modal-info-section {
-  padding: 0 clamp(16px, 4vw, 20px) clamp(24px, 6vw, 32px) clamp(16px, 4vw, 20px);
-  margin-top: clamp(8px, 2.5vw, 12px);
+  padding: 0 clamp(20px, 5vw, 24px) clamp(20px, 5vw, 28px) clamp(20px, 5vw, 24px);
+  margin-top: clamp(4px, 1.5vw, 8px);
 }
 
 .modal-info-title {
@@ -1200,8 +1200,8 @@
 .modal-info-row {
   display: flex;
   align-items: center;
-  padding: clamp(12px, 3.5vw, 16px) clamp(16px, 4vw, 20px);
-  gap: clamp(8px, 2.5vw, 12px);
+  padding: clamp(10px, 3vw, 14px) clamp(14px, 3.5vw, 18px);
+  gap: clamp(8px, 2vw, 10px);
 }
 
 .info-icon {
