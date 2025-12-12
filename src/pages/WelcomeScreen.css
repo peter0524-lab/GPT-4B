@@ -15,6 +15,9 @@
   flex-direction: column;
   align-items: center;
   gap: 20px;
+  padding: 20px;
+  width: 100%;
+  max-width: 320px;
 }
 
 .logo-container {
@@ -45,3 +48,126 @@
   margin: 0;
 }
 
+/* Stats Section */
+.stats-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stats-header {
+  text-align: center;
+}
+
+.stats-intro {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0;
+  line-height: 1.5;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.stats-intro-highlight {
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 4px 0 0 0;
+  line-height: 1.5;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.company-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.company-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 14px 16px;
+  animation: slideIn 0.4s ease-out;
+  animation-fill-mode: both;
+}
+
+.company-item:nth-child(1) {
+  animation-delay: 0.1s;
+  background: linear-gradient(135deg, rgba(88, 76, 220, 0.3) 0%, rgba(109, 48, 223, 0.3) 100%);
+  border: 1px solid rgba(88, 76, 220, 0.5);
+}
+
+.company-item:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.company-item:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.company-rank-badge {
+  font-size: 20px;
+  width: 28px;
+  text-align: center;
+}
+
+.company-name {
+  flex: 1;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.company-count {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 13px;
+  font-weight: 500;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.stats-footer {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 14px;
+  font-weight: 400;
+  margin: 8px 0 0 0;
+  font-family: 'Noto Sans KR', sans-serif;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}

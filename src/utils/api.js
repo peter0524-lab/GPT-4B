@@ -222,6 +222,8 @@ export const authAPI = {
   googleLogin: (idToken) => api.post("/auth/google", { idToken }),
 
   appleLogin: (idToken) => api.post("/auth/apple", { idToken }),
+
+  getCompanyStats: () => api.get("/auth/company-stats"),
 };
 
 // Business Card API
