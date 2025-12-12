@@ -8,7 +8,7 @@
 
 .chat-history-container {
   width: 100%;
-  max-width: 393px;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -18,7 +18,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 20px;
+  padding: clamp(12px, 3.5vw, 16px) clamp(16px, 4vw, 20px);
   position: relative;
 }
 
@@ -30,7 +30,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 24px;
+  height: clamp(20px, 6vw, 24px);
   align-self: flex-start;
 }
 
@@ -39,7 +39,7 @@
 }
 
 .chat-history-title {
-  font-size: 18px;
+  font-size: clamp(15px, 4.5vw, 18px);
   font-weight: 700;
   color: #252525;
   font-family: 'Mulish', 'Noto Sans KR', sans-serif;
@@ -47,20 +47,20 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%) translateY(27px);
-  line-height: 24px;
+  transform: translate(-50%, -50%) translateY(clamp(20px, 6vw, 27px));
+  line-height: 1;
   display: flex;
   align-items: center;
-  height: 24px;
+  height: clamp(20px, 6vw, 24px);
 }
 
 .search-bar {
   display: flex;
   align-items: center;
-  padding: 4px 12px;
+  padding: 4px clamp(10px, 3vw, 12px);
   background-color: #F5F5F5;
-  margin: 12px 12px;
-  margin-top: calc(12px + 28px);
+  margin: clamp(10px, 3vw, 12px);
+  margin-top: calc(clamp(10px, 3vw, 12px) + clamp(22px, 7vw, 28px));
   border-radius: 10px;
   position: relative;
 }
@@ -69,8 +69,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 14px;
-  height: 14px;
+  width: clamp(12px, 3.5vw, 14px);
+  height: clamp(12px, 3.5vw, 14px);
   margin-right: 8px;
   flex-shrink: 0;
 }
@@ -80,7 +80,7 @@
   border: none;
   background: none;
   outline: none;
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   font-family: 'Mulish', 'Noto Sans KR', sans-serif;
   color: #252525;
   padding: 0;
@@ -102,7 +102,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 20px;
+  padding: clamp(12px, 3.5vw, 16px) clamp(16px, 4vw, 20px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   cursor: pointer;
   transition: background-color 0.2s;
@@ -120,7 +120,7 @@
 }
 
 .chat-item-text {
-  font-size: 16px;
+  font-size: clamp(14px, 4vw, 16px);
   font-weight: 500;
   color: #252525;
   font-family: 'Mulish', 'Noto Sans KR', sans-serif;
@@ -131,7 +131,7 @@
 }
 
 .chat-time {
-  font-size: 12px;
+  font-size: clamp(10px, 3vw, 12px);
   font-weight: 400;
   color: #999;
   font-family: 'Mulish', 'Noto Sans KR', sans-serif;
@@ -144,10 +144,23 @@
 
 .chat-loading,
 .chat-empty {
-  padding: 40px 20px;
+  padding: clamp(30px, 10vw, 40px) clamp(16px, 4vw, 20px);
   text-align: center;
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   color: #999;
   font-family: 'Mulish', 'Noto Sans KR', sans-serif;
 }
 
+/* 태블릿 */
+@media (min-width: 768px) {
+  .chat-history-container {
+    max-width: 600px;
+  }
+}
+
+/* 데스크탑 */
+@media (min-width: 1024px) {
+  .chat-history-container {
+    max-width: 430px;
+  }
+}

@@ -4,17 +4,18 @@
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  max-width: 393px;
-  height: 83px;
+  max-width: 100%;
+  height: clamp(70px, 20vw, 83px);
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 0 17px;
+  padding: 0 clamp(12px, 3.5vw, 17px);
   background-color: white;
-  border-top-left-radius: 40px;
-  border-top-right-radius: 40px;
+  border-top-left-radius: clamp(24px, 8vw, 40px);
+  border-top-right-radius: clamp(24px, 8vw, 40px);
   box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.3), 0 -4px 12px rgba(0, 0, 0, 0.2);
   z-index: 1000;
+  box-sizing: border-box;
 }
 
 .nav-background {
@@ -22,10 +23,10 @@
   top: -12px;
   left: 0;
   width: 100%;
-  height: 83px;
+  height: clamp(70px, 20vw, 83px);
   background-color: white;
-  border-top-left-radius: 40px;
-  border-top-right-radius: 40px;
+  border-top-left-radius: clamp(24px, 8vw, 40px);
+  border-top-right-radius: clamp(24px, 8vw, 40px);
 }
 
 .home-indicator {
@@ -33,7 +34,7 @@
   bottom: -18px;
   left: 50%;
   transform: translateX(-50%);
-  width: 144px;
+  width: clamp(100px, 35vw, 144px);
   height: 5px;
   background-color: #312e28;
   border-radius: 100px;
@@ -43,14 +44,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: clamp(2px, 1vw, 4px);
   text-decoration: none;
   color: black;
   opacity: 0.4;
   transition: opacity 0.2s;
   position: relative;
   z-index: 1;
-  padding: 8px;
+  padding: clamp(6px, 2vw, 8px);
 }
 
 .nav-item.active {
@@ -62,23 +63,23 @@
 }
 
 .nav-icon {
-  width: 24px;
-  height: 24px;
+  width: clamp(20px, 6vw, 24px);
+  height: clamp(20px, 6vw, 24px);
   object-fit: contain;
 }
 
 .nav-item svg {
-  width: 24px;
-  height: 24px;
+  width: clamp(20px, 6vw, 24px);
+  height: clamp(20px, 6vw, 24px);
   flex-shrink: 0;
 }
 
 .nav-label {
-  font-size: 11px;
+  font-size: clamp(9px, 2.8vw, 11px);
   font-weight: 700;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
   text-align: center;
-  line-height: 16.5px;
+  line-height: 1.4;
   letter-spacing: 0.0645px;
 }
 
@@ -90,8 +91,8 @@
 
 .ai-icon-wrapper {
   position: relative;
-  width: 26px;
-  height: 26px;
+  width: clamp(22px, 6.5vw, 26px);
+  height: clamp(22px, 6.5vw, 26px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -99,16 +100,16 @@
 
 .ai-background-icon {
   position: absolute;
-  width: 26px;
-  height: 26px;
+  width: clamp(22px, 6.5vw, 26px);
+  height: clamp(22px, 6.5vw, 26px);
   top: 0;
   left: 0;
 }
 
 .ai-logo {
   position: absolute;
-  width: 23px;
-  height: 25px;
+  width: clamp(19px, 5.8vw, 23px);
+  height: clamp(21px, 6.3vw, 25px);
   top: 1px;
   left: 2px;
   object-fit: cover;
@@ -120,10 +121,10 @@
   top: -9px;
   left: 50%;
   transform: translateX(-50%);
-  width: 72px;
-  height: 72px;
+  width: clamp(58px, 18vw, 72px);
+  height: clamp(58px, 18vw, 72px);
   background-color: #584cdc;
-  border-radius: 36px;
+  border-radius: 50%;
   z-index: -1;
   box-shadow: 0px 6px 20px rgba(88, 76, 220, 0.6), 0px 2px 8px rgba(88, 76, 220, 0.4);
 }
@@ -132,8 +133,21 @@
   color: #fff7ef;
   font-family: 'Pretendard', sans-serif;
   font-weight: 700;
-  font-size: 12px;
+  font-size: clamp(10px, 3vw, 12px);
   line-height: 1.2;
   margin-top: 4px;
 }
 
+/* 태블릿 */
+@media (min-width: 768px) {
+  .bottom-navigation {
+    max-width: 600px;
+  }
+}
+
+/* 데스크탑 */
+@media (min-width: 1024px) {
+  .bottom-navigation {
+    max-width: 430px;
+  }
+}

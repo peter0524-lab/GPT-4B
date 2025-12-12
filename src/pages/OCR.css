@@ -1,6 +1,6 @@
 .ocr-page {
   width: 100%;
-  max-width: 393px;
+  max-width: 100%;
   min-height: 100vh;
   height: 100vh;
   background: #000000;
@@ -14,14 +14,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-
-@media (max-width: 393px) {
-  .ocr-page {
-    max-width: 100%;
-    left: 0;
-    transform: none;
-  }
 }
 
 .ocr-container {
@@ -38,7 +30,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 16px;
+  padding: clamp(16px, 4vw, 20px) clamp(12px, 3.5vw, 16px);
   position: absolute;
   top: 0;
   left: 0;
@@ -50,8 +42,8 @@
 .ocr-back-button,
 .ocr-flip-button,
 .ocr-switch-button {
-  width: 40px;
-  height: 40px;
+  width: clamp(32px, 10vw, 40px);
+  height: clamp(32px, 10vw, 40px);
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
@@ -77,7 +69,7 @@
 }
 
 .ocr-title-section {
-  padding: 80px 24px 0;
+  padding: clamp(60px, 18vw, 80px) clamp(16px, 5vw, 24px) 0;
   text-align: center;
   position: absolute;
   top: 0;
@@ -88,7 +80,7 @@
 }
 
 .ocr-step {
-  font-size: 12px;
+  font-size: clamp(10px, 3vw, 12px);
   font-weight: 500;
   color: rgba(255, 255, 255, 0.7);
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
@@ -97,7 +89,7 @@
 }
 
 .ocr-title {
-  font-size: 20px;
+  font-size: clamp(16px, 5vw, 20px);
   font-weight: 600;
   color: white;
   margin: 0 0 8px 0;
@@ -106,7 +98,7 @@
 }
 
 .ocr-subtitle {
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   color: rgba(255, 255, 255, 0.8);
   margin: 0;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
@@ -115,15 +107,15 @@
 
 .ocr-guide-message {
   position: absolute;
-  bottom: 180px;
+  bottom: clamp(140px, 40vw, 180px);
   left: 50%;
   transform: translateX(-50%);
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(10px);
   color: white;
-  padding: 10px 20px;
-  border-radius: 20px;
-  font-size: 13px;
+  padding: clamp(8px, 2.5vw, 10px) clamp(16px, 4vw, 20px);
+  border-radius: clamp(16px, 4vw, 20px);
+  font-size: clamp(11px, 3.2vw, 13px);
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
   white-space: nowrap;
   z-index: 15;
@@ -132,19 +124,19 @@
 
 .ocr-error-message {
   position: absolute;
-  bottom: 180px;
+  bottom: clamp(140px, 40vw, 180px);
   left: 50%;
   transform: translateX(-50%);
   background: rgba(239, 68, 68, 0.95);
   backdrop-filter: blur(10px);
   color: white;
-  padding: 12px 24px;
-  border-radius: 20px;
-  font-size: 14px;
+  padding: clamp(10px, 3vw, 12px) clamp(16px, 5vw, 24px);
+  border-radius: clamp(16px, 4vw, 20px);
+  font-size: clamp(12px, 3.5vw, 14px);
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
   z-index: 20;
   box-shadow: 0px 4px 12px rgba(239, 68, 68, 0.4);
-  max-width: calc(100% - 48px);
+  max-width: calc(100% - clamp(32px, 10vw, 48px));
   text-align: center;
 }
 
@@ -160,15 +152,15 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  padding: 20px;
+  padding: clamp(16px, 4vw, 20px);
 }
 
 .permission-dialog {
   background: rgba(255, 255, 255, 0.82);
   backdrop-filter: blur(25px);
-  border-radius: 14px;
+  border-radius: clamp(12px, 3vw, 14px);
   width: 100%;
-  max-width: 270px;
+  max-width: clamp(240px, 70vw, 270px);
   position: relative;
   overflow: hidden;
 }
@@ -177,8 +169,8 @@
   position: absolute;
   top: 8px;
   right: 8px;
-  width: 24px;
-  height: 24px;
+  width: clamp(20px, 6vw, 24px);
+  height: clamp(20px, 6vw, 24px);
   border: none;
   background: transparent;
   cursor: pointer;
@@ -194,36 +186,36 @@
 }
 
 .permission-dialog-content {
-  padding: 19px 16px 15px;
+  padding: clamp(15px, 4vw, 19px) clamp(12px, 3.5vw, 16px) clamp(12px, 3vw, 15px);
   text-align: center;
 }
 
 .permission-dialog-title {
-  font-size: 17px;
+  font-size: clamp(15px, 4.5vw, 17px);
   font-weight: 600;
   color: #000000;
   margin: 0 0 2px 0;
   font-family: 'SF Pro', 'Inter', 'Noto Sans KR', sans-serif;
-  line-height: 22px;
+  line-height: 1.3;
 }
 
 .permission-dialog-description {
-  font-size: 13px;
+  font-size: clamp(11px, 3.2vw, 13px);
   font-weight: 400;
   color: #000000;
   margin: 0;
   font-family: 'SF Pro', 'Inter', 'Noto Sans KR', sans-serif;
-  line-height: 18px;
+  line-height: 1.4;
 }
 
 .permission-dialog-button {
   width: 100%;
-  height: 44px;
+  height: clamp(38px, 12vw, 44px);
   border: none;
   border-top: 0.333px solid rgba(0, 0, 0, 0.1);
   background: transparent;
   color: #007aff;
-  font-size: 17px;
+  font-size: clamp(15px, 4.5vw, 17px);
   font-weight: 600;
   cursor: pointer;
   font-family: 'SF Pro', 'Inter', 'Noto Sans KR', sans-serif;
@@ -244,14 +236,14 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 40px 24px;
+  padding: clamp(30px, 10vw, 40px) clamp(16px, 5vw, 24px);
   min-height: 100vh;
   flex: 1;
 }
 
 .ocr-file-upload-area {
   width: 100%;
-  max-width: 400px;
+  max-width: clamp(300px, 90vw, 400px);
   margin: 0 auto;
 }
 
@@ -260,9 +252,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 80px 40px;
+  padding: clamp(50px, 18vw, 80px) clamp(24px, 8vw, 40px);
   border: 2px dashed rgba(255, 255, 255, 0.4);
-  border-radius: 20px;
+  border-radius: clamp(16px, 4vw, 20px);
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
   cursor: pointer;
@@ -282,9 +274,9 @@
 }
 
 .ocr-file-upload-icon {
-  width: 72px;
-  height: 72px;
-  margin-bottom: 24px;
+  width: clamp(56px, 18vw, 72px);
+  height: clamp(56px, 18vw, 72px);
+  margin-bottom: clamp(16px, 5vw, 24px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -295,7 +287,7 @@
 }
 
 .ocr-file-upload-text {
-  font-size: 18px;
+  font-size: clamp(15px, 4.5vw, 18px);
   font-weight: 600;
   color: white;
   margin: 0 0 8px 0;
@@ -304,27 +296,27 @@
 }
 
 .ocr-file-upload-hint {
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   color: rgba(255, 255, 255, 0.8);
   margin: 0;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
 }
 
 .ocr-processing {
-  margin-top: 32px;
-  padding: 24px;
+  margin-top: clamp(24px, 7vw, 32px);
+  padding: clamp(16px, 5vw, 24px);
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px);
-  border-radius: 12px;
+  border-radius: clamp(10px, 2.5vw, 12px);
   color: white;
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
   text-align: center;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: clamp(8px, 2.5vw, 12px);
 }
 
 .ocr-processing p {
@@ -333,14 +325,14 @@
 }
 
 .ocr-processing-hint {
-  font-size: 12px !important;
+  font-size: clamp(10px, 3vw, 12px) !important;
   color: rgba(255, 255, 255, 0.7) !important;
   font-weight: 400 !important;
 }
 
 .ocr-processing-spinner {
-  width: 32px;
-  height: 32px;
+  width: clamp(24px, 8vw, 32px);
+  height: clamp(24px, 8vw, 32px);
   border: 3px solid rgba(255, 255, 255, 0.2);
   border-top-color: white;
   border-radius: 50%;
@@ -350,5 +342,19 @@
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+/* 태블릿 */
+@media (min-width: 768px) {
+  .ocr-page {
+    max-width: 600px;
+  }
+}
+
+/* 데스크탑 */
+@media (min-width: 1024px) {
+  .ocr-page {
+    max-width: 430px;
   }
 }

@@ -9,7 +9,7 @@
 
 .gift-recommend-result-container {
   width: 100%;
-  max-width: 393px;
+  max-width: 100%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -21,7 +21,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 20px 16px 20px;
+  padding: clamp(12px, 3.5vw, 16px) clamp(16px, 4vw, 20px);
   position: sticky;
   top: 0;
   background-color: white;
@@ -44,7 +44,7 @@
 }
 
 .header-title {
-  font-size: 16px;
+  font-size: clamp(14px, 4vw, 16px);
   font-weight: 600;
   color: #252525;
   font-family: 'Mulish', 'Noto Sans KR', sans-serif;
@@ -52,7 +52,7 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%) translateY(24px);
+  transform: translate(-50%, -50%) translateY(clamp(18px, 5vw, 24px));
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -60,12 +60,12 @@
 }
 
 .header-name {
-  font-size: 16px;
+  font-size: clamp(14px, 4vw, 16px);
   font-weight: 600;
 }
 
 .header-company-position {
-  font-size: 10px;
+  font-size: clamp(9px, 2.5vw, 10px);
   font-weight: 400;
   opacity: 0.7;
 }
@@ -73,18 +73,18 @@
 /* Chat Messages */
 .chat-messages {
   flex: 1;
-  padding: 36px 20px 100px 20px;
+  padding: clamp(24px, 7vw, 36px) clamp(16px, 4vw, 20px) clamp(80px, 24vw, 100px) clamp(16px, 4vw, 20px);
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: clamp(12px, 3.5vw, 16px);
   overflow-y: auto;
   position: relative;
 }
 
 .message-bubble {
   max-width: 95%;
-  padding: 12px 16px;
-  border-radius: 16px;
+  padding: clamp(10px, 3vw, 12px) clamp(12px, 3.5vw, 16px);
+  border-radius: clamp(12px, 3.5vw, 16px);
   word-wrap: break-word;
 }
 
@@ -104,7 +104,7 @@
 .user-message p {
   margin: 0 0 8px 0;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 400;
   line-height: 1.5;
 }
@@ -125,17 +125,17 @@
 /* User Info Card */
 .user-info-card {
   background-color: #e5e7eb;
-  border-radius: 12px;
-  padding: 12px;
-  margin: 12px 0;
+  border-radius: clamp(10px, 2.5vw, 12px);
+  padding: clamp(10px, 3vw, 12px);
+  margin: clamp(10px, 3vw, 12px) 0;
   display: flex;
-  gap: 12px;
+  gap: clamp(10px, 3vw, 12px);
   align-items: flex-start;
 }
 
 .user-info-avatar {
-  width: 40px;
-  height: 40px;
+  width: clamp(32px, 10vw, 40px);
+  height: clamp(32px, 10vw, 40px);
   border-radius: 50%;
   background: linear-gradient(147.99deg, rgba(109, 48, 223, 1) 0%, rgba(88, 76, 220, 1) 100%);
   display: flex;
@@ -146,7 +146,7 @@
 
 .user-info-avatar span {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 16px;
+  font-size: clamp(13px, 4vw, 16px);
   font-weight: 600;
   color: white;
 }
@@ -160,7 +160,7 @@
 
 .user-info-name {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 600;
   color: #1f2937;
   margin-bottom: 4px;
@@ -168,7 +168,7 @@
 
 .user-info-item {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 12px;
+  font-size: clamp(10px, 3vw, 12px);
   font-weight: 400;
   color: #6b7280;
   line-height: 1.4;
@@ -183,7 +183,7 @@
   padding: 8px 0;
   cursor: pointer;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 12px;
+  font-size: clamp(10px, 3vw, 12px);
   font-weight: 500;
   color: #584cdc;
   margin-top: 8px;
@@ -195,8 +195,8 @@
 
 /* Rationale Section */
 .rationale-section {
-  margin-top: 16px;
-  padding-top: 16px;
+  margin-top: clamp(12px, 3.5vw, 16px);
+  padding-top: clamp(12px, 3.5vw, 16px);
   border-top: 1px solid rgba(0, 0, 0, 0.05);
   animation: slideDown 0.3s ease-out;
   width: 100%;
@@ -214,7 +214,7 @@
 }
 
 .rationale-header {
-  margin-bottom: 12px;
+  margin-bottom: clamp(10px, 3vw, 12px);
 }
 
 .rationale-header-content {
@@ -224,15 +224,15 @@
 }
 
 .rationale-logo {
-  width: 24px;
-  height: 24px;
+  width: clamp(20px, 6vw, 24px);
+  height: clamp(20px, 6vw, 24px);
   object-fit: contain;
   flex-shrink: 0;
 }
 
 .rationale-title {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 600;
   color: #1f2937;
   margin: 0;
@@ -247,9 +247,9 @@
 .rationale-card {
   background: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(124, 58, 237, 0.06) 100%);
   border-radius: 8px;
-  padding: 12px;
+  padding: clamp(10px, 3vw, 12px);
   display: flex;
-  gap: 12px;
+  gap: clamp(10px, 3vw, 12px);
   align-items: flex-start;
   border: 1px solid rgba(139, 92, 246, 0.12);
   transition: background 0.2s ease;
@@ -260,10 +260,10 @@
 }
 
 .rationale-card-icon {
-  font-size: 24px;
+  font-size: clamp(20px, 6vw, 24px);
   flex-shrink: 0;
-  width: 32px;
-  height: 32px;
+  width: clamp(28px, 8vw, 32px);
+  height: clamp(28px, 8vw, 32px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -280,7 +280,7 @@
 
 .rationale-card-title {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 12px;
+  font-size: clamp(10px, 3vw, 12px);
   font-weight: 600;
   color: #1f2937;
   margin: 0;
@@ -289,7 +289,7 @@
 
 .rationale-card-description {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 11px;
+  font-size: clamp(10px, 2.8vw, 11px);
   font-weight: 400;
   color: #374151;
   margin: 0;
@@ -305,8 +305,8 @@
 }
 
 .gift-recommendation-logo {
-  width: 20px;
-  height: 20px;
+  width: clamp(16px, 5vw, 20px);
+  height: clamp(16px, 5vw, 20px);
   object-fit: contain;
   flex-shrink: 0;
 }
@@ -314,7 +314,7 @@
 .gift-recommendation-header p {
   margin: 0;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 600;
   color: #1f2937;
 }
@@ -327,20 +327,20 @@
 .gift-recommendations {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-top: 12px;
+  gap: clamp(12px, 3.5vw, 16px);
+  margin-top: clamp(10px, 3vw, 12px);
 }
 
 .gift-item-wrapper {
   display: flex;
   flex-direction: column;
   background-color: white;
-  border-radius: 12px;
-  padding: 16px;
+  border-radius: clamp(10px, 2.5vw, 12px);
+  padding: clamp(12px, 3.5vw, 16px);
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(0, 0, 0, 0.08);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  gap: 12px;
+  gap: clamp(10px, 3vw, 12px);
   width: 100%;
   box-sizing: border-box;
   overflow: hidden;
@@ -359,7 +359,7 @@
 
 .gift-rationale-box {
   margin-top: 0;
-  padding-top: 12px;
+  padding-top: clamp(10px, 3vw, 12px);
   border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
@@ -368,7 +368,7 @@
   border-radius: 0;
   padding: 0;
   display: flex;
-  gap: 12px;
+  gap: clamp(10px, 3vw, 12px);
   box-shadow: none;
   border: none;
   transition: none;
@@ -376,14 +376,13 @@
   box-sizing: border-box;
 }
 
-
 .gift-card-image {
-  width: 80px;
-  height: 80px;
-  min-width: 80px;
-  min-height: 80px;
-  max-width: 80px;
-  max-height: 80px;
+  width: clamp(65px, 22vw, 80px);
+  height: clamp(65px, 22vw, 80px);
+  min-width: clamp(65px, 22vw, 80px);
+  min-height: clamp(65px, 22vw, 80px);
+  max-width: clamp(65px, 22vw, 80px);
+  max-height: clamp(65px, 22vw, 80px);
   aspect-ratio: 1 / 1;
   border-radius: 8px;
   overflow: hidden;
@@ -427,7 +426,7 @@
 
 .gift-card-title {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 500;
   color: #1f2937;
   margin: 0;
@@ -441,7 +440,7 @@
 
 .gift-card-description {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 12px;
+  font-size: clamp(10px, 3vw, 12px);
   font-weight: 400;
   color: #6b7280;
   margin: 0;
@@ -458,12 +457,13 @@
   justify-content: space-between;
   margin-top: -4px;
   width: 100%;
-  gap: 12px;
+  gap: clamp(8px, 2.5vw, 12px);
+  flex-wrap: wrap;
 }
 
 .gift-card-price {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 15px;
+  font-size: clamp(13px, 4vw, 15px);
   font-weight: 600;
   color: #1f2937;
 }
@@ -474,7 +474,7 @@
   padding: 0;
   cursor: pointer;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 12px;
+  font-size: clamp(10px, 3vw, 12px);
   font-weight: 500;
   color: #584cdc;
   text-decoration: underline;
@@ -489,7 +489,7 @@
 /* Gift Card Category */
 .gift-card-category {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 12px;
+  font-size: clamp(10px, 3vw, 12px);
   font-weight: 400;
   color: #6b7280;
   margin: 0;
@@ -509,7 +509,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 32px;
+  font-size: clamp(24px, 8vw, 32px);
   background-color: #f3f4f6;
   border-radius: 8px;
 }
@@ -517,7 +517,7 @@
 /* Gift Card Source Badge */
 .gift-card-source {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 10px;
+  font-size: clamp(9px, 2.5vw, 10px);
   font-weight: 500;
   color: #6b7280;
   background-color: #f3f4f6;
@@ -531,15 +531,15 @@
 .no-gifts-message {
   background-color: #fef2f2;
   border: 1px solid #fecaca;
-  border-radius: 12px;
-  padding: 20px;
-  margin-top: 12px;
+  border-radius: clamp(10px, 2.5vw, 12px);
+  padding: clamp(16px, 4vw, 20px);
+  margin-top: clamp(10px, 3vw, 12px);
   text-align: center;
 }
 
 .no-gifts-message p {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 400;
   color: #991b1b;
   margin: 4px 0;
@@ -547,26 +547,25 @@
 }
 
 .no-gifts-message p:first-child {
-  font-size: 16px;
+  font-size: clamp(14px, 4vw, 16px);
   font-weight: 500;
 }
 
-/* Input Bar */
 /* Gift Select Button */
 .gift-select-button {
   background-color: #584cdc;
   color: white;
   border: none;
   border-radius: 8px;
-  padding: 6px 12px;
+  padding: clamp(5px, 1.5vw, 6px) clamp(10px, 3vw, 12px);
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 12px;
+  font-size: clamp(10px, 3vw, 12px);
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
   white-space: nowrap;
   flex-shrink: 0;
-  min-width: 60px;
+  min-width: clamp(50px, 16vw, 60px);
 }
 
 .gift-select-button:hover:not(:disabled) {
@@ -595,12 +594,12 @@
 /* Completion Section */
 .completion-section {
   margin-top: 0px;
-  padding: 20px;
+  padding: clamp(16px, 4vw, 20px);
   background-color: #f3f4f6;
-  border-radius: 12px;
+  border-radius: clamp(10px, 2.5vw, 12px);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: clamp(10px, 3vw, 12px);
   width: 100%;
   box-sizing: border-box;
 }
@@ -610,7 +609,7 @@
 }
 
 .completion-title {
-  font-size: 16px;
+  font-size: clamp(14px, 4vw, 16px);
   font-weight: 600;
   color: #252525;
   font-family: 'Mulish', 'Noto Sans KR', sans-serif;
@@ -618,7 +617,7 @@
 }
 
 .completion-subtitle {
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 400;
   color: #4b5563;
   font-family: 'Mulish', 'Noto Sans KR', sans-serif;
@@ -645,13 +644,14 @@
   justify-content: center;
   align-items: center;
   margin: 0;
+  flex-wrap: wrap;
 }
 
 .completion-home-button,
 .completion-history-button {
-  padding: 8px 16px;
+  padding: clamp(6px, 2vw, 8px) clamp(12px, 3.5vw, 16px);
   border-radius: 8px;
-  font-size: 13px;
+  font-size: clamp(11px, 3.2vw, 13px);
   font-weight: 500;
   font-family: 'Mulish', 'Noto Sans KR', sans-serif;
   cursor: pointer;
@@ -688,14 +688,15 @@
   margin: 0 auto;
   align-items: stretch;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .completion-buttons .home-button,
 .completion-buttons .history-button {
   flex: 0 1 auto;
-  padding: 10px 16px;
+  padding: clamp(8px, 2.5vw, 10px) clamp(12px, 3.5vw, 16px);
   border-radius: 8px;
-  font-size: 13px;
+  font-size: clamp(11px, 3.2vw, 13px);
   font-weight: 500;
   font-family: 'Mulish', 'Noto Sans KR', sans-serif;
   cursor: pointer;
@@ -723,5 +724,16 @@
   background-color: #4a3fc0;
 }
 
+/* 태블릿 */
+@media (min-width: 768px) {
+  .gift-recommend-result-container {
+    max-width: 600px;
+  }
+}
 
-
+/* 데스크탑 */
+@media (min-width: 1024px) {
+  .gift-recommend-result-container {
+    max-width: 430px;
+  }
+}

@@ -1,13 +1,13 @@
 .card-form-container {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: clamp(16px, 5vw, 24px);
 }
 
 .card-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: clamp(14px, 4vw, 20px);
 }
 
 .card-form-field {
@@ -17,7 +17,7 @@
 }
 
 .card-form-label {
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 500;
   color: #374151;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
@@ -28,16 +28,16 @@
 
 .card-form-label-required {
   color: #ef4444;
-  font-size: 12px;
+  font-size: clamp(10px, 3vw, 12px);
 }
 
 .card-form-input {
   width: 100%;
-  padding: 14px 16px;
+  padding: clamp(10px, 3vw, 14px) clamp(12px, 3.5vw, 16px);
   background: white;
   border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  font-size: 14px;
+  border-radius: clamp(10px, 2.5vw, 12px);
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 400;
   color: #1f2937;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
@@ -57,12 +57,12 @@
 
 .card-form-textarea {
   width: 100%;
-  min-height: 100px;
-  padding: 14px 16px;
+  min-height: clamp(80px, 25vw, 100px);
+  padding: clamp(10px, 3vw, 14px) clamp(12px, 3.5vw, 16px);
   background: white;
   border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  font-size: 14px;
+  border-radius: clamp(10px, 2.5vw, 12px);
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 400;
   color: #1f2937;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
@@ -83,11 +83,11 @@
 
 .card-form-select {
   width: 100%;
-  padding: 14px 16px;
+  padding: clamp(10px, 3vw, 14px) clamp(12px, 3.5vw, 16px);
   background: white;
   border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  font-size: 14px;
+  border-radius: clamp(10px, 2.5vw, 12px);
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 400;
   color: #1f2937;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
@@ -97,8 +97,8 @@
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23374151' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 16px center;
-  padding-right: 40px;
+  background-position: right clamp(12px, 3.5vw, 16px) center;
+  padding-right: clamp(32px, 10vw, 40px);
 }
 
 .card-form-select:focus {
@@ -114,11 +114,11 @@
 
 .card-form-submit-button {
   width: 100%;
-  padding: 16px 24px;
+  padding: clamp(12px, 3.5vw, 16px) clamp(16px, 5vw, 24px);
   background: #584cdc;
   border: none;
-  border-radius: 12px;
-  font-size: 16px;
+  border-radius: clamp(10px, 2.5vw, 12px);
+  font-size: clamp(14px, 4vw, 16px);
   font-weight: 600;
   color: white;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;

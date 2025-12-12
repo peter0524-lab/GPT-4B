@@ -9,7 +9,7 @@
 
 .chat-detail-container {
   width: 100%;
-  max-width: 393px;
+  max-width: 100%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -21,7 +21,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 20px 16px 20px;
+  padding: clamp(12px, 3.5vw, 16px) clamp(16px, 4vw, 20px);
   position: sticky;
   top: 0;
   background-color: white;
@@ -44,7 +44,7 @@
 }
 
 .header-title {
-  font-size: 16px;
+  font-size: clamp(14px, 4vw, 16px);
   font-weight: 600;
   color: #252525;
   font-family: 'Mulish', 'Noto Sans KR', sans-serif;
@@ -52,7 +52,7 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%) translateY(24px);
+  transform: translate(-50%, -50%) translateY(clamp(18px, 5vw, 24px));
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -62,18 +62,18 @@
 /* Chat Messages */
 .chat-messages {
   flex: 1;
-  padding: 36px 20px 100px 20px;
+  padding: clamp(24px, 7vw, 36px) clamp(16px, 4vw, 20px) clamp(80px, 24vw, 100px) clamp(16px, 4vw, 20px);
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: clamp(12px, 3.5vw, 16px);
   overflow-y: auto;
   position: relative;
 }
 
 .message-bubble {
   max-width: 95%;
-  padding: 12px 16px;
-  border-radius: 16px;
+  padding: clamp(10px, 3vw, 12px) clamp(12px, 3.5vw, 16px);
+  border-radius: clamp(12px, 3.5vw, 16px);
   word-wrap: break-word;
 }
 
@@ -93,7 +93,7 @@
 .user-message p {
   margin: 0 0 8px 0;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 400;
   line-height: 1.5;
 }
@@ -114,9 +114,9 @@
 .loading-message,
 .empty-message,
 .error-message {
-  padding: 40px 20px;
+  padding: clamp(30px, 10vw, 40px) clamp(16px, 4vw, 20px);
   text-align: center;
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   color: #999;
   font-family: 'Mulish', 'Noto Sans KR', sans-serif;
 }
@@ -137,3 +137,16 @@
   filter: grayscale(0.2);
 }
 
+/* 태블릿 */
+@media (min-width: 768px) {
+  .chat-detail-container {
+    max-width: 600px;
+  }
+}
+
+/* 데스크탑 */
+@media (min-width: 1024px) {
+  .chat-detail-container {
+    max-width: 430px;
+  }
+}

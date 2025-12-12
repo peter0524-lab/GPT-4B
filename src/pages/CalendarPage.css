@@ -6,12 +6,12 @@
 
 .calendar-page {
   width: 100%;
-  max-width: 393px;
+  max-width: 100%;
   min-height: 100vh;
   background-color: white;
-  border-radius: 40px;
+  border-radius: clamp(24px, 6vw, 40px);
   overflow-y: auto;
-  padding-bottom: 100px;
+  padding-bottom: clamp(80px, 24vw, 100px);
   position: relative;
   margin: 0 auto;
 }
@@ -19,14 +19,14 @@
 /* 로고 헤더 */
 .logo-header {
   position: absolute;
-  top: 20px;
-  left: 42px;
+  top: clamp(16px, 4vw, 20px);
+  left: clamp(24px, 8vw, 42px);
   z-index: 10;
 }
 
 .calendar-logo {
-  width: 21px;
-  height: 21px;
+  width: clamp(18px, 5vw, 21px);
+  height: clamp(18px, 5vw, 21px);
   object-fit: cover;
 }
 
@@ -35,7 +35,7 @@
   display: flex;
   justify-content: flex-end;
   padding: 0;
-  margin: 12px 0;
+  margin: clamp(8px, 2.5vw, 12px) 0;
   width: 100%;
   box-sizing: border-box;
 }
@@ -53,7 +53,7 @@
 }
 
 .add-schedule-plus {
-  font-size: 20px;
+  font-size: clamp(16px, 5vw, 20px);
   font-weight: 400;
   color: #584cdc;
   line-height: 1;
@@ -64,10 +64,10 @@
 
 .add-schedule-text {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 16px;
+  font-size: clamp(13px, 4vw, 16px);
   font-weight: 400;
   color: #584cdc;
-  line-height: 24px;
+  line-height: 1.5;
   letter-spacing: -0.3125px;
 }
 
@@ -76,11 +76,11 @@
   background: white;
   border-radius: 8px;
   box-shadow: 2px 16px 19px 0px rgba(0, 0, 0, 0.09);
-  padding: 24px;
-  margin: 0 42px 24px 42px;
+  padding: clamp(16px, 5vw, 24px);
+  margin: 0 clamp(16px, 6vw, 42px) clamp(16px, 5vw, 24px) clamp(16px, 6vw, 42px);
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: clamp(16px, 5vw, 22px);
 }
 
 .calendar-header-nav {
@@ -102,7 +102,7 @@
 }
 
 .arrow-text {
-  font-size: 18px;
+  font-size: clamp(14px, 4.5vw, 18px);
   font-weight: 400;
   color: #b5bec6;
   line-height: 1;
@@ -113,9 +113,9 @@
 
 .calendar-month {
   font-family: 'Avenir Next LT Pro', 'Inter', sans-serif;
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 600;
-  line-height: 14px;
+  line-height: 1;
   color: #4a5660;
   text-align: center;
   margin: 0;
@@ -124,7 +124,7 @@
 /* 요일 헤더 */
 .calendar-days-header {
   display: flex;
-  gap: 8px;
+  gap: clamp(4px, 1.5vw, 8px);
   width: 100%;
 }
 
@@ -133,11 +133,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 20px;
+  height: clamp(16px, 5vw, 20px);
   font-family: 'Avenir Next LT Pro', 'Inter', sans-serif;
-  font-size: 10px;
+  font-size: clamp(8px, 2.5vw, 10px);
   font-weight: 600;
-  line-height: 12px;
+  line-height: 1.2;
   color: #b5bec6;
   text-transform: uppercase;
   letter-spacing: 1.5px;
@@ -147,7 +147,7 @@
 .calendar-days-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 8px;
+  gap: clamp(4px, 1.5vw, 8px);
   width: 100%;
 }
 
@@ -156,9 +156,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
-  border-radius: 29px;
+  width: clamp(24px, 8vw, 30px);
+  height: clamp(24px, 8vw, 30px);
+  border-radius: 50%;
   cursor: pointer;
   transition: all 0.2s;
   margin: 0 auto;
@@ -179,13 +179,13 @@
 
 .day-number {
   font-family: 'Avenir Next LT Pro', 'Inter', sans-serif;
-  font-size: 16px;
+  font-size: clamp(12px, 4vw, 16px);
   font-weight: 600;
-  line-height: 18px;
+  line-height: 1.2;
   color: #4a5660;
   text-align: center;
-  width: 20px;
-  height: 15px;
+  width: clamp(16px, 5vw, 20px);
+  height: clamp(12px, 4vw, 15px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -200,8 +200,8 @@
   bottom: 2px;
   left: 50%;
   transform: translateX(-50%);
-  width: 4px;
-  height: 4px;
+  width: clamp(3px, 1vw, 4px);
+  height: clamp(3px, 1vw, 4px);
   background-color: #584cdc;
   border-radius: 50%;
   display: block;
@@ -217,25 +217,25 @@
 
 /* 이벤트 섹션 */
 .events-section {
-  padding: 0 22px;
+  padding: 0 clamp(16px, 4vw, 22px);
   margin-top: 5px;
   display: flex;
   flex-direction: column;
-  gap: 10.56px;
+  gap: clamp(8px, 2.5vw, 10.56px);
 }
 
 .events-header {
   display: flex;
   align-items: center;
-  gap: 7.04px;
-  height: 23px;
+  gap: clamp(5px, 1.5vw, 7.04px);
+  height: clamp(18px, 6vw, 23px);
 }
 
 .events-title {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 15.84px;
+  font-size: clamp(13px, 4vw, 15.84px);
   font-weight: 500;
-  line-height: 23.76px;
+  line-height: 1.5;
   color: #364153;
   letter-spacing: -0.3867px;
   margin: 0;
@@ -251,8 +251,8 @@
 .event-item {
   background: white;
   border: 0.587px solid #e5e7eb;
-  border-radius: 12.32px;
-  padding: 14.667px;
+  border-radius: clamp(10px, 3vw, 12.32px);
+  padding: clamp(12px, 3.5vw, 14.667px);
   margin-bottom: 0;
   cursor: pointer;
   transition: all 0.2s;
@@ -269,26 +269,26 @@
 
 .event-content {
   display: flex;
-  gap: 14.08px;
+  gap: clamp(10px, 3vw, 14.08px);
   align-items: center;
   width: 100%;
 }
 
 .event-time {
   font-family: 'Inter', sans-serif;
-  font-size: 14.08px;
+  font-size: clamp(12px, 3.5vw, 14.08px);
   font-weight: 400;
-  line-height: 21.12px;
+  line-height: 1.5;
   color: #4a5565;
   letter-spacing: -0.275px;
-  min-width: 35.943px;
-  height: 21.12px;
+  min-width: clamp(28px, 9vw, 35.943px);
+  height: clamp(16px, 5vw, 21.12px);
 }
 
 .event-color-bar {
-  width: 3.52px;
-  height: 35.2px;
-  border-radius: 19685250px;
+  width: clamp(3px, 1vw, 3.52px);
+  height: clamp(28px, 9vw, 35.2px);
+  border-radius: 9999px;
   flex-shrink: 0;
 }
 
@@ -302,9 +302,9 @@
 
 .event-title {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 14.08px;
+  font-size: clamp(12px, 3.5vw, 14.08px);
   font-weight: 400;
-  line-height: 21.12px;
+  line-height: 1.5;
   color: #1e2939;
   letter-spacing: -0.275px;
   margin-bottom: 6px;
@@ -312,22 +312,22 @@
 
 .event-badge {
   display: inline-block;
-  padding: 2.35px 7.04px;
-  border-radius: 7.04px;
+  padding: clamp(2px, 0.6vw, 2.35px) clamp(5px, 1.5vw, 7.04px);
+  border-radius: clamp(5px, 1.5vw, 7.04px);
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 10.56px;
+  font-size: clamp(9px, 2.8vw, 10.56px);
   font-weight: 500;
-  line-height: 14.08px;
+  line-height: 1.4;
   color: white;
   width: fit-content;
 }
 
 .no-events {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   color: #9ca3af;
   text-align: center;
-  padding: 40px 0;
+  padding: clamp(30px, 10vw, 40px) 0;
 }
 
 .no-events.error {
@@ -355,22 +355,18 @@
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .add-event-modal {
   width: 100%;
-  max-width: 393px;
+  max-width: 100%;
   background-color: white;
-  border-radius: 40px 40px 0 0;
+  border-radius: clamp(24px, 6vw, 40px) clamp(24px, 6vw, 40px) 0 0;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 24px 18px 120px;
+  padding: clamp(16px, 5vw, 24px) clamp(14px, 4vw, 18px) clamp(100px, 28vw, 120px);
   position: relative;
   margin: 0;
   margin-bottom: 0;
@@ -393,11 +389,11 @@
 }
 
 .modal-drag-handle {
-  width: 60px;
+  width: clamp(48px, 15vw, 60px);
   height: 4px;
   background-color: #d1d5db;
   border-radius: 2px;
-  margin: 12px auto 8px;
+  margin: clamp(8px, 2.5vw, 12px) auto 8px;
   cursor: grab;
   position: sticky;
   top: 0;
@@ -425,12 +421,8 @@
 }
 
 @keyframes slideUp {
-  from {
-    transform: translateY(100%);
-  }
-  to {
-    transform: translateY(0);
-  }
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
 }
 
 .modal-back-button {
@@ -443,12 +435,12 @@
   padding: 8px;
   border-radius: 8px;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 500;
   color: #0a0a0a;
-  line-height: 20px;
+  line-height: 1.4;
   letter-spacing: -0.1504px;
-  margin-bottom: 20px;
+  margin-bottom: clamp(16px, 4vw, 20px);
   white-space: nowrap;
 }
 
@@ -459,7 +451,7 @@
 /* AddEventPage 스타일 재사용 */
 .event-title-label {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 500;
   color: #0a0a0a;
   margin-bottom: 8px;
@@ -473,7 +465,7 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 8px;
-  margin-bottom: 20px;
+  margin-bottom: clamp(16px, 4vw, 20px);
   width: 100%;
   box-sizing: border-box;
 }
@@ -481,20 +473,22 @@
 .title-input-wrapper {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: clamp(8px, 2.5vw, 12px);
   width: 100%;
+  flex-wrap: wrap;
 }
 
 .event-title-input {
   flex: 1;
-  height: 36px;
+  min-width: 150px;
+  height: clamp(32px, 9vw, 36px);
   background: var(--input-bg-color);
   border: none;
   border-bottom: 0.667px solid rgba(0, 0, 0, 0);
   border-radius: 0;
   padding: 4px 0;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 15px;
+  font-size: clamp(13px, 4vw, 15px);
   font-weight: 400;
   color: #717182;
   letter-spacing: 0.3955px;
@@ -514,17 +508,17 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  height: 36px;
-  padding: 0 12px;
+  height: clamp(32px, 9vw, 36px);
+  padding: 0 clamp(8px, 2.5vw, 12px);
   background: #eceef2;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 500;
   color: #030213;
-  line-height: 20px;
+  line-height: 1.4;
   letter-spacing: -0.1504px;
 }
 
@@ -536,8 +530,8 @@
 }
 
 .dropdown-icon {
-  width: 16px;
-  height: 16px;
+  width: clamp(14px, 4vw, 16px);
+  height: clamp(14px, 4vw, 16px);
   flex-shrink: 0;
 }
 
@@ -559,13 +553,13 @@
   align-items: center;
   gap: 8px;
   width: 100%;
-  padding: 10px 12px;
+  padding: clamp(8px, 2.5vw, 10px) clamp(10px, 3vw, 12px);
   background: white;
   border: none;
   text-align: left;
   cursor: pointer;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 500;
   color: #030213;
   transition: background-color 0.2s;
@@ -580,7 +574,7 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 8px;
-  margin-bottom: 20px;
+  margin-bottom: clamp(16px, 4vw, 20px);
   width: 100%;
   box-sizing: border-box;
   padding: 0;
@@ -589,7 +583,7 @@
 
 .participant-label {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 500;
   color: #0a0a0a;
   margin-bottom: 0;
@@ -600,23 +594,23 @@
 .participant-section {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: clamp(8px, 2.5vw, 12px);
   background: var(--input-bg-color);
   border-radius: 10px;
-  padding: 12px 16px;
+  padding: clamp(10px, 3vw, 12px) clamp(12px, 3.5vw, 16px);
   width: 100%;
   box-sizing: border-box;
 }
 
 .participant-input {
   flex: 1;
-  height: 36px;
+  height: clamp(32px, 9vw, 36px);
   background: transparent;
   border: none;
   border-radius: 8px;
   padding: 4px 0;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 16px;
+  font-size: clamp(14px, 4vw, 16px);
   font-weight: 400;
   color: #717182;
   letter-spacing: -0.3125px;
@@ -628,8 +622,8 @@
 }
 
 .participant-button {
-  width: 36px;
-  height: 36px;
+  width: clamp(32px, 9vw, 36px);
+  height: clamp(32px, 9vw, 36px);
   background: transparent;
   border: none;
   cursor: pointer;
@@ -653,16 +647,16 @@
 }
 
 .participant-button svg {
-  width: 24px;
-  height: 24px;
+  width: clamp(20px, 6vw, 24px);
+  height: clamp(20px, 6vw, 24px);
 }
 
 .participants-list {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 20px;
-  padding: 0 18px;
+  margin-bottom: clamp(16px, 4vw, 20px);
+  padding: 0 clamp(14px, 4vw, 18px);
 }
 
 .participant-tag {
@@ -671,9 +665,9 @@
   gap: 6px;
   background: #eceef2;
   border-radius: 16px;
-  padding: 6px 12px;
+  padding: clamp(4px, 1.5vw, 6px) clamp(10px, 3vw, 12px);
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   color: #030213;
 }
 
@@ -681,12 +675,12 @@
   background: transparent;
   border: none;
   cursor: pointer;
-  font-size: 18px;
+  font-size: clamp(14px, 4.5vw, 18px);
   line-height: 1;
   color: #717182;
   padding: 0;
-  width: 18px;
-  height: 18px;
+  width: clamp(14px, 4.5vw, 18px);
+  height: clamp(14px, 4.5vw, 18px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -702,24 +696,25 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 15px;
-  margin-bottom: 20px;
+  gap: clamp(10px, 3vw, 15px);
+  margin-bottom: clamp(16px, 4vw, 20px);
   width: 100%;
   box-sizing: border-box;
+  flex-wrap: wrap;
 }
 
 .date-display,
 .time-display {
-  height: 36px;
+  height: clamp(32px, 9vw, 36px);
   padding: 8px 0;
   background: transparent;
   border: none;
   border-radius: 8px;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 500;
   color: #0a0a0a;
-  line-height: 20px;
+  line-height: 1.4;
   letter-spacing: -0.1504px;
   cursor: pointer;
   text-align: left;
@@ -744,28 +739,30 @@
 
 .date-picker-content {
   background: white;
-  border-radius: 16px;
-  padding: 24px;
-  max-width: 300px;
+  border-radius: clamp(12px, 3.5vw, 16px);
+  padding: clamp(16px, 5vw, 24px);
+  max-width: clamp(260px, 80vw, 300px);
   width: 90%;
 }
 
 .date-picker-content h3 {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 16px;
+  font-size: clamp(14px, 4vw, 16px);
   font-weight: 600;
   color: #0a0a0a;
-  margin: 0 0 20px 0;
+  margin: 0 0 clamp(16px, 4vw, 20px) 0;
 }
 
 .date-picker-inputs {
   display: flex;
-  gap: 12px;
-  margin-bottom: 20px;
+  gap: clamp(8px, 2.5vw, 12px);
+  margin-bottom: clamp(16px, 4vw, 20px);
+  flex-wrap: wrap;
 }
 
 .date-input-group {
   flex: 1;
+  min-width: 60px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -773,19 +770,19 @@
 
 .date-input-group label {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 12px;
+  font-size: clamp(10px, 3vw, 12px);
   font-weight: 500;
   color: #717182;
 }
 
 .date-input {
   width: 100%;
-  height: 40px;
+  height: clamp(36px, 10vw, 40px);
   border: 1px solid #e5e7eb;
   border-radius: 8px;
   padding: 8px;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 16px;
+  font-size: clamp(14px, 4vw, 16px);
   text-align: center;
   outline: none;
 }
@@ -796,16 +793,16 @@
 
 .date-picker-close {
   width: 100%;
-  height: 40px;
+  height: clamp(36px, 10vw, 40px);
   background: #584cdc;
   border: none;
   border-radius: 8px;
   color: white;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 500;
   cursor: pointer;
-  margin-top: 12px;
+  margin-top: clamp(8px, 2.5vw, 12px);
 }
 
 .date-picker-close:hover {
@@ -832,35 +829,35 @@
 
 .calendar-time-picker-content {
   background: white;
-  border-radius: 16px;
-  padding: 24px;
-  max-width: 300px;
+  border-radius: clamp(12px, 3.5vw, 16px);
+  padding: clamp(16px, 5vw, 24px);
+  max-width: clamp(260px, 80vw, 300px);
   width: 90%;
 }
 
 .calendar-time-picker-content h3 {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 16px;
+  font-size: clamp(14px, 4vw, 16px);
   font-weight: 600;
   color: #0a0a0a;
-  margin: 0 0 12px 0;
+  margin: 0 0 clamp(8px, 2.5vw, 12px) 0;
 }
 
 .calendar-time-inputs {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 20px;
+  margin-bottom: clamp(16px, 4vw, 20px);
 }
 
 .calendar-time-input {
-  width: 60px;
-  height: 40px;
+  width: clamp(50px, 15vw, 60px);
+  height: clamp(36px, 10vw, 40px);
   border: 1px solid #e5e7eb;
   border-radius: 8px;
   padding: 8px;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 16px;
+  font-size: clamp(14px, 4vw, 16px);
   text-align: center;
   outline: none;
 }
@@ -880,24 +877,24 @@
 .calendar-time-error-message {
   color: #ef4444;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 13px;
+  font-size: clamp(11px, 3.2vw, 13px);
   font-weight: 400;
-  margin: -16px 0 12px 0;
+  margin: -16px 0 clamp(8px, 2.5vw, 12px) 0;
   padding: 0;
 }
 
 .calendar-time-picker-close {
   width: 100%;
-  height: 40px;
+  height: clamp(36px, 10vw, 40px);
   background: #584cdc;
   border: none;
   border-radius: 8px;
   color: white;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 500;
   cursor: pointer;
-  margin-top: 12px;
+  margin-top: clamp(8px, 2.5vw, 12px);
 }
 
 .calendar-time-picker-close:hover:not(:disabled) {
@@ -913,7 +910,7 @@
 /* 알림 섹션 */
 .notification-label {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 500;
   color: #0a0a0a;
   margin-bottom: 0;
@@ -926,7 +923,7 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 8px;
-  margin-bottom: 20px;
+  margin-bottom: clamp(16px, 4vw, 20px);
   position: relative;
   width: 100%;
   box-sizing: border-box;
@@ -946,17 +943,17 @@
   background: var(--input-bg-color);
   border: none;
   border-radius: 10px;
-  height: 45px;
+  height: clamp(38px, 12vw, 45px);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 16px;
+  padding: 0 clamp(12px, 3.5vw, 16px);
   cursor: pointer;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 16px;
+  font-size: clamp(14px, 4vw, 16px);
   font-weight: 400;
   color: #717182;
-  line-height: 20px;
+  line-height: 1.3;
   letter-spacing: -0.3125px;
   box-sizing: border-box;
   margin: 0;
@@ -980,45 +977,45 @@
   right: 0;
   margin-bottom: 8px;
   background: white;
-  border-radius: 12px;
+  border-radius: clamp(10px, 2.5vw, 12px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   z-index: 1000;
-  min-width: 200px;
-  max-width: 280px;
+  min-width: clamp(160px, 50vw, 200px);
+  max-width: clamp(220px, 70vw, 280px);
   overflow: hidden;
 }
 
 .notification-dropdown-header {
-  padding: 16px;
+  padding: clamp(12px, 3.5vw, 16px);
   border-bottom: 1px solid #f3f4f6;
 }
 
 .notification-dropdown-header h4 {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 600;
   color: #0a0a0a;
   margin: 0;
-  line-height: 20px;
+  line-height: 1.4;
 }
 
 .notification-options {
-  max-height: 300px;
+  max-height: clamp(200px, 60vw, 300px);
   overflow-y: auto;
 }
 
 .notification-option {
   width: 100%;
-  padding: 12px 16px;
+  padding: clamp(10px, 3vw, 12px) clamp(12px, 3.5vw, 16px);
   background: white;
   border: none;
   text-align: left;
   cursor: pointer;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 400;
   color: #364153;
-  line-height: 20px;
+  line-height: 1.4;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1036,7 +1033,7 @@
 
 .memo-label {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 500;
   color: #0a0a0a;
   margin-bottom: 0;
@@ -1049,7 +1046,7 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 8px;
-  margin-bottom: 20px;
+  margin-bottom: clamp(16px, 4vw, 20px);
   width: 100%;
   box-sizing: border-box;
   padding: 0;
@@ -1058,13 +1055,13 @@
 
 .memo-input {
   width: 100%;
-  min-height: 110px;
-  padding: 12px 16px;
+  min-height: clamp(90px, 28vw, 110px);
+  padding: clamp(10px, 3vw, 12px) clamp(12px, 3.5vw, 16px);
   background: var(--input-bg-color);
   border: none;
   border-radius: 10px;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 16px;
+  font-size: clamp(14px, 4vw, 16px);
   font-weight: 400;
   color: #717182;
   letter-spacing: -0.3125px;
@@ -1082,24 +1079,24 @@
   position: relative;
   bottom: auto;
   right: auto;
-  width: 76.115px;
-  height: 36px;
-  min-width: 76.115px;
-  max-width: 76.115px;
-  min-height: 36px;
-  max-height: 36px;
+  width: clamp(65px, 20vw, 76.115px);
+  height: clamp(32px, 9vw, 36px);
+  min-width: clamp(65px, 20vw, 76.115px);
+  max-width: clamp(65px, 20vw, 76.115px);
+  min-height: clamp(32px, 9vw, 36px);
+  max-height: clamp(32px, 9vw, 36px);
   background: #eceef2;
   border: none;
   border-radius: 8px;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 500;
   color: #030213;
-  line-height: 20px;
+  line-height: 1.4;
   letter-spacing: -0.1504px;
   cursor: pointer;
   transition: all 0.2s;
-  margin-top: 20px;
+  margin-top: clamp(16px, 4vw, 20px);
   margin-left: auto;
   display: block;
   flex-shrink: 0;
@@ -1125,5 +1122,24 @@
   transform: scale(0.98);
 }
 
+/* 태블릿 */
+@media (min-width: 768px) {
+  .calendar-page {
+    max-width: 600px;
+  }
+  
+  .add-event-modal {
+    max-width: 500px;
+  }
+}
 
-
+/* 데스크탑 */
+@media (min-width: 1024px) {
+  .calendar-page {
+    max-width: 430px;
+  }
+  
+  .add-event-modal {
+    max-width: 430px;
+  }
+}

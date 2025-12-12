@@ -2,17 +2,17 @@
   width: 100%;
   min-height: 100vh;
   background-color: white;
-  border-radius: 40px;
+  border-radius: clamp(24px, 6vw, 40px);
   overflow-y: auto;
-  padding-bottom: 100px;
+  padding-bottom: clamp(80px, 20vw, 100px);
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
 }
 
 .wallet-container {
-  padding: 24px;
-  padding-top: 116px;
-  max-width: 405px;
+  padding: clamp(16px, 4vw, 24px);
+  padding-top: clamp(90px, 25vw, 116px);
+  max-width: 100%;
   margin: 0 auto;
 }
 
@@ -22,11 +22,11 @@
   top: 0;
   left: 0;
   right: 0;
-  max-width: 405px;
+  max-width: 100%;
   margin: 0 auto;
   background-color: white;
   z-index: 100;
-  padding: 56px 24px 20px 24px;
+  padding: clamp(40px, 12vw, 56px) clamp(16px, 4vw, 24px) clamp(16px, 4vw, 20px) clamp(16px, 4vw, 24px);
 }
 
 .wallet-page-header-content {
@@ -37,7 +37,7 @@
 }
 
 .wallet-page-header-title {
-  font-size: 18px;
+  font-size: clamp(16px, 4.5vw, 20px);
   font-weight: 600;
   color: #1f2937;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
@@ -46,7 +46,7 @@
 }
 
 .wallet-page-header-subtitle {
-  font-size: 11px;
+  font-size: clamp(10px, 2.8vw, 12px);
   font-weight: 400;
   color: #6b7280;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
@@ -57,19 +57,20 @@
 /* Header Section */
 .wallet-header {
   margin-top: -12px;
-  margin-bottom: 12px;
+  margin-bottom: clamp(8px, 2vw, 12px);
 }
 
 .header-content {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 16px;
+  gap: clamp(12px, 3vw, 16px);
   position: relative;
+  flex-wrap: wrap;
 }
 
 .header-instruction {
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 600;
   color: #1f2937;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
@@ -80,6 +81,7 @@
   flex-direction: column;
   align-items: center;
   gap: 4px;
+  min-width: 0;
 }
 
 .header-instruction p {
@@ -88,7 +90,7 @@
 }
 
 .header-title {
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 600;
   color: #1f2937;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
@@ -97,7 +99,7 @@
 }
 
 .header-subtitle {
-  font-size: 11px;
+  font-size: clamp(10px, 2.8vw, 12px);
   font-weight: 400;
   color: #6b7280;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
@@ -108,7 +110,7 @@
 .header-actions {
   display: flex;
   flex-direction: row;
-  gap: 8px;
+  gap: clamp(6px, 1.5vw, 8px);
   flex-shrink: 0;
   align-items: center;
 }
@@ -118,14 +120,14 @@
   flex-direction: column;
   align-items: center;
   gap: 3px;
-  padding: 6px 12px;
+  padding: clamp(4px, 1.5vw, 6px) clamp(8px, 2.5vw, 12px);
   background-color: white;
   border: 1px solid #000000;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s;
-  min-width: 95px;
-  width: 95px;
+  min-width: clamp(70px, 22vw, 95px);
+  width: auto;
 }
 
 .header-action-btn:hover {
@@ -134,7 +136,7 @@
 }
 
 .action-icon {
-  font-size: 20px;
+  font-size: clamp(16px, 4.5vw, 20px);
   line-height: 1;
   display: flex;
   align-items: center;
@@ -142,12 +144,12 @@
 }
 
 .action-icon svg {
-  width: 20px;
-  height: 20px;
+  width: clamp(16px, 4.5vw, 20px);
+  height: clamp(16px, 4.5vw, 20px);
 }
 
 .action-label {
-  font-size: 11px;
+  font-size: clamp(9px, 2.5vw, 11px);
   font-weight: 400;
   color: #374151;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
@@ -156,7 +158,7 @@
 
 /* Search Section */
 .search-section {
-  margin-bottom: 16px;
+  margin-bottom: clamp(12px, 3vw, 16px);
 }
 
 /* Action Buttons Section */
@@ -164,7 +166,9 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 16px;
+  margin-bottom: clamp(12px, 3vw, 16px);
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .search-wrapper {
@@ -177,8 +181,8 @@
   left: 12px;
   top: 50%;
   transform: translateY(-50%);
-  width: 14px;
-  height: 14px;
+  width: clamp(12px, 3.5vw, 14px);
+  height: clamp(12px, 3.5vw, 14px);
   z-index: 1;
   display: flex;
   align-items: center;
@@ -188,12 +192,12 @@
 
 .search-input {
   width: 100%;
-  height: 36px;
+  height: clamp(32px, 9vw, 40px);
   padding: 4px 12px 4px 40px;
   background-color: #f3f4f6;
   border: none;
   border-radius: 9999px;
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
   color: #717182;
 }
@@ -209,7 +213,7 @@
 
 /* Card Carousel Section */
 .card-carousel-section {
-  margin-bottom: 32px;
+  margin-bottom: clamp(20px, 6vw, 32px);
 }
 
 .carousel-container {
@@ -217,7 +221,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 24px;
+  margin-bottom: clamp(16px, 5vw, 24px);
   padding: 0;
   width: 100%;
 }
@@ -246,13 +250,19 @@
               opacity 0.4s ease, 
               filter 0.4s ease;
   transform-origin: center center;
+  cursor: pointer;
+  perspective: 1000px;
+}
+
+.carousel-card.active {
+  cursor: pointer;
 }
 
 .business-card-display {
   width: 100%;
   aspect-ratio: 1.6;
-  border-radius: 20px;
-  padding: 28px;
+  border-radius: clamp(12px, 4vw, 20px);
+  padding: clamp(16px, 5vw, 28px);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25),
               0px 37.311px 74.622px -17.909px rgba(0, 0, 0, 0.25);
   display: flex;
@@ -276,7 +286,7 @@
 }
 
 .card-company {
-  font-size: 15px;
+  font-size: clamp(12px, 3.5vw, 15px);
   font-weight: 400;
   color: rgba(255, 255, 255, 0.7);
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
@@ -291,8 +301,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: clamp(24px, 6vw, 28px);
+  height: clamp(24px, 6vw, 28px);
   color: white;
   transition: transform 0.2s;
 }
@@ -306,8 +316,8 @@
 }
 
 .card-heart-button svg {
-  width: 26px;
-  height: 26px;
+  width: clamp(22px, 5.5vw, 26px);
+  height: clamp(22px, 5.5vw, 26px);
   filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
 }
 
@@ -316,12 +326,12 @@
   justify-content: flex-start;
   align-items: flex-end;
   margin-top: auto;
-  padding-top: 24px;
+  padding-top: clamp(16px, 4vw, 24px);
   transform: translateY(2px);
 }
 
 .card-name {
-  font-size: 17px;
+  font-size: clamp(14px, 4vw, 17px);
   font-weight: 600;
   color: white;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
@@ -329,7 +339,7 @@
 }
 
 .card-position {
-  font-size: 11px;
+  font-size: clamp(9px, 2.8vw, 11px);
   font-weight: 400;
   color: rgba(255, 255, 255, 0.7);
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
@@ -338,8 +348,8 @@
 
 .card-bottom-section {
   position: absolute;
-  bottom: 57px;
-  right: -28px;
+  bottom: clamp(40px, 12vw, 57px);
+  right: clamp(-16px, -5vw, -28px);
   display: flex;
   justify-content: flex-end;
 }
@@ -352,7 +362,7 @@
 }
 
 .card-phone {
-  font-size: 8px;
+  font-size: clamp(6px, 2vw, 8px);
   font-weight: 400;
   color: rgba(255, 255, 255, 0.6);
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
@@ -361,7 +371,7 @@
 }
 
 .card-email {
-  font-size: 7px;
+  font-size: clamp(5px, 1.8vw, 7px);
   font-weight: 400;
   color: rgba(255, 255, 255, 0.6);
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
@@ -372,8 +382,8 @@
 
 .carousel-nav-btn {
   position: absolute;
-  width: 36px;
-  height: 36px;
+  width: clamp(28px, 8vw, 36px);
+  height: clamp(28px, 8vw, 36px);
   border-radius: 50%;
   background-color: white;
   border: 2px solid white;
@@ -401,28 +411,18 @@
 }
 
 .carousel-nav-prev {
-  left: -18px;
+  left: clamp(-12px, -3vw, -18px);
 }
 
 .carousel-nav-next {
-  right: -18px;
-}
-
-@media (max-width: 480px) {
-  .carousel-nav-prev {
-    left: -18px;
-  }
-  
-  .carousel-nav-next {
-    right: -18px;
-  }
+  right: clamp(-12px, -3vw, -18px);
 }
 
 /* Action Buttons */
 .card-actions {
   display: flex;
-  gap: 12px;
-  margin-bottom: 12px;
+  gap: clamp(8px, 2.5vw, 12px);
+  margin-bottom: clamp(8px, 2.5vw, 12px);
 }
 
 .card-guide {
@@ -435,7 +435,7 @@
 
 .card-guide-text {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 11px;
+  font-size: clamp(9px, 2.8vw, 11px);
   font-weight: 400;
   color: #6b7280;
   text-align: center;
@@ -444,9 +444,9 @@
 
 .action-btn {
   flex: 1;
-  padding: 16px 20px;
-  border-radius: 12px;
-  font-size: 14px;
+  padding: clamp(12px, 3.5vw, 16px) clamp(16px, 4vw, 20px);
+  border-radius: clamp(10px, 2.5vw, 12px);
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 500;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
   border: none;
@@ -475,9 +475,9 @@
 /* Grid View */
 .cards-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-bottom: 24px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(8px, 2.5vw, 12px);
+  margin-bottom: clamp(16px, 5vw, 24px);
 }
 
 .grid-card-item {
@@ -494,8 +494,8 @@
 .grid-business-card {
   width: 100%;
   aspect-ratio: 1.85;
-  border-radius: 12px;
-  padding: 16px;
+  border-radius: clamp(8px, 2.5vw, 12px);
+  padding: clamp(10px, 3vw, 16px);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25),
               0px 37.311px 74.622px -17.909px rgba(0, 0, 0, 0.25);
   display: flex;
@@ -521,7 +521,7 @@
 }
 
 .grid-card-company {
-  font-size: 11px;
+  font-size: clamp(8px, 2.5vw, 11px);
   font-weight: 400;
   color: rgba(255, 255, 255, 0.7);
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
@@ -541,8 +541,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
+  width: clamp(18px, 5vw, 24px);
+  height: clamp(18px, 5vw, 24px);
   color: white;
   position: absolute;
   top: 0;
@@ -561,8 +561,8 @@
 }
 
 .grid-card-heart-button svg {
-  width: 22px;
-  height: 22px;
+  width: clamp(16px, 4.5vw, 22px);
+  height: clamp(16px, 4.5vw, 22px);
   filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
 }
 
@@ -575,7 +575,7 @@
 }
 
 .grid-card-name {
-  font-size: 15px;
+  font-size: clamp(11px, 3.5vw, 15px);
   font-weight: 600;
   color: white;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
@@ -586,7 +586,7 @@
 }
 
 .grid-card-position {
-  font-size: 11px;
+  font-size: clamp(8px, 2.5vw, 11px);
   font-weight: 400;
   color: rgba(255, 255, 255, 0.7);
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
@@ -603,7 +603,7 @@
 
 .grid-card-phone,
 .grid-card-email {
-  font-size: 9px;
+  font-size: clamp(7px, 2vw, 9px);
   font-weight: 400;
   color: rgba(255, 255, 255, 0.6);
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
@@ -625,11 +625,11 @@
 }
 
 .view-all-btn {
-  padding: 4px 8px;
+  padding: clamp(3px, 1vw, 4px) clamp(6px, 1.5vw, 8px);
   background-color: white;
   border: 1px solid #9ca3af;
   border-radius: 8px;
-  font-size: 11px;
+  font-size: clamp(9px, 2.5vw, 11px);
   font-weight: 400;
   color: #6b7280;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
@@ -645,12 +645,12 @@
 
 /* Empty State */
 .empty-state {
-  padding: 60px 20px;
+  padding: clamp(40px, 12vw, 60px) clamp(16px, 4vw, 20px);
   text-align: center;
 }
 
 .empty-message {
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 400;
   color: #9ca3af;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
@@ -662,8 +662,8 @@
   flex-direction: column;
   align-items: center;
   gap: 0px;
-  margin-top: 60px;
-  padding-bottom: 20px;
+  margin-top: clamp(40px, 12vw, 60px);
+  padding-bottom: clamp(16px, 4vw, 20px);
 }
 
 .usage-indicator {
@@ -675,10 +675,9 @@
   justify-content: space-between;
   align-items: center;
   margin: 4px 0 4px 0;
-  padding: 0 0 0 40px;
+  padding: 0 0 0 clamp(24px, 8vw, 40px);
 }
 
-/* Grid view: align usage count to right */
 .usage-and-guide-container.grid-view-container {
   justify-content: flex-end;
 }
@@ -691,45 +690,22 @@
   padding: 0;
 }
 
-.usage-count {
-  font-size: 14px;
-  font-weight: 500;
-  color: #1f2937;
-  font-family: 'Inter', 'Noto Sans KR', sans-serif;
-}
-
-.usage-count-number {
-  color: #584cdc;
-  font-weight: 600;
-}
-
-/* Carousel view usage count */
-.usage-count-carousel {
-  font-size: 14px;
-  font-weight: 500;
-  color: #1f2937;
-  font-family: 'Inter', 'Noto Sans KR', sans-serif;
-}
-
-.usage-count-number-carousel {
-  color: #584cdc;
-  font-weight: 600;
-}
-
-/* Grid view usage count */
+.usage-count,
+.usage-count-carousel,
 .usage-count-grid {
-  font-size: 14px;
-  font-weight: 700;
+  font-size: clamp(12px, 3.5vw, 14px);
+  font-weight: 500;
   color: #1f2937;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
 }
 
+.usage-count-number,
+.usage-count-number-carousel,
 .usage-count-number-grid {
   color: #584cdc;
-  font-weight: 700;
+  font-weight: 600;
 }
 
-/* Usage indicator below grid */
 .usage-indicator-bottom {
   display: flex;
   justify-content: center;
@@ -738,13 +714,12 @@
   padding: 0;
 }
 
-/* Footer in grid view - reduce top margin */
 .wallet-footer.grid-view-footer {
   margin-top: 0px;
 }
 
 .footer-text {
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 400;
   color: #6a7282;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
@@ -752,13 +727,12 @@
   margin: 16px 0 2px 0;
 }
 
-/* Footer text in grid view - reduce top margin */
 .wallet-footer.grid-view-footer .footer-text {
   margin: 4px 0 2px 0;
 }
 
 .upgrade-link {
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 400;
   color: #155dfc;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
@@ -782,47 +756,17 @@
 }
 
 @keyframes cardFlip {
-  0% {
-    transform: rotateY(0deg) scale(1);
-    opacity: 1;
-  }
-  25% {
-    transform: rotateY(45deg) scale(1.05);
-    opacity: 0.9;
-  }
-  50% {
-    transform: rotateY(90deg) scale(1.1);
-    opacity: 0.7;
-  }
-  75% {
-    transform: rotateY(135deg) scale(1.15);
-    opacity: 0.5;
-  }
-  100% {
-    transform: rotateY(180deg) scale(1.2);
-    opacity: 0;
-  }
+  0% { transform: rotateY(0deg) scale(1); opacity: 1; }
+  25% { transform: rotateY(45deg) scale(1.05); opacity: 0.9; }
+  50% { transform: rotateY(90deg) scale(1.1); opacity: 0.7; }
+  75% { transform: rotateY(135deg) scale(1.15); opacity: 0.5; }
+  100% { transform: rotateY(180deg) scale(1.2); opacity: 0; }
 }
 
 @keyframes cardFlipInner {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.3;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-.carousel-card {
-  cursor: pointer;
-  perspective: 1000px;
-}
-
-.carousel-card.active {
-  cursor: pointer;
+  0% { opacity: 1; }
+  50% { opacity: 0.3; }
+  100% { opacity: 0; }
 }
 
 /* Card Detail Modal */
@@ -843,19 +787,14 @@
 }
 
 @keyframes fadeInOverlay {
-  from {
-    background-color: rgba(0, 0, 0, 0);
-  }
-  to {
-    background-color: rgba(0, 0, 0, 0.8);
-  }
+  from { background-color: rgba(0, 0, 0, 0); }
+  to { background-color: rgba(0, 0, 0, 0.8); }
 }
 
 .card-detail-modal {
-  /* background-color: #f9fafb; */ /* Removed to allow inline style */
-  border-radius: 40px 40px 0 0;
+  border-radius: clamp(24px, 6vw, 40px) clamp(24px, 6vw, 40px) 0 0;
   width: 100%;
-  max-width: 393px;
+  max-width: 100%;
   height: 100vh;
   overflow-y: auto;
   padding: 0;
@@ -871,34 +810,18 @@
 }
 
 @keyframes slideUpModal {
-  from {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
 @keyframes slideDownModal {
-  from {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  to {
-    transform: translateY(100%);
-    opacity: 0;
-  }
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(100%); opacity: 0; }
 }
 
 @keyframes fadeOutOverlay {
-  from {
-    background-color: rgba(0, 0, 0, 0.8);
-  }
-  to {
-    background-color: rgba(0, 0, 0, 0);
-  }
+  from { background-color: rgba(0, 0, 0, 0.8); }
+  to { background-color: rgba(0, 0, 0, 0); }
 }
 
 /* Top Navigation */
@@ -906,13 +829,15 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  padding: 20px 20px 12px 20px;
+  padding: clamp(16px, 4vw, 20px) clamp(16px, 4vw, 20px) clamp(8px, 2vw, 12px) clamp(16px, 4vw, 20px);
   position: relative;
 }
 
-.modal-back-button {
-  width: 40px;
-  height: 40px;
+.modal-back-button,
+.modal-share-button,
+.modal-delete-button {
+  width: clamp(32px, 9vw, 40px);
+  height: clamp(32px, 9vw, 40px);
   background-color: transparent;
   border: none;
   display: flex;
@@ -929,36 +854,11 @@
   gap: 8px;
 }
 
-.modal-share-button {
-  width: 40px;
-  height: 40px;
-  background-color: transparent;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  padding: 0;
-}
-
 .modal-top-actions {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 8px;
-}
-
-.modal-delete-button {
-  width: 40px;
-  height: 40px;
-  background-color: transparent;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  padding: 0;
-  transition: all 0.2s;
 }
 
 .modal-delete-button:hover {
@@ -971,12 +871,12 @@
 }
 
 .modal-customize-button {
-  padding: 6px 12px;
+  padding: clamp(4px, 1.5vw, 6px) clamp(8px, 2.5vw, 12px);
   background-color: #584cdc;
   color: white;
   border: none;
   border-radius: 8px;
-  font-size: 11px;
+  font-size: clamp(9px, 2.8vw, 11px);
   font-weight: 500;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
   cursor: pointer;
@@ -990,25 +890,23 @@
 
 /* Main Card Info */
 .modal-main-card {
-  /* background-color: white; */ /* Removed to allow inline style */
-  border-radius: 20px;
-  padding: 24px;
-  margin: 0 20px 8px 20px;
+  border-radius: clamp(14px, 4vw, 20px);
+  padding: clamp(16px, 5vw, 24px);
+  margin: 0 clamp(16px, 4vw, 20px) 8px clamp(16px, 4vw, 20px);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
   transition: background 0.3s ease;
-  min-height: 140px;
+  min-height: clamp(100px, 30vw, 140px);
   position: relative;
 }
 
-/* 삭제 버튼 섹션 - 명함 위 */
 .modal-delete-section-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
+  padding: 0 clamp(16px, 4vw, 20px);
   margin-bottom: 8px;
 }
 
@@ -1017,7 +915,7 @@
   border: none;
   color: #ef4444;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 12px;
+  font-size: clamp(10px, 3vw, 12px);
   font-weight: 500;
   cursor: pointer;
   padding: 0;
@@ -1038,8 +936,8 @@
 
 .modal-profile-contact {
   position: absolute;
-  top: 24px;
-  right: 24px;
+  top: clamp(16px, 5vw, 24px);
+  right: clamp(16px, 5vw, 24px);
   display: flex;
   flex-direction: column;
   gap: 0px;
@@ -1049,7 +947,7 @@
 .modal-profile-phone,
 .modal-profile-email {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 11.2px;
+  font-size: clamp(9px, 2.8vw, 11.2px);
   font-weight: 400;
   color: white;
   margin: 0;
@@ -1058,8 +956,8 @@
 
 .modal-profile-section {
   position: absolute;
-  bottom: 16px;
-  left: 24px;
+  bottom: clamp(12px, 3.5vw, 16px);
+  left: clamp(16px, 5vw, 24px);
   display: flex;
   align-items: flex-start;
   gap: 8px;
@@ -1075,8 +973,8 @@
 }
 
 .modal-profile-icon {
-  width: 60px;
-  height: 60px;
+  width: clamp(44px, 14vw, 60px);
+  height: clamp(44px, 14vw, 60px);
   flex-shrink: 0;
 }
 
@@ -1086,13 +984,13 @@
   gap: 2px;
   align-items: flex-start;
   position: absolute;
-  bottom: 16px;
-  left: 24px;
+  bottom: clamp(12px, 3.5vw, 16px);
+  left: clamp(16px, 5vw, 24px);
 }
 
 .modal-profile-company {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 14px;
+  font-size: clamp(11px, 3.5vw, 14px);
   font-weight: 400;
   color: white;
   margin: 0;
@@ -1107,18 +1005,18 @@
 }
 
 .modal-profile-name {
-  font-size: 26px;
+  font-size: clamp(18px, 6vw, 26px);
   font-weight: 600;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
   margin: 0;
   padding: 0;
   color: white;
-  line-height: 28px;
+  line-height: 1.2;
 }
 
 .modal-profile-position {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 14px;
+  font-size: clamp(11px, 3.5vw, 14px);
   font-weight: 400;
   color: white;
   margin: 0 0 2px 0;
@@ -1135,7 +1033,7 @@
 
 .modal-contact-phone,
 .modal-contact-email {
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 400;
   color: #1f2937;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
@@ -1145,9 +1043,9 @@
 /* Gift History Button */
 .modal-gift-actions {
   display: flex;
-  gap: 12px;
-  margin: 8px 20px 12px 20px;
-  width: calc(100% - 40px);
+  gap: clamp(8px, 2.5vw, 12px);
+  margin: 8px clamp(16px, 4vw, 20px) 12px clamp(16px, 4vw, 20px);
+  width: calc(100% - clamp(32px, 8vw, 40px));
   box-sizing: border-box;
 }
 
@@ -1155,9 +1053,9 @@
   flex: 1;
   background-color: white;
   border: none;
-  border-radius: 14px;
-  padding: 16px;
-  height: 80px;
+  border-radius: clamp(10px, 3vw, 14px);
+  padding: clamp(12px, 3.5vw, 16px);
+  height: clamp(60px, 18vw, 80px);
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -1186,12 +1084,12 @@
 
 .modal-gift-recommend-button .gift-card-logo {
   position: absolute;
-  left: 16px;
+  left: clamp(12px, 3.5vw, 16px);
 }
 
 .modal-gift-recommend-button .gift-card-arrow {
   position: absolute;
-  right: 16px;
+  right: clamp(12px, 3.5vw, 16px);
   margin-bottom: 0;
 }
 
@@ -1222,15 +1120,15 @@
 }
 
 .gift-card-icon {
-  width: 16px;
-  height: 16px;
+  width: clamp(12px, 3.5vw, 16px);
+  height: clamp(12px, 3.5vw, 16px);
   flex-shrink: 0;
   display: block;
 }
 
 .gift-card-logo {
-  width: 20px;
-  height: 20px;
+  width: clamp(16px, 4.5vw, 20px);
+  height: clamp(16px, 4.5vw, 20px);
   flex-shrink: 0;
   display: block;
   object-fit: contain;
@@ -1246,7 +1144,7 @@
 
 .gift-card-label {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 14px;
+  font-size: clamp(11px, 3.5vw, 14px);
   font-weight: 400;
   line-height: 20px;
   color: #0a0a0a;
@@ -1255,7 +1153,7 @@
 
 .gift-card-value {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 15px;
+  font-size: clamp(12px, 3.8vw, 15px);
   font-weight: 400;
   line-height: 32px;
   color: #0a0a0a;
@@ -1270,33 +1168,29 @@
 
 .gift-card-arrow {
   flex-shrink: 0;
-  width: 20px;
-  height: 20px;
+  width: clamp(16px, 4.5vw, 20px);
+  height: clamp(16px, 4.5vw, 20px);
   align-self: flex-end;
   margin-bottom: 2px;
 }
 
-.modal-gift-recommend-button .gift-card-arrow path {
-  stroke: white;
-}
-
 /* Business Card Information Section */
 .modal-info-section {
-  padding: 0 20px 32px 20px;
-  margin-top: 12px;
+  padding: 0 clamp(16px, 4vw, 20px) clamp(24px, 6vw, 32px) clamp(16px, 4vw, 20px);
+  margin-top: clamp(8px, 2.5vw, 12px);
 }
 
 .modal-info-title {
-  font-size: 18px;
+  font-size: clamp(15px, 4.5vw, 18px);
   font-weight: 700;
   color: #1f2937;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  margin: 0 0 16px 0;
+  margin: 0 0 clamp(12px, 3.5vw, 16px) 0;
 }
 
 .modal-info-card {
   background-color: white;
-  border-radius: 16px;
+  border-radius: clamp(12px, 3.5vw, 16px);
   padding: 0;
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -1305,24 +1199,24 @@
 .modal-info-row {
   display: flex;
   align-items: center;
-  padding: 16px 20px;
-  gap: 12px;
+  padding: clamp(12px, 3.5vw, 16px) clamp(16px, 4vw, 20px);
+  gap: clamp(8px, 2.5vw, 12px);
 }
 
 .info-icon {
-  font-size: 16px;
+  font-size: clamp(14px, 3.5vw, 16px);
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  height: 20px;
+  width: clamp(16px, 4.5vw, 20px);
+  height: clamp(16px, 4.5vw, 20px);
   overflow: visible;
 }
 
 .info-icon svg {
-  width: 16px;
-  height: 16px;
+  width: clamp(14px, 3.5vw, 16px);
+  height: clamp(14px, 3.5vw, 16px);
   overflow: visible;
 }
 
@@ -1338,14 +1232,14 @@
 }
 
 .info-label {
-  font-size: 13px;
+  font-size: clamp(11px, 3.2vw, 13px);
   font-weight: 400;
   color: #6b7280;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
 }
 
 .info-value {
-  font-size: 15px;
+  font-size: clamp(13px, 3.8vw, 15px);
   font-weight: 400;
   color: #1f2937;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
@@ -1355,7 +1249,7 @@
   background-color: transparent;
   border: none;
   color: #584cdc;
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 500;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
   cursor: pointer;
@@ -1370,7 +1264,7 @@
 .info-divider {
   height: 1px;
   background-color: #e5e7eb;
-  margin: 0 20px;
+  margin: 0 clamp(16px, 4vw, 20px);
 }
 
 /* Delete Button Section */
@@ -1378,7 +1272,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: clamp(16px, 4vw, 20px);
   margin-top: 8px;
 }
 
@@ -1387,11 +1281,11 @@
   border: 1px solid rgba(239, 68, 68, 0.3);
   border-radius: 8px;
   color: #ef4444;
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 600;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
   cursor: pointer;
-  padding: 6px 20px;
+  padding: clamp(4px, 1.5vw, 6px) clamp(16px, 4vw, 20px);
   transition: all 0.2s;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -1408,12 +1302,12 @@
 
 .modal-memo-input {
   width: 100%;
-  min-height: 60px;
-  padding: 12px;
+  min-height: clamp(48px, 14vw, 60px);
+  padding: clamp(8px, 2.5vw, 12px);
   background-color: #f9fafb;
   border: 1px solid #e5e7eb;
   border-radius: 8px;
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 400;
   color: #1f2937;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
@@ -1432,20 +1326,20 @@
   color: #9ca3af;
 }
 
-/* Edit Button - Bottom right of card */
+/* Edit Button */
 .modal-edit-button {
   position: absolute;
-  bottom: 16px;
-  right: 16px;
+  bottom: clamp(12px, 3.5vw, 16px);
+  right: clamp(12px, 3.5vw, 16px);
   background-color: rgba(255, 255, 255, 0.9);
   border: none;
   border-radius: 8px;
   color: #1f2937;
-  font-size: 13px;
+  font-size: clamp(11px, 3.2vw, 13px);
   font-weight: 600;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
   cursor: pointer;
-  padding: 6px 16px;
+  padding: clamp(4px, 1.5vw, 6px) clamp(12px, 3.5vw, 16px);
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
   transition: all 0.2s;
   z-index: 10;
@@ -1462,3 +1356,34 @@
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* 태블릿 */
+@media (min-width: 768px) {
+  .wallet-container,
+  .wallet-page-header {
+    max-width: 600px;
+  }
+  
+  .cards-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .card-detail-modal {
+    max-width: 500px;
+  }
+}
+
+/* 데스크탑 */
+@media (min-width: 1024px) {
+  .wallet-container,
+  .wallet-page-header {
+    max-width: 430px;
+  }
+  
+  .cards-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .card-detail-modal {
+    max-width: 430px;
+  }
+}

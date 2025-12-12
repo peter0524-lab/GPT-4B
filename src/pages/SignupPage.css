@@ -6,7 +6,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: clamp(16px, 4vw, 24px);
   position: relative;
 }
 
@@ -16,9 +16,9 @@
   left: 0;
   right: 0;
   width: 100%;
-  max-width: 400px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 16px 20px;
+  padding: clamp(12px, 3vw, 16px) clamp(16px, 4vw, 20px);
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -28,14 +28,14 @@
 
 .signup-container {
   width: 100%;
-  max-width: 400px;
+  max-width: 100%;
   background-color: white;
-  border-radius: 40px;
-  padding: 40px 24px;
+  border-radius: clamp(24px, 6vw, 40px);
+  padding: clamp(24px, 6vw, 40px) clamp(16px, 4vw, 24px);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 32px;
+  gap: clamp(20px, 5vw, 32px);
   position: relative;
 }
 
@@ -59,8 +59,8 @@
 }
 
 .logo-section {
-  width: 63px;
-  height: 68px;
+  width: clamp(50px, 15vw, 70px);
+  height: clamp(54px, 16vw, 76px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -83,7 +83,7 @@
 }
 
 .signup-text-main {
-  font-size: 16px;
+  font-size: clamp(14px, 4vw, 18px);
   font-weight: 600;
   color: #252525;
   font-family: 'Mulish', 'Noto Sans KR', sans-serif;
@@ -91,7 +91,7 @@
 }
 
 .signup-text-sub {
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 15px);
   font-weight: 400;
   color: rgba(37, 37, 37, 0.6);
   font-family: 'Mulish', 'Noto Sans KR', sans-serif;
@@ -102,7 +102,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: clamp(16px, 4vw, 24px);
 }
 
 .input-group {
@@ -124,7 +124,7 @@
 }
 
 .input-label {
-  font-size: 14px;
+  font-size: clamp(12px, 3.5vw, 14px);
   font-weight: 600;
   color: #252525;
   font-family: 'Mulish', 'Noto Sans KR', sans-serif;
@@ -144,12 +144,12 @@
 
 .signup-input {
   width: 100%;
-  height: 50px;
+  height: clamp(44px, 12vw, 54px);
   padding: 0 48px 0 16px;
   border: 1px solid rgba(196, 196, 196, 0.3);
   background-color: rgba(196, 196, 196, 0.2);
   border-radius: 10px;
-  font-size: 14px;
+  font-size: clamp(13px, 3.5vw, 15px);
   font-family: 'Mulish', 'Noto Sans KR', sans-serif;
   color: #252525;
   transition: all 0.2s;
@@ -200,7 +200,7 @@
 }
 
 .error-message {
-  font-size: 12px;
+  font-size: clamp(10px, 3vw, 12px);
   color: #EA4335;
   font-family: 'Mulish', 'Noto Sans KR', sans-serif;
   margin: 0 !important;
@@ -215,7 +215,7 @@
 }
 
 .input-hint {
-  font-size: 12px;
+  font-size: clamp(10px, 3vw, 12px);
   color: rgba(37, 37, 37, 0.5);
   font-family: 'Mulish', 'Noto Sans KR', sans-serif;
   margin: 0 !important;
@@ -231,10 +231,10 @@
 
 .continue-button {
   width: 100%;
-  height: 70px;
+  height: clamp(50px, 14vw, 70px);
   border: none;
   border-radius: 10px;
-  font-size: 16px;
+  font-size: clamp(14px, 4vw, 16px);
   font-weight: 600;
   font-family: 'Mulish', 'Noto Sans KR', sans-serif;
   cursor: pointer;
@@ -262,4 +262,32 @@
   background-color: rgba(196, 196, 196, 0.3);
   color: rgba(0, 0, 0, 0.3);
   cursor: not-allowed;
+}
+
+/* 태블릿 */
+@media (min-width: 768px) {
+  .signup-header {
+    max-width: 500px;
+  }
+  
+  .signup-container {
+    max-width: 500px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+}
+
+/* 데스크탑 */
+@media (min-width: 1024px) {
+  .signup-screen {
+    background-color: #f5f5f5;
+  }
+  
+  .signup-header {
+    max-width: 430px;
+  }
+  
+  .signup-container {
+    max-width: 430px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  }
 }
