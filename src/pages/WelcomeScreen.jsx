@@ -66,7 +66,7 @@ function WelcomeScreen() {
                     <div className="company-rank-badge">
                       {index === 0 ? '🥇' : index === 1 ? '🥈' : '🥉'}
                     </div>
-                    <span className="company-name">{company.company}</span>
+                    <span className="company-name">{company.company.toUpperCase()}</span>
                     <span className="company-count">{company.userCount}명</span>
                   </div>
                 ))}

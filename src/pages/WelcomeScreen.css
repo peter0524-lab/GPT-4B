@@ -161,6 +161,9 @@
   margin: 8px 0 0 0;
   font-family: 'Noto Sans KR', sans-serif;
   animation: pulse 2s infinite;
+  text-align: center;
+  white-space: nowrap;
+  width: 100%;
 }
 
 @keyframes pulse {
