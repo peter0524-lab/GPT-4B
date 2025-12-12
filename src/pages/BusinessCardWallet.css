@@ -351,7 +351,7 @@
 .card-bottom-section {
   position: absolute;
   bottom: clamp(40px, 12vw, 57px);
-  right: clamp(8px, 2vw, 12px);
+  right: clamp(-16px, -5vw, -28px);
   display: flex;
   justify-content: flex-end;
 }
@@ -417,7 +417,7 @@
 }
 
 .carousel-nav-next {
-  right: clamp(-8px, -2vw, -12px);
+  right: clamp(-12px, -3vw, -18px);
 }
 
 /* Action Buttons */
@@ -831,7 +831,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  padding: clamp(50px, 12vw, 60px) clamp(16px, 4vw, 20px) clamp(8px, 2vw, 12px) clamp(16px, 4vw, 20px);
+  padding: clamp(60px, 15vw, 80px) clamp(16px, 4vw, 20px) clamp(8px, 2vw, 12px) clamp(16px, 4vw, 20px);
   position: relative;
 }
 
@@ -892,15 +892,15 @@
 
 /* Main Card Info */
 .modal-main-card {
-  border-radius: clamp(12px, 3vw, 16px);
-  padding: clamp(10px, 2.5vw, 14px);
+  border-radius: 24px;
+  padding: 20px;
   margin: 0 clamp(20px, 5vw, 24px) 12px clamp(20px, 5vw, 24px);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 25px 50px -12px rgba(0, 0, 0, 0.4);
   transition: background 0.3s ease;
-  aspect-ratio: 2.0;
+  min-height: 140px;
   width: calc(100% - clamp(40px, 10vw, 48px));
   position: relative;
   box-sizing: border-box;
@@ -940,8 +940,8 @@
 
 .modal-profile-contact {
   position: absolute;
-  top: clamp(8px, 2vw, 12px);
-  right: clamp(10px, 2.5vw, 14px);
+  top: 20px;
+  right: 20px;
   display: flex;
   flex-direction: column;
   gap: 0px;
@@ -951,17 +951,19 @@
 .modal-profile-phone,
 .modal-profile-email {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: clamp(8px, 2.5vw, 10px);
+  font-size: 11.2px;
   font-weight: 400;
   color: white;
   margin: 0;
-  line-height: 14px;
+  line-height: 16px;
+  letter-spacing: -0.1504px;
+  white-space: nowrap;
 }
 
 .modal-profile-section {
   position: absolute;
-  bottom: clamp(8px, 2vw, 12px);
-  left: clamp(10px, 2.5vw, 14px);
+  bottom: 20px;
+  left: 20px;
   display: flex;
   align-items: flex-start;
   gap: 8px;
@@ -994,11 +996,12 @@
 
 .modal-profile-company {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: clamp(9px, 2.5vw, 11px);
+  font-size: 14px;
   font-weight: 400;
   color: white;
   margin: 0;
-  line-height: 14px;
+  line-height: 20px;
+  letter-spacing: -0.1504px;
 }
 
 .modal-profile-info {
@@ -1009,22 +1012,24 @@
 }
 
 .modal-profile-name {
-  font-size: clamp(14px, 4.5vw, 20px);
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 700;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
   margin: 0;
   padding: 0;
   color: white;
-  line-height: 1.2;
+  line-height: 18px;
+  letter-spacing: -0.4492px;
 }
 
 .modal-profile-position {
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: clamp(9px, 2.5vw, 11px);
+  font-size: 14px;
   font-weight: 400;
   color: white;
   margin: 0 0 2px 0;
-  line-height: 14px;
+  line-height: 20px;
+  letter-spacing: -0.1504px;
 }
 
 .modal-contact-section {
@@ -1333,20 +1338,21 @@
 /* Edit Button */
 .modal-edit-button {
   position: absolute;
-  bottom: clamp(8px, 2vw, 12px);
-  right: clamp(8px, 2vw, 12px);
+  bottom: 16px;
+  right: 16px;
   background-color: rgba(255, 255, 255, 0.9);
   border: none;
   border-radius: 6px;
   color: #1f2937;
-  font-size: clamp(9px, 2.5vw, 10px);
-  font-weight: 600;
+  font-size: 10px;
+  font-weight: 500;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
   cursor: pointer;
-  padding: clamp(2px, 0.8vw, 4px) clamp(6px, 2vw, 10px);
+  padding: 4px 8px;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
   transition: all 0.2s;
   z-index: 10;
+  white-space: nowrap;
 }
 
 .modal-edit-button:hover {
