@@ -84,6 +84,8 @@ function LoginScreen() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 className="login-input"
+                autoCapitalize="off"
+                autoCorrect="off"
               />
               <div className="input-icon-right">
                 <UserIcon />
