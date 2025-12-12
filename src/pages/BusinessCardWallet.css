@@ -351,7 +351,7 @@
 .card-bottom-section {
   position: absolute;
   bottom: clamp(40px, 12vw, 57px);
-  right: clamp(-16px, -5vw, -28px);
+  right: clamp(8px, 2vw, 12px);
   display: flex;
   justify-content: flex-end;
 }
@@ -417,7 +417,7 @@
 }
 
 .carousel-nav-next {
-  right: clamp(-12px, -3vw, -18px);
+  right: clamp(-8px, -2vw, -12px);
 }
 
 /* Action Buttons */
@@ -831,7 +831,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  padding: clamp(40px, 10vw, 50px) clamp(16px, 4vw, 20px) clamp(8px, 2vw, 12px) clamp(16px, 4vw, 20px);
+  padding: clamp(50px, 12vw, 60px) clamp(16px, 4vw, 20px) clamp(8px, 2vw, 12px) clamp(16px, 4vw, 20px);
   position: relative;
 }
 
