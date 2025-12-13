@@ -625,10 +625,6 @@ function CalendarPage() {
 
   return (
     <div className="calendar-page">
-      <div className="logo-header">
-        <img src="/assets/gpt_4b_logo_blueberry.png" alt="GPT-4b Logo" className="calendar-logo" />
-      </div>
-
       <div className="calendar-component">
         <div className="calendar-header-nav">
           <button className="nav-arrow" onClick={handlePrevMonth}>

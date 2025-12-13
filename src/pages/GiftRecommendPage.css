@@ -103,7 +103,7 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: clamp(20px, 6vw, 32px);
-  padding-top: clamp(20px, 6vw, 32px);
+  padding-top: calc(env(safe-area-inset-top, 0px) + clamp(20px, 6vw, 32px));
   padding-bottom: 8px;
   position: sticky;
   top: 0;
