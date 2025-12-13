@@ -87,7 +87,7 @@
   background-color: white;
   border-radius: clamp(24px, 6vw, 40px);
   overflow-y: auto;
-  padding-top: env(safe-area-inset-top, 0px);
+  padding-top: max(env(safe-area-inset-top, 0px), 59px);
   padding-bottom: clamp(80px, 20vw, 100px);
   margin: 0 auto;
 }
