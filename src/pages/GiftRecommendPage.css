@@ -16,6 +16,7 @@
   z-index: 10000;
   margin: 0 auto;
   padding: clamp(16px, 4vw, 24px);
+  padding-top: calc(env(safe-area-inset-top, 0px) + clamp(16px, 4vw, 24px));
 }
 
 .loading-spinner {

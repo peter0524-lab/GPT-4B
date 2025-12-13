@@ -7,6 +7,7 @@
   overflow: visible;
   position: relative;
   margin: 0 auto;
+  padding-top: env(safe-area-inset-top, 0px);
 }
 
 .my-page-background {

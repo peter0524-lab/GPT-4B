@@ -4,6 +4,7 @@
   background-color: white;
   display: flex;
   justify-content: center;
+  padding-top: env(safe-area-inset-top, 0px);
 }
 
 .chat-history-container {
