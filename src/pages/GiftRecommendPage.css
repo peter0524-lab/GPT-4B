@@ -87,6 +87,7 @@
   background-color: white;
   border-radius: clamp(24px, 6vw, 40px);
   overflow-y: auto;
+  padding-top: env(safe-area-inset-top, 0px);
   padding-bottom: clamp(80px, 20vw, 100px);
   margin: 0 auto;
 }
@@ -103,12 +104,9 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: clamp(20px, 6vw, 32px);
-  padding-top: clamp(20px, 5vw, 28px);
+  padding-top: clamp(16px, 4vw, 24px);
   padding-bottom: 8px;
-  position: sticky;
-  top: env(safe-area-inset-top, 0px);
   background-color: white;
-  z-index: 100;
   min-height: clamp(48px, 14vw, 60px);
 }
 
