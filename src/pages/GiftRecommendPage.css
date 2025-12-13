@@ -82,19 +82,19 @@
 /* Main Page */
 .gift-recommend-page {
   width: 100%;
-  max-width: 100%;
-  min-height: 100vh;
+  max-width: 393px;
+  min-height: calc(100vh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
   background-color: white;
-  border-radius: clamp(24px, 6vw, 40px);
+  border-radius: 40px;
   overflow-y: auto;
-  padding-top: max(env(safe-area-inset-top, 0px), 59px);
-  padding-bottom: clamp(80px, 20vw, 100px);
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px));
   margin: 0 auto;
 }
 
 .gift-recommend-container {
-  padding: clamp(16px, 4vw, 24px);
-  max-width: 100%;
+  padding: 24px;
+  max-width: 405px;
   margin: 0 auto;
 }
 
@@ -103,11 +103,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: clamp(20px, 6vw, 32px);
-  padding-top: clamp(16px, 4vw, 24px);
-  padding-bottom: 8px;
+  margin-bottom: 12px;
+  padding-top: calc(8px + env(safe-area-inset-top, 0px));
+  padding-bottom: 4px;
+  position: relative;
   background-color: white;
-  min-height: clamp(48px, 14vw, 60px);
+  min-height: 44px;
 }
 
 .back-button {
