@@ -120,7 +120,14 @@ html, body {
   font-size: clamp(14px, 3.5vw, 16px);
 }
 
-/* Safe area for mobile devices */
+/* Safe area for mobile devices (iPhone notch/Dynamic Island) */
+:root {
+  --safe-area-top: env(safe-area-inset-top, 0px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-left: env(safe-area-inset-left, 0px);
+  --safe-area-right: env(safe-area-inset-right, 0px);
+}
+
 @supports (padding-top: env(safe-area-inset-top)) {
   .safe-area-top {
     padding-top: env(safe-area-inset-top);
@@ -128,5 +135,11 @@ html, body {
   
   .safe-area-bottom {
     padding-bottom: env(safe-area-inset-bottom);
+  }
+  
+  /* 모든 페이지의 상단 여백에 safe area 적용 */
+  .app-container,
+  .page-wrapper {
+    padding-top: env(safe-area-inset-top);
   }
 }
