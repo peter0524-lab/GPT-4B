@@ -103,10 +103,10 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: clamp(20px, 6vw, 32px);
-  padding-top: calc(env(safe-area-inset-top, 0px) + clamp(60px, 15vw, 80px));
+  padding-top: clamp(20px, 5vw, 28px);
   padding-bottom: 8px;
   position: sticky;
-  top: 0;
+  top: env(safe-area-inset-top, 0px);
   background-color: white;
   z-index: 100;
   min-height: clamp(48px, 14vw, 60px);
